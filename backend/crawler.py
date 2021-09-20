@@ -15,12 +15,19 @@ except AttributeError:
     # no pyopenssl support used / needed / available
     pass
 
-#데이터 크롤링하고 csv 파일 형태로 저장
-url = "https://openapi.mnd.go.kr/3935313630333536343431323332303830/json/DS_TB_MNDT_DATEBYMLSVC_8623/1/100/"
+#각종 인자 설정
+troop_code = 9030
+
+#데이터 크롤링하고 parsing
+url = "https://openapi.mnd.go.kr/3935313630333536343431323332303830/json/DS_TB_MNDT_DATEBYMLSVC_" + str(troop_code) + "/1/100/"
 
 response = requests.get(url)
-jsonObject = json.loads(response.text).get('DS_TB_MNDT_DATEBYMLSVC_8623').get('row')
+service_name = 'DS_TB_MNDT_DATEBYMLSVC_' + str(troop_code)
+jsonObject = json.loads(response.text).get(service_name).get('row')
 print(jsonObject)
+
+#크롤링한 데이터 dataframe 형태로 저장
 df = pd.json_normalize(jsonObject)
-print(df.sort_values(by='dates')[:10])
+df.insert(0, "troop_code", 8623)
+df = df.sort_values(by='dates')
 df.to_csv("samplecsv.csv")
