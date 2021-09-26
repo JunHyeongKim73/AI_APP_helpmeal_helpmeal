@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myapp/src/model/colors.dart';
 
-void main() => runApp(MyApp());
+import 'src/app.dart';
+import 'src/binding/init_binding.dart';
 
-class MyApp extends StatelessWidget {
+void main() => runApp(const MyAPP());
+
+class MyAPP extends StatelessWidget {
+  const MyAPP({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
+    return GetMaterialApp(
+      title: CustomColor.appName,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: CustomColor.orangeColor,
         ),
-        body: const Center(
-          child: const Text('Hello World'),
-        ),
+        scaffoldBackgroundColor: Colors.grey[100]
       ),
+      initialRoute: '/',
+      initialBinding: InitBinding(),
+      getPages: [
+        GetPage(
+          name: '/',
+          page: () => const App(),
+        ),
+      ],
     );
   }
 }
