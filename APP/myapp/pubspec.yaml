@@ -40,6 +40,7 @@ dependencies:
   google_fonts: ^2.1.0
   flutter_datetime_picker: ^1.5.1
   intl: ^0.17.0
+  sign_button: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -64,8 +65,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - assets/1.jpg
+  assets:
+    - assets/icon/
   #   - assets/2.jpg
   #   - assets/3.jpg
   #   - assets/4.jpg

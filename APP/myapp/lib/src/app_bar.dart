@@ -32,13 +32,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       return AppBar(
           backgroundColor: Colors.white,
           title: Row(
-            children: [
-              CustomFont(text: 'H', fontSize: 28, color: Colors.red[600]).logo,
-              CustomFont(text: 'elp', fontSize: 24).logo,
-              CustomFont(text: ' M', fontSize: 28, color: Colors.yellow[700])
-                  .logo,
-              CustomFont(text: 'eal', fontSize: 24).logo,
-            ],
+            children: CustomFont(fontSize: 28).logo,
           ),
           titleSpacing: 25,
           shape: const RoundedRectangleBorder(
