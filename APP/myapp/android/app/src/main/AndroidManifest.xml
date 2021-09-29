@@ -30,6 +30,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <data android:scheme="kakao495577a022036d236cb44ca9f46487bc"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
