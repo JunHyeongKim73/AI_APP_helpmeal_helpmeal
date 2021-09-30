@@ -1,9 +1,9 @@
-var express = require('express');
-var  app = express();
-var db_config = require(__dirname + '/config/database.js');
-var conn = db_config.init();
-var bodyParser = require('body-parser');
-var cors = require('cors');
+const express = require('express');
+const  app = express();
+const db_config = require(__dirname + '/config/database.js');
+const conn = db_config.init();
+const bodyParser = require('body-parser');
+const cors = require('cors');
 db_config.connect(conn);
 
 app.set('views', __dirname + '/views');
@@ -17,32 +17,26 @@ app.get('/', function (req, res) {
     res.send('ROOT');
 });
 
-var test_req = {
-
-	//"day" : `'2021-09-27'`, 
-	
-	"troop_id" : 1, 
-	
-	"number_of_day" : 2
-}
-app.get('/menus', function (req, res) {
-    sql = `SELECT name from food WHERE id IN (SELECT menu.food_id FROM meal INNER JOIN menu on menu.meal_id = meal.id WHERE troop_id = ${req.troop_id} AND meal.number_of_day = ${test_req.number_of_day} AND meal.day = ${req.day} ORDER BY menu_order);` 
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' }); 
+app.get('/menus/:troop_id/:day/:number_of_day', function (req, res) {
+    sql = `SELECT name from food WHERE id IN (SELECT menu.food_id FROM meal INNER JOIN menu on menu.meal_id = meal.id WHERE troop_id = ${req.params.troop_id} AND meal.number_of_day = ${req.params.number_of_day} AND meal.day = "${req.params.day}" ORDER BY menu_order);` 
+    //res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' }); 
 	conn.query(sql, function (err, rows, fields) {
         if(err) console.log('query is not excuted. select fail...\n' + err);
         else {var menus = new Array(); 
+    		res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' }); 
 			//메뉴 이름 담긴 배열 만들기
 			for(i = 0; i < rows.length; i++) {
-				res.write(JSON.stringify(rows[i])); 
+				//res.write(JSON.stringify(rows[i])); 
    	        	var menu = new Object();
-		    	menu.menu = rows[i].name;
+		    	menu.name = rows[i].name;
 		    	menu.order = i;
 			
 				menu = JSON.stringify(menu); 
-		    	menus.push(JSON.parse(menu))	
+		        //res.json(JSON.parse(menu))	
+				menus.push(JSON.parse(menu))	
 			}
-	        res.result = menus;
-		    console.log(menus);	
+			res.send(menus);
+			console.log(menus);	
 		}
 	});
 });
