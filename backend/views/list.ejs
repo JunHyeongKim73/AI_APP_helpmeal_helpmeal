@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>게시글</title>
+    </head>
+    <body>
+        <h2>게시글 리스트</h2>
+        <table border='1'>
+            <colgroup>
+                <col width='60'><col width='200'><col width='100'>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>meal_id</th>
+                    <th>food_id</th>
+                    <th>menu_orde</th>
+                    <th>average_star</th>
+           	    </tr> 
+			</thead>
+            <tbody>
+                <% for(i = 0; i < list.length; i++) { %>
+                <tr>
+                    <td><%=list[i].id %></td>
+                    <td><%=list[i].meal_id %></td>
+                    <td><%=list[i].food_id%></td>
+                    <td><%=list[i].menu_order%></td>
+                    <td><%=list[i].average_star%></td>
+				</tr>
+                <% } %>
+            </tbody>
+        </table boader='1'>
+        
+        <button onclick="location.href='../write'">글쓰기</button>
+    </body>
+</html>
