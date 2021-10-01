@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class RankingPage extends StatelessWidget{
-  const RankingPage({ Key? key }) : super(key: key);
+void main() => runApp(RankingPage());
 
-  @override
+class RankingPage extends StatefulWidget {
+  RankingPageState createState() => RankingPageState();
+}
+
+class RankingPageState extends State<RankingPage> {
+  final isSelected = <bool>[false, false, false];
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: const Center(
-        child: Text("RANKING"),
-      )
+      appBar: AppBar(
+        title: Text('HelpMeal'),
+      ),
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text('1'),
+            Text('2'),
+          ]),
     );
   }
 }

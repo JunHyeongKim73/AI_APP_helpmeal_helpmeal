@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/view/allergy_page.dart';
+import 'package:myapp/src/view/first_page.dart';
 import 'package:myapp/src/view/login_page.dart';
 import 'package:myapp/src/view/meal_control_page.dart';
 import 'package:myapp/src/view/my_page.dart';
@@ -31,10 +33,11 @@ class MyAPP extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      initialRoute: '/startWithNoLogin',
+      initialRoute: '/first',
       initialBinding: InitBinding(),
       getPages: [
         GetPage(name: '/', page: () => const App()),
+        GetPage(name: '/first', page: () => FirstPage()),
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/allergy', page: () => AllergyPage()),
         GetPage(name: '/suggestComplain', page: () => SuggestionComplainPage()),
