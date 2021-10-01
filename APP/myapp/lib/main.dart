@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/view/allergy_page.dart';
 import 'package:myapp/src/view/login_page.dart';
