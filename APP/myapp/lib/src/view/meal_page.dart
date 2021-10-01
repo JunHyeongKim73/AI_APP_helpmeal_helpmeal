@@ -10,7 +10,7 @@ import 'package:myapp/src/model/meal.dart';
 import 'package:myapp/src/model/meal_repository.dart';
 import 'package:myapp/src/model/menu.dart';
 import 'package:myapp/src/model/menu_repository.dart';
-import 'meal_list_view.dart';
+import 'meal_item_view.dart';
 
 class MealPage extends StatefulWidget {
   const MealPage({Key? key}) : super(key: key);
@@ -91,7 +91,7 @@ class MealContainer extends StatelessWidget {
             return Padding(
               padding:
                   const EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 16),
-              child: MealList(mealData: mealList[index]),
+              child: MealItem(mealData: mealList[index]),
             );
           },
         ),
