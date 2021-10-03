@@ -11,7 +11,7 @@ class Troop {
     this.group,
     this.isLast = false,
   }){ 
-    if(group == null) group = [];
+    group ??= [];
     groups = group! + ['+'];
   }
 }

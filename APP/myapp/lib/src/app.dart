@@ -19,7 +19,7 @@ class App extends StatelessWidget {
           body: SafeArea(
             child: IndexedStack(
               index: controller.tabIndex,
-              children: [
+              children: const [
                 MealPage(),
                 RankingPage(),
                 MyPage(),

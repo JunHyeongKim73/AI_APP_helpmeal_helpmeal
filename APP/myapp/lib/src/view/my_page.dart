@@ -69,7 +69,7 @@ class MyPage extends StatelessWidget {
                                 style: GoogleFonts.doHyeon(
                                     fontSize: 20, color: Colors.white),
                               ),
-                              isAdminstrator ? SizedBox(width: 2) : SizedBox(),
+                              isAdminstrator ? const SizedBox(width: 2) : const SizedBox(),
                               isAdminstrator ? _masterIcon() : Container(),
                             ],
                           ),
@@ -160,10 +160,10 @@ class MyPage extends StatelessWidget {
     }
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(6.0),
+        padding: const EdgeInsets.all(6.0),
         child: GridView.builder(
           itemCount: myPageIconList.length,
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             childAspectRatio: 1.5,
             crossAxisSpacing: 4.0,
             mainAxisSpacing: 4.0,
@@ -173,7 +173,7 @@ class MyPage extends StatelessWidget {
             return Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

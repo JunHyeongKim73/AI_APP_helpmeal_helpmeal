@@ -6,13 +6,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:myapp/src/controller/select_troop_controller.dart';
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/troop.dart';
-import 'package:myapp/src/model/troop_repository.dart';
-import 'package:myapp/src/view/notice_check_page.dart';
-import 'package:myapp/src/view/suggestion_check_page.dart';
-import 'package:myapp/src/view/suggestion_complain_page.dart';
 
 class TroopSelectPage extends StatefulWidget {
-  TroopSelectPage({Key? key}) : super(key: key);
+  const TroopSelectPage({Key? key}) : super(key: key);
 
   @override
   State<TroopSelectPage> createState() => _TroopSelectPage();
@@ -84,7 +80,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
               backgroundColor: Colors.white,
               child: IconButton(
                 onPressed: controller.previousPage,
-                icon: Icon(
+                icon: const Icon(
                   MdiIcons.chevronLeft,
                   color: CustomColor.themeColor,
                 ),
@@ -115,7 +111,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
             backgroundColor: Colors.white,
             child: IconButton(
               onPressed: controller.previousPage,
-              icon: Icon(
+              icon: const Icon(
                 MdiIcons.chevronLeft,
                 color: CustomColor.themeColor,
               ),
@@ -125,10 +121,8 @@ class _TroopSelectPage extends State<TroopSelectPage> {
         } else {
           return ElevatedButton(
             onPressed: () {},
-            child: Container(
-              child: Text('완료',
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 24)),
-            ),
+            child: const Text('완료',
+                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 24)),
             style: ElevatedButton.styleFrom(
               elevation: 5,
               primary: Colors.white,
@@ -141,24 +135,22 @@ class _TroopSelectPage extends State<TroopSelectPage> {
     }
   }
 
-  Container _firstPage(SelectTroopController controller) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _selectArmyIcon(controller, 0),
-              const SizedBox(width: 30),
-              _selectArmyIcon(controller, 1),
-              const SizedBox(width: 30),
-              _selectArmyIcon(controller, 2),
-            ],
-          ),
-        ],
-      ),
+  Widget _firstPage(SelectTroopController controller) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _selectArmyIcon(controller, 0),
+            const SizedBox(width: 30),
+            _selectArmyIcon(controller, 1),
+            const SizedBox(width: 30),
+            _selectArmyIcon(controller, 2),
+          ],
+        ),
+      ],
     );
   }
 
@@ -180,11 +172,9 @@ class _TroopSelectPage extends State<TroopSelectPage> {
           onPressed: troops![index].isLast
               ? () => controller.changeButton(index)
               : () => controller.changeSelectedTroopIndex(index),
-          child: Container(
-            child: Text(
-              troops[index].name,
-              style: GoogleFonts.doHyeon(fontSize: 24),
-            ),
+          child: Text(
+            troops[index].name,
+            style: GoogleFonts.doHyeon(fontSize: 24),
           ),
           style: ElevatedButton.styleFrom(
               primary: Colors.white,
@@ -217,11 +207,9 @@ class _TroopSelectPage extends State<TroopSelectPage> {
       itemBuilder: (BuildContext context, int index) {
         return ElevatedButton(
           onPressed: () => controller.changeButton(index),
-          child: Container(
-            child: Text(
-              detailTroops[index].name,
-              style: GoogleFonts.doHyeon(fontSize: 20),
-            ),
+          child: Text(
+            detailTroops[index].name,
+            style: GoogleFonts.doHyeon(fontSize: 20),
           ),
           style: ElevatedButton.styleFrom(
               primary: Colors.white,
@@ -262,10 +250,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
           onPressed: index == groups!.length - 1
               ? () => _displayTroopInputDialog(context, controller)
               : () => controller.changeButton(index),
-          child: Container(
-            child:
-                Text(groups[index], style: GoogleFonts.doHyeon(fontSize: 20)),
-          ),
+          child: Text(groups[index], style: GoogleFonts.doHyeon(fontSize: 20)),
           style: ElevatedButton.styleFrom(
               primary: Colors.white,
               side: BorderSide(
@@ -289,7 +274,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
           title: Text('그룹을 입력하세요', style: GoogleFonts.doHyeon(fontSize: 24)),
           content: TextField(
             controller: textController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "오산기지",
               hintStyle: TextStyle(fontSize: 14.0, color: Colors.grey),
             ),
@@ -349,7 +334,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
             ),
           ),
         ),
-        Text(korNameList[idx], style: TextStyle(fontWeight: FontWeight.w800)),
+        Text(korNameList[idx], style: const TextStyle(fontWeight: FontWeight.w800)),
       ],
     );
   }
@@ -358,7 +343,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CircleAvatar(
+        const CircleAvatar(
           radius: 28,
           backgroundColor: CustomColor.themeColor,
           child: Text('1', style: TextStyle(color: Colors.white)),

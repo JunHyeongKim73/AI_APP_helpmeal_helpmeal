@@ -27,7 +27,7 @@ class SelectTroopController extends GetxController {
       pageController.jumpToPage(3);
     } else {
       pageController.nextPage(
-        duration: Duration(milliseconds: 350),
+        duration: const Duration(milliseconds: 350),
         curve: Curves.easeIn,
       );
     }
@@ -50,7 +50,7 @@ class SelectTroopController extends GetxController {
       }
     }
     pageController.previousPage(
-      duration: Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 350),
       curve: Curves.easeIn,
     );
     if (pageIndex == 1) {
@@ -79,7 +79,7 @@ class SelectTroopController extends GetxController {
 
   void changeSelectedTroopIndex(int index) {
     pageController.nextPage(
-      duration: Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 350),
       curve: Curves.easeIn,
     );
     isPlusContainerOn = true;

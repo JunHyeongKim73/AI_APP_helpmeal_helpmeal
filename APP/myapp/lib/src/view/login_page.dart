@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/fonts.dart';
-import 'package:sign_button/sign_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -26,9 +25,9 @@ class LoginPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               elevation: 15.0,
               child: Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     TextField(
                       decoration: InputDecoration(
                         hintText: "example@email.com",
@@ -57,7 +56,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          Container(
+          SizedBox(
             height: 40.0,
             width: 240,
             child: ElevatedButton(
@@ -83,7 +82,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Container(
+          SizedBox(
             height: 40.0,
             width: 240,
             child: ElevatedButton(

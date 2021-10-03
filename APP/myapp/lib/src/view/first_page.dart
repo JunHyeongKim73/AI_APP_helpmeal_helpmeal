@@ -13,7 +13,7 @@ class FirstPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Icon(
+            const Icon(
               Icons.local_restaurant,
               size: 200,
             ),
@@ -25,7 +25,7 @@ class FirstPage extends StatelessWidget {
                     color: Colors.red.shade400,
                     fontWeight: FontWeight.bold,
                   )),
-              TextSpan(
+              const TextSpan(
                   text: 'elp',
                   style: TextStyle(
                     fontSize: 80.0,
