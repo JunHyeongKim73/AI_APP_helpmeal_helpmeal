@@ -42,5 +42,5 @@ class AllergyRepository {
 
 
 String constructPath(String assetPath) {
-  return 'assets/icon/$assetPath.png';
+  return 'assets/allergy_icon/$assetPath.png';
 }
