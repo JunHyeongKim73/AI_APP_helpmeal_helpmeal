@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/view/allergy_page.dart';
 import 'package:myapp/src/view/first_page.dart';
 import 'package:myapp/src/view/login_page.dart';
 import 'package:myapp/src/view/meal_control_page.dart';
-import 'package:myapp/src/view/my_page.dart';
 import 'package:myapp/src/view/my_review.dart';
 import 'package:myapp/src/view/notice_check_page.dart';
 import 'package:myapp/src/view/notice_pass_page.dart';
 import 'package:myapp/src/view/review_analysis_page.dart';
-import 'package:myapp/src/view/start_without_login_page.dart';
+import 'package:myapp/src/view/troop_select_page.dart';
 import 'package:myapp/src/view/suggestion_check_page.dart';
 import 'package:myapp/src/view/suggestion_complain_page.dart';
 import 'src/app.dart';
@@ -33,7 +33,7 @@ class MyAPP extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      initialRoute: '/first',
+      initialRoute: '/troopSelect',
       initialBinding: InitBinding(),
       getPages: [
         GetPage(name: '/', page: () => const App()),
@@ -47,7 +47,7 @@ class MyAPP extends StatelessWidget {
         GetPage(name: '/noticePass', page: () => NoticePassPage()),
         GetPage(name: '/reviewAnalysis', page: () => ReviewAnalysisPage()),
         GetPage(name: '/mealControl', page: () => MealControlPage()),
-        GetPage(name: '/startWithNoLogin', page: () => StartWithNoLoginPage()),
+        GetPage(name: '/troopSelect', page: () => TroopSelectPage()),
       ],
     );
   }
