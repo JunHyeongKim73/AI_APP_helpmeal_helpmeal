@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:collection/collection.dart';
 
 import 'package:myapp/src/model/allergy.dart';
@@ -9,13 +7,13 @@ import 'package:myapp/src/model/allergy_repository.dart';
 import 'package:myapp/src/model/fonts.dart';
 
 class AllergyPage extends StatelessWidget {
-  AllergyPage({Key? key}) : super(key: key);
+  const AllergyPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -30,7 +28,7 @@ class AllergyPage extends StatelessWidget {
                   style: GoogleFonts.cuteFont(
                       fontSize: 20, fontWeight: FontWeight.bold)),
             ),
-            AllergyView(),
+            const AllergyView(),
           ],
         ),
       ),
@@ -39,7 +37,7 @@ class AllergyPage extends StatelessWidget {
 }
 
 class AllergyView extends StatefulWidget {
-  AllergyView({Key? key}) : super(key: key);
+  const AllergyView({Key? key}) : super(key: key);
 
   @override
   State<AllergyView> createState() => _AllergyViewState();
@@ -65,7 +63,7 @@ class _AllergyViewState extends State<AllergyView> {
         children: [
           GridView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 150,
               childAspectRatio: 1,

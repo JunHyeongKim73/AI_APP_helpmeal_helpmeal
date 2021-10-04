@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/src/model/meal.dart';
 // 아침, 점심, 저녁 위젯
-class MealList extends StatelessWidget {
+class MealItem extends StatelessWidget {
   final Meal mealData;
 
-  const MealList({Key? key, required this.mealData}) : super(key: key);
+  const MealItem({Key? key, required this.mealData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

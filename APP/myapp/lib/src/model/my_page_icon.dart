@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'package:myapp/src/view/suggestion_complain_page.dart';
-
 class MyPageIcon {
   final IconData iconData;
   final String pageName;
