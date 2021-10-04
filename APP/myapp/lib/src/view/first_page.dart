@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FirstPage extends StatelessWidget {
-  const FirstPage({
-    Key? key,
-  }) : super(key: key);
+  const FirstPage({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +11,7 @@ class FirstPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Icon(
+            Icon(
               Icons.local_restaurant,
               size: 200,
             ),
@@ -25,7 +23,7 @@ class FirstPage extends StatelessWidget {
                     color: Colors.red.shade400,
                     fontWeight: FontWeight.bold,
                   )),
-              const TextSpan(
+              TextSpan(
                   text: 'elp',
                   style: TextStyle(
                     fontSize: 80.0,
