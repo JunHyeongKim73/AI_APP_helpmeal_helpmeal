@@ -2,6 +2,7 @@ import 'package:get/instance_manager.dart';
 import 'package:myapp/src/controller/date_controller.dart';
 import 'package:myapp/src/controller/navigate_page_controller.dart';
 import 'package:myapp/src/controller/select_troop_controller.dart';
+import 'package:myapp/src/controller/sign_up_controller.dart';
 
 class InitBinding extends Bindings {
   @override
@@ -9,5 +10,6 @@ class InitBinding extends Bindings {
     Get.lazyPut<NavigatePageController>(() => NavigatePageController());
     Get.lazyPut<DateController>(() => DateController());
     Get.lazyPut<SelectTroopController>(() => SelectTroopController());
+    Get.lazyPut<SignUpController>(() => SignUpController());
   }
 }

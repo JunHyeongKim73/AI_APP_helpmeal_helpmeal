@@ -10,6 +10,7 @@ import 'package:myapp/src/view/my_review.dart';
 import 'package:myapp/src/view/notice_check_page.dart';
 import 'package:myapp/src/view/notice_pass_page.dart';
 import 'package:myapp/src/view/review_analysis_page.dart';
+import 'package:myapp/src/view/sign_up_page.dart';
 import 'package:myapp/src/view/troop_select_page.dart';
 import 'package:myapp/src/view/suggestion_check_page.dart';
 import 'package:myapp/src/view/suggestion_complain_page.dart';
@@ -33,7 +34,7 @@ class MyAPP extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      initialRoute: '/troopSelect',
+      initialRoute: '/',
       initialBinding: InitBinding(),
       getPages: [
         GetPage(name: '/', page: () => const App()),
@@ -47,7 +48,8 @@ class MyAPP extends StatelessWidget {
         GetPage(name: '/noticePass', page: () => const NoticePassPage()),
         GetPage(name: '/reviewAnalysis', page: () => const ReviewAnalysisPage()),
         GetPage(name: '/mealControl', page: () => const MealControlPage()),
-        GetPage(name: '/troopSelect', page: () => TroopSelectPage()),
+        GetPage(name: '/troopSelect', page: () => const TroopSelectPage()),
+        GetPage(name: '/signUp', page: () => const SignUpPage()),
       ],
     );
   }

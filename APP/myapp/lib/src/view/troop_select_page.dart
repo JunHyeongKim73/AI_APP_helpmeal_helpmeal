@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'package:myapp/src/controller/select_troop_controller.dart';
+import 'package:myapp/src/controller/sign_up_controller.dart';
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/troop.dart';
 
@@ -55,6 +56,9 @@ class _TroopSelectPage extends State<TroopSelectPage> {
   }
 
   Widget _buttonBuilder(SelectTroopController controller) {
+    SignUpController signUpController = Get.arguments;
+    signUpController = SignUpController();
+    
     switch (controller.pageIndex) {
       case 0:
         return CircleAvatar(
@@ -120,7 +124,11 @@ class _TroopSelectPage extends State<TroopSelectPage> {
           );
         } else {
           return ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.selectTroopCompleted();
+              signUpController.setTroops(controller.troopName, controller.groupName);
+              Get.toNamed('/allergy', arguments: signUpController);
+            },
             child: const Text('완료',
                 style: TextStyle(fontWeight: FontWeight.w800, fontSize: 24)),
             style: ElevatedButton.styleFrom(
@@ -334,7 +342,8 @@ class _TroopSelectPage extends State<TroopSelectPage> {
             ),
           ),
         ),
-        Text(korNameList[idx], style: const TextStyle(fontWeight: FontWeight.w800)),
+        Text(korNameList[idx],
+            style: const TextStyle(fontWeight: FontWeight.w800)),
       ],
     );
   }

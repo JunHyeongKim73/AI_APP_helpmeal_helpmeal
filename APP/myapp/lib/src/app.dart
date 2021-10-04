@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:myapp/src/controller/sign_up_controller.dart';
 
 import 'controller/navigate_page_controller.dart';
 import 'view/meal_page.dart';
@@ -13,6 +14,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SignUpController signUpController = Get.arguments;
+    // print(signUpController.troopName);
+    // print(signUpController.groupName);
+    // print(signUpController.allergy);
     return GetBuilder<NavigatePageController>(
       builder: (controller) {
         return Scaffold(

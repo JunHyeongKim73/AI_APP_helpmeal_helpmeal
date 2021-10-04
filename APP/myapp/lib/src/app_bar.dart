@@ -72,7 +72,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
               icon: const Icon(MdiIcons.chevronRight, size: 16),
               constraints: const BoxConstraints(maxHeight: 24),
             ),
-            const SizedBox(width: 25)
           ]);
     });
   }

@@ -16,6 +16,7 @@ class SelectTroopController extends GetxController {
   var selectedDetailTroopIndex = -1;
   var selectedGroupIndex = -1;
   bool isThirdPageOn = false;
+  String troopName = '';
   String groupName = '';
 
   final PageController pageController = PageController(initialPage: 0);
@@ -118,6 +119,34 @@ class SelectTroopController extends GetxController {
       tempList.add(name);
       tempList.add('+');
     }
+    update();
+  }
+
+  void selectTroopCompleted() {
+    final milName = troopList[selectedIconIndex].name;
+    final troop =
+        troopList[selectedIconIndex].troops![selectedTroopIndex].name;
+    if (selectedDetailTroopIndex == -1) {
+      var group = troopList[selectedIconIndex]
+          .troops![selectedTroopIndex]
+          .groups![selectedGroupIndex];
+
+      troopName = '$milName $troop';
+      groupName = group;
+    } else {
+      var detailTroopName = troopList[selectedIconIndex]
+          .troops![selectedTroopIndex]
+          .troops![selectedDetailTroopIndex]
+          .name;
+      var group = troopList[selectedIconIndex]
+          .troops![selectedTroopIndex]
+          .troops![selectedDetailTroopIndex]
+          .groups![selectedGroupIndex];
+
+      troopName = '$milName $troop $detailTroopName';
+      groupName = group;
+    }
+
     update();
   }
 }
