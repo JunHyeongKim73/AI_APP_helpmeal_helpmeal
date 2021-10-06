@@ -20,7 +20,7 @@ import 'src/view/meal/meal_control_page.dart';
 void main() {
   runApp(const MyAPP());
 }
-
+//Codespace가 갑자기 안되면 10분 있다가 하기
 class MyAPP extends StatelessWidget {
   const MyAPP({Key? key}) : super(key: key);
 

@@ -23,6 +23,9 @@ import 'menu.dart';
 // }
 
 class MenuRepository {
+  final DateTime dateTime;
+  List<Menu>? menuList;
+
   static final _allMenus = <Menu>[
     Menu(
       dateTime: DateTime.utc(2021, 09, 24),
@@ -71,14 +74,29 @@ class MenuRepository {
     ),
   ];
 
+  MenuRepository(this.dateTime);
+
+  static Future<Food> fetchMenu() async {
+    final response =
+        await http.get(Uri.parse('http://20.194.58.178/menus/1/2020-1-5/2'));
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response);
+      return Food.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('failed!');
+    }
+  }
+
   static List<Menu> loadMenusWithDate(DateTime date) {
-    List<Menu> list = _allMenus.where((element) => dateForm(element.dateTime) == dateForm(date)).toList();
-    
+    List<Menu> list = _allMenus
+        .where((element) => dateForm(element.dateTime) == dateForm(date))
+        .toList();
+
     return list;
   }
 }
 
-dateForm(DateTime date){
+dateForm(DateTime date) {
   return DateFormat('yyyy-MM-dd').format(date);
 }
-

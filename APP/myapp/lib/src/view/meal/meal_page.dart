@@ -6,6 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:myapp/src/app_bar.dart';
 import 'package:myapp/src/controller/date_controller.dart';
 import 'package:myapp/src/model/fonts.dart';
+import 'package:myapp/src/model/meal/food.dart';
 import 'package:myapp/src/model/meal/meal.dart';
 import 'package:myapp/src/model/meal/meal_repository.dart';
 import 'package:myapp/src/model/meal/menu.dart';
@@ -23,7 +24,14 @@ class MealPage extends StatefulWidget {
 
 class _MealPage extends State<MealPage> {
   final _scrollController = ScrollController();
-  
+  late Future<Food> futureFood; 
+  @override
+  void initState() {
+    // TODO: implement initState
+    //futureFood = MenuRepository.fetchMenu();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
