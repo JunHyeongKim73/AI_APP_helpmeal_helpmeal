@@ -16,6 +16,7 @@ class SelectTroopController extends GetxController {
   var selectedDetailTroopIndex = -1;
   var selectedGroupIndex = -1;
   bool isThirdPageOn = false;
+  String milName = '';
   String troopName = '';
   String groupName = '';
 
@@ -123,7 +124,19 @@ class SelectTroopController extends GetxController {
   }
 
   void selectTroopCompleted() {
-    final milName = troopList[selectedIconIndex].name;
+    final _milName = troopList[selectedIconIndex].name;
+    switch (_milName) {
+      case '육군':
+        milName = 'army';
+        break;
+      case '공군':
+        milName = 'airforce';
+        break;
+      case '해군':
+        milName = 'navy';
+        break;
+    }
+
     final troop =
         troopList[selectedIconIndex].troops![selectedTroopIndex].name;
     if (selectedDetailTroopIndex == -1) {
@@ -131,7 +144,7 @@ class SelectTroopController extends GetxController {
           .troops![selectedTroopIndex]
           .groups![selectedGroupIndex];
 
-      troopName = '$milName $troop';
+      troopName = '$_milName $troop';
       groupName = group;
     } else {
       var detailTroopName = troopList[selectedIconIndex]
@@ -143,7 +156,7 @@ class SelectTroopController extends GetxController {
           .troops![selectedDetailTroopIndex]
           .groups![selectedGroupIndex];
 
-      troopName = '$milName $troop $detailTroopName';
+      troopName = '$_milName $troop $detailTroopName';
       groupName = group;
     }
 

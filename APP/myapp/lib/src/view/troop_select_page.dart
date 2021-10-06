@@ -126,7 +126,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
           return ElevatedButton(
             onPressed: () {
               controller.selectTroopCompleted();
-              signUpController.setTroops(controller.troopName, controller.groupName);
+              signUpController.setTroops(controller.milName, controller.troopName, controller.groupName);
               Get.toNamed('/allergy', arguments: signUpController);
             },
             child: const Text('완료',

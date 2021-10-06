@@ -1,24 +1,25 @@
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
-  var email = '';
+  String email = '';
   bool isEmail = false;
 
-  var password = '';
+  String password = '';
   bool isPassword = false;
 
-  var name = '';
+  String name = '';
   bool isName = false;
 
-  var milNum = '';
+  String milNum = '';
   bool isMilNum = false;
 
   bool isAdmin = false;
   bool isNextPage = false;
 
-  var allergy = [];
-  var troopName = '';
-  var groupName = '';
+  List<String> allergy = [];
+  String milName = '';
+  String troopName = '';
+  String groupName = '';
 
   void setEmail(String text) {
     email = text;
@@ -60,7 +61,8 @@ class SignUpController extends GetxController {
     update();
   }
 
-  void setTroops(String _troopName, String _groupName) {
+  void setTroops(String _milName, String _troopName, String _groupName) {
+    milName = _milName;
     troopName = _troopName;
     groupName = _groupName;
     update();

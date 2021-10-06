@@ -5,7 +5,6 @@ import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/view/allergy_page.dart';
 import 'package:myapp/src/view/first_page.dart';
 import 'package:myapp/src/view/login_page.dart';
-import 'package:myapp/src/view/meal_control_page.dart';
 import 'package:myapp/src/view/my_review.dart';
 import 'package:myapp/src/view/notice_check_page.dart';
 import 'package:myapp/src/view/notice_pass_page.dart';
@@ -16,6 +15,7 @@ import 'package:myapp/src/view/suggestion_check_page.dart';
 import 'package:myapp/src/view/suggestion_complain_page.dart';
 import 'src/app.dart';
 import 'src/binding/init_binding.dart';
+import 'src/view/meal/meal_control_page.dart';
 
 void main() {
   runApp(const MyAPP());
