@@ -24,18 +24,18 @@ class MealPage extends StatefulWidget {
 
 class _MealPage extends State<MealPage> {
   final _scrollController = ScrollController();
-  late Future<Food> futureFood; 
+  late Future<Menu> futureFood;
   @override
   void initState() {
     // TODO: implement initState
-    //futureFood = MenuRepository.fetchMenu();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
-      print(widget.user);
+      // widget.user
+      futureFood = MenuRepository.fetchMenu(controller.dateText, 1);
       return Scaffold(
         appBar: const CustomAppBar(),
         body: Column(
@@ -71,20 +71,19 @@ class _MealPage extends State<MealPage> {
     });
   }
 }
+
 // 식단 위젯
 class MealContainer extends StatelessWidget {
   final ScrollController scrollController;
   final DateTime dateTime;
-  late final List<Menu> menuList;
-  late final List<Meal> mealList;
+  late final Future<List<Meal>> futureMealList;
 
   MealContainer({
     Key? key,
     required this.scrollController,
     required this.dateTime,
   }) : super(key: key) {
-    menuList = MenuRepository.loadMenusWithDate(dateTime); // -> MealController에 dateTime 넘겨주면 메뉴 리스트 받아오는 방식으로 ㄱㄱ
-    mealList = MealRepository(menuList: menuList).loadMeals();
+    futureMealList = MealRepository(dateTime: dateTime).loadMeals();
   }
 
   @override
@@ -94,17 +93,22 @@ class MealContainer extends StatelessWidget {
       child: Scrollbar(
         controller: scrollController,
         isAlwaysShown: true,
-        child: ListView.builder(
-          controller: scrollController,
-          scrollDirection: Axis.horizontal,
-          itemCount: mealList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding:
-                  const EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 16),
-              child: MealItem(mealData: mealList[index]),
+        child: FutureBuilder<List<Meal>>(
+          future: futureMealList,
+          builder: (context, snapshot) {
+            return ListView.builder(
+              controller: scrollController,
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 16),
+                  child: MealItem(mealData: snapshot.data![index]),
+                );
+              },
             );
-          },
+          }
         ),
       ),
     );

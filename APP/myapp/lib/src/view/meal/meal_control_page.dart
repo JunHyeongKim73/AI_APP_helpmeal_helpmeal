@@ -27,68 +27,86 @@ class MealControlPage extends StatelessWidget {
           final TextEditingController lunchController = TextEditingController();
           final TextEditingController dinnerController =
               TextEditingController();
-          final List<Menu> menuList =
-              MenuRepository.loadMenusWithDate(controller.dateText);
-          if (menuList.isEmpty) {
-            breakController.text = '';
-          } else {
-            breakController.text = menuList[0].meals.join('\n');
-            lunchController.text = menuList[1].meals.join('\n');
-            dinnerController.text = menuList[2].meals.join('\n');
-          }
+          // final List<Menu> menuList =
+          //     MenuRepository.loadMenusWithDate(controller.dateText);
+          Future<List<Menu>> menuList =
+              MenuRepository.getMenus(controller.dateText);
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(2018, 10, 20),
-                          maxTime: DateTime(2022, 10, 20),
-                          onChanged: (date) {}, onConfirm: (date) {
-                        controller.updateDate(date: date);
-                      }, currentTime: DateTime.now(), locale: LocaleType.ko);
-                    },
-                    iconSize: 16,
-                    icon: const Icon(MdiIcons.calendarBlankOutline, size: 20),
-                  ),
-                  Text(DateFormat.yMd('ko').format(controller.dateText),
-                      style: GoogleFonts.roboto(fontSize: 18)),
-                ],
-              ),
-              _mealTextField(breakController, '아침'),
-              _mealTextField(lunchController, '점심'),
-              _mealTextField(dinnerController, '저녁'),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text('음식들을 enter로 구분해주세요!',
-                        style: TextStyle(color: Colors.grey)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: ElevatedButton(
-                      onPressed: () => _showToast(context),
-                      child: Text('수정', style: TextStyle(color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                      ),
+          // if (menuList.isEmpty) {
+          //   breakController.text = '';
+          // } else {
+          //   breakController.text = menuList[0].meals.join('\n');
+          //   lunchController.text = menuList[1].meals.join('\n');
+          //   dinnerController.text = menuList[2].meals.join('\n');
+          // }
+
+          return FutureBuilder<List<Menu>>(
+              future: menuList,
+              builder: (context, snapshot) {
+                if (snapshot.data!.isEmpty) {
+                  breakController.text = '';
+                } else {
+                  breakController.text = snapshot.data![0].meals.join('\n');
+                  lunchController.text = snapshot.data![1].meals.join('\n');
+                  dinnerController.text = snapshot.data![2].meals.join('\n');
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            DatePicker.showDatePicker(context,
+                                showTitleActions: true,
+                                minTime: DateTime(2018, 10, 20),
+                                maxTime: DateTime(2022, 10, 20),
+                                onChanged: (date) {}, onConfirm: (date) {
+                              controller.updateDate(date: date);
+                            },
+                                currentTime: DateTime.now(),
+                                locale: LocaleType.ko);
+                          },
+                          iconSize: 16,
+                          icon: const Icon(MdiIcons.calendarBlankOutline,
+                              size: 20),
+                        ),
+                        Text(DateFormat.yMd('ko').format(controller.dateText),
+                            style: GoogleFonts.roboto(fontSize: 18)),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          );
+                    _mealTextField(breakController, '아침'),
+                    _mealTextField(lunchController, '점심'),
+                    _mealTextField(dinnerController, '저녁'),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text('음식들을 enter로 구분해주세요!',
+                              style: TextStyle(color: Colors.grey)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: ElevatedButton(
+                            onPressed: () => _showToast(context),
+                            child: Text('수정',
+                                style: TextStyle(color: Colors.white)),
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              });
         }),
       ),
     );
@@ -132,7 +150,8 @@ class MealControlPage extends StatelessWidget {
     scaffold.showSnackBar(
       SnackBar(
         content: const Text('수정되었습니다'),
-        action: SnackBarAction(label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
   }

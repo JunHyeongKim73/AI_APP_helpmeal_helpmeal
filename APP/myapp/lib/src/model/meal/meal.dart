@@ -3,7 +3,7 @@ class Meal {
   final String titleText;
   final int startColor;
   final int endColor;
-  final List<String> meals;
+  final List<String?> meals;
 
   Meal({
     required this.dateTime,

@@ -1,7 +1,7 @@
 class Food {
   String? name = '';
   int? order = -1;
-  List<String>? allergy = [];
+  List<dynamic>? allergy = [];
 
   Food({this.name, this.order, this.allergy});
 
