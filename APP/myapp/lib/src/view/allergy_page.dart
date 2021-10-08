@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:collection/collection.dart';
+import 'package:myapp/src/controller/sign_up_controller.dart';
 
 import 'package:myapp/src/model/allergy.dart';
 import 'package:myapp/src/model/allergy_repository.dart';
@@ -57,7 +59,8 @@ class _AllergyViewState extends State<AllergyView> {
   }
   
   @override
-  Widget build(BuildContext context) {   
+  Widget build(BuildContext context) {
+    final SignUpController signUpController = Get.arguments;
     return Flexible(
       child: Column(
         children: [
@@ -108,6 +111,8 @@ class _AllergyViewState extends State<AllergyView> {
                         selectedAllergy.add(allergyList[index].engName);
                       }
                     });
+                    signUpController.setAllergy(selectedAllergy);
+                    Get.offAllNamed('/', arguments: signUpController);
                   },
                   child: Text(
                     selectedNum == 0 ? '알레르기가 없어요': '선택 완료',

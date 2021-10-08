@@ -90,7 +90,7 @@ class TroopRepository {
         Troop(
           name: '직할부대',
           isLast: true,
-          group: ['작전정보통신단', '작전근무지원단'],
+          group: ['오산기지'],
         ),
       ]),
       Troop(name: '군수사령부', isLast: true),

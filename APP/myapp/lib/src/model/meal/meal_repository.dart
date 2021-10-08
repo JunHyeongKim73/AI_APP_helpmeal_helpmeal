@@ -1,5 +1,5 @@
-import 'package:myapp/src/model/meal.dart';
-import 'package:myapp/src/model/menu.dart';
+import 'meal.dart';
+import 'menu.dart';
 
 class MealRepository {
   List<Menu>? menuList;

@@ -4,18 +4,19 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/my_page_icon.dart';
+import 'package:myapp/src/model/user.dart';
 
 class MyPage extends StatelessWidget {
-  final bool isLogined = true;
-  final bool isAdminstrator = true;
-  final String kind = 'army';
+  User user;
 
-  const MyPage({Key? key}) : super(key: key);
+  MyPage({required this.user, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(user);
     return Scaffold(
       body: Column(children: [
         Container(
@@ -65,16 +66,16 @@ class MyPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                isLogined ? '김준형' : '',
+                                user.isLogined ? '김준형' : '',
                                 style: GoogleFonts.doHyeon(
                                     fontSize: 20, color: Colors.white),
                               ),
-                              isAdminstrator ? const SizedBox(width: 2) : const SizedBox(),
-                              isAdminstrator ? _masterIcon() : Container(),
+                              user.isAdmin ? const SizedBox(width: 2) : const SizedBox(),
+                              user.isAdmin ? _masterIcon() : Container(),
                             ],
                           ),
                         ),
-                        Text(isLogined ? '공군 오산기지' : '',
+                        Text(user.isLogined ? user.groupName : '',
                             style: GoogleFonts.doHyeon(
                                 fontSize: 20, color: Colors.white)),
                       ],
@@ -84,7 +85,7 @@ class MyPage extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 200),
-                        isLogined ? _loginButtonView() : _notLoginButtonView(),
+                        user.isLogined ? _loginButtonView() : _notLoginButtonView(),
                       ],
                     ),
                     right: 0,
@@ -103,8 +104,8 @@ class MyPage extends StatelessWidget {
   }
 
   Widget _imageSelection() {
-    if (isLogined) {
-      return Image.asset('assets/user_icon/$kind.png');
+    if (user.isLogined) {
+      return Image.asset('assets/user_icon/${user.milName}.png');
     }
     return const Icon(MdiIcons.account, color: Colors.grey, size: 36);
   }
@@ -151,28 +152,28 @@ class MyPage extends StatelessWidget {
   }
 
   Widget _myPageIconsView() {
-    List<MyPageIcon> myPageIconList = isAdminstrator
+    List<MyPageIcon> myPageIconList = user.isAdmin
         ? MyPageIcon.adminMyPageIconList
         : MyPageIcon.userMyPageIconList;
 
-    if (!isLogined) {
+    if (!user.isLogined) {
       return Container();
     }
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(6.0),
+        padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
           itemCount: myPageIconList.length,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            childAspectRatio: 1.5,
-            crossAxisSpacing: 4.0,
-            mainAxisSpacing: 4.0,
+            childAspectRatio: 1.6,
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
             maxCrossAxisExtent: 200,
           ),
           itemBuilder: (BuildContext context, int index) {
             return Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 1),
+                color: Colors.white,
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: Column(

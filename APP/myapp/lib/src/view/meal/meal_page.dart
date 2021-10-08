@@ -6,14 +6,17 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:myapp/src/app_bar.dart';
 import 'package:myapp/src/controller/date_controller.dart';
 import 'package:myapp/src/model/fonts.dart';
-import 'package:myapp/src/model/meal.dart';
-import 'package:myapp/src/model/meal_repository.dart';
-import 'package:myapp/src/model/menu.dart';
-import 'package:myapp/src/model/menu_repository.dart';
+import 'package:myapp/src/model/meal/food.dart';
+import 'package:myapp/src/model/meal/meal.dart';
+import 'package:myapp/src/model/meal/meal_repository.dart';
+import 'package:myapp/src/model/meal/menu.dart';
+import 'package:myapp/src/model/meal/menu_repository.dart';
+import 'package:myapp/src/model/user.dart';
 import 'meal_item_view.dart';
 
 class MealPage extends StatefulWidget {
-  const MealPage({Key? key}) : super(key: key);
+  User user;
+  MealPage({required this.user, Key? key}) : super(key: key);
 
   @override
   _MealPage createState() => _MealPage();
@@ -21,10 +24,18 @@ class MealPage extends StatefulWidget {
 
 class _MealPage extends State<MealPage> {
   final _scrollController = ScrollController();
+  late Future<Food> futureFood; 
+  @override
+  void initState() {
+    // TODO: implement initState
+    //futureFood = MenuRepository.fetchMenu();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
+      print(widget.user);
       return Scaffold(
         appBar: const CustomAppBar(),
         body: Column(
@@ -62,19 +73,19 @@ class _MealPage extends State<MealPage> {
 }
 // 식단 위젯
 class MealContainer extends StatelessWidget {
-  MealContainer({
-    Key? key, 
-    required this.scrollController,
-    required this.dateTime,
-  }) : super(key: key) {
-    menuList = MenuRepository.loadMenusWithDate(dateTime);
-    mealList = MealRepository(menuList: menuList).loadMeals();
-  }
-
   final ScrollController scrollController;
   final DateTime dateTime;
   late final List<Menu> menuList;
   late final List<Meal> mealList;
+
+  MealContainer({
+    Key? key,
+    required this.scrollController,
+    required this.dateTime,
+  }) : super(key: key) {
+    menuList = MenuRepository.loadMenusWithDate(dateTime); // -> MealController에 dateTime 넘겨주면 메뉴 리스트 받아오는 방식으로 ㄱㄱ
+    mealList = MealRepository(menuList: menuList).loadMeals();
+  }
 
   @override
   Widget build(BuildContext context) {

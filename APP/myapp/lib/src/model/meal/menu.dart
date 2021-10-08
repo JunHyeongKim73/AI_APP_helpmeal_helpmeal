@@ -1,3 +1,5 @@
+import 'package:http/http.dart' as http;
+
 enum Category { breakfast, lunch, dinner }
 
 class Menu {

@@ -5,21 +5,22 @@ import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/view/allergy_page.dart';
 import 'package:myapp/src/view/first_page.dart';
 import 'package:myapp/src/view/login_page.dart';
-import 'package:myapp/src/view/meal_control_page.dart';
 import 'package:myapp/src/view/my_review.dart';
 import 'package:myapp/src/view/notice_check_page.dart';
 import 'package:myapp/src/view/notice_pass_page.dart';
 import 'package:myapp/src/view/review_analysis_page.dart';
+import 'package:myapp/src/view/sign_up_page.dart';
 import 'package:myapp/src/view/troop_select_page.dart';
 import 'package:myapp/src/view/suggestion_check_page.dart';
 import 'package:myapp/src/view/suggestion_complain_page.dart';
 import 'src/app.dart';
 import 'src/binding/init_binding.dart';
+import 'src/view/meal/meal_control_page.dart';
 
 void main() {
   runApp(const MyAPP());
 }
-
+//Codespace가 갑자기 안되면 10분 있다가 하기
 class MyAPP extends StatelessWidget {
   const MyAPP({Key? key}) : super(key: key);
 
@@ -33,7 +34,7 @@ class MyAPP extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      initialRoute: '/troopSelect',
+      initialRoute: '/',
       initialBinding: InitBinding(),
       getPages: [
         GetPage(name: '/', page: () => const App()),
@@ -47,7 +48,8 @@ class MyAPP extends StatelessWidget {
         GetPage(name: '/noticePass', page: () => const NoticePassPage()),
         GetPage(name: '/reviewAnalysis', page: () => const ReviewAnalysisPage()),
         GetPage(name: '/mealControl', page: () => const MealControlPage()),
-        GetPage(name: '/troopSelect', page: () => TroopSelectPage()),
+        GetPage(name: '/troopSelect', page: () => const TroopSelectPage()),
+        GetPage(name: '/signUp', page: () => const SignUpPage()),
       ],
     );
   }

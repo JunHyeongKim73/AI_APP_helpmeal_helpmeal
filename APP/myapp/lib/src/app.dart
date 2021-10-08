@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:myapp/src/controller/sign_up_controller.dart';
+import 'package:myapp/src/model/user.dart';
 
 import 'controller/navigate_page_controller.dart';
-import 'view/meal_page.dart';
+import 'view/meal/meal_page.dart';
 import 'view/my_page.dart';
 import 'view/ranking_page.dart';
 
@@ -13,33 +15,57 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SignUpController signUpController = Get.arguments;
+    User user;
+    if (signUpController == null) {
+      user = User(
+        email: 'rla5764',
+        name: '김준형',
+        milName: 'airforce',
+        troopName: '공군 작전사령부 직할부대',
+        groupName: '오산기지',
+        allergyList: ['고기'],
+        isAdmin: true,
+      );
+    } else {
+      user = User(
+        email: signUpController.email,
+        password: signUpController.password,
+        name: signUpController.name,
+        milNum: signUpController.milNum,
+        milName: signUpController.milName,
+        troopName: signUpController.milNum,
+        groupName: signUpController.groupName,
+        allergyList: signUpController.allergy,
+        isAdmin: signUpController.isAdmin,
+      );
+    }
     return GetBuilder<NavigatePageController>(
       builder: (controller) {
         return Scaffold(
           body: SafeArea(
             child: IndexedStack(
               index: controller.tabIndex,
-              children: const [
-                MealPage(),
+              children: [
+                MealPage(user: user),
                 RankingPage(),
-                MyPage(),
+                MyPage(user: user),
               ],
             ),
           ),
           bottomNavigationBar: Container(
             decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(30),
-                topLeft: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black38,
-                  spreadRadius: 0,
-                  blurRadius: 10,
-                )
-              ]
-            ),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(30),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black38,
+                    spreadRadius: 0,
+                    blurRadius: 10,
+                  )
+                ]),
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30),

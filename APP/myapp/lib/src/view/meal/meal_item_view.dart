@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/src/model/meal.dart';
+import 'package:myapp/src/model/meal/meal.dart';
 // 아침, 점심, 저녁 위젯
 class MealItem extends StatelessWidget {
   final Meal mealData;
