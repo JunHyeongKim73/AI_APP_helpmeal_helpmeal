@@ -82,12 +82,11 @@ class MealContainer extends StatelessWidget {
     Key? key,
     required this.scrollController,
     required this.dateTime,
-  }) : super(key: key) {
-    futureMealList = MealRepository(dateTime: dateTime).loadMeals();
-  }
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    futureMealList = MealRepository(dateTime: dateTime).loadMeals();
     return SizedBox(
       height: 280,
       child: Scrollbar(
@@ -99,7 +98,7 @@ class MealContainer extends StatelessWidget {
             return ListView.builder(
               controller: scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data!.length,
+              itemCount: snapshot.hasData ? snapshot.data!.length : 0,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding:

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myapp/src/controller/date_controller.dart';
 import 'package:myapp/src/model/colors.dart';
+import 'package:myapp/src/model/meal/food.dart';
 import 'package:myapp/src/model/meal/menu.dart';
 import 'package:myapp/src/model/meal/menu_repository.dart';
 
@@ -25,30 +26,23 @@ class MealControlPage extends StatelessWidget {
         child: GetBuilder<DateController>(builder: (controller) {
           final TextEditingController breakController = TextEditingController();
           final TextEditingController lunchController = TextEditingController();
-          final TextEditingController dinnerController =
-              TextEditingController();
+          final TextEditingController dinerController = TextEditingController();
           // final List<Menu> menuList =
           //     MenuRepository.loadMenusWithDate(controller.dateText);
           Future<List<Menu>> menuList =
               MenuRepository.getMenus(controller.dateText);
 
-          // if (menuList.isEmpty) {
-          //   breakController.text = '';
-          // } else {
-          //   breakController.text = menuList[0].meals.join('\n');
-          //   lunchController.text = menuList[1].meals.join('\n');
-          //   dinnerController.text = menuList[2].meals.join('\n');
-          // }
-
           return FutureBuilder<List<Menu>>(
               future: menuList,
               builder: (context, snapshot) {
-                if (snapshot.data!.isEmpty) {
-                  breakController.text = '';
-                } else {
-                  breakController.text = snapshot.data![0].meals.join('\n');
-                  lunchController.text = snapshot.data![1].meals.join('\n');
-                  dinnerController.text = snapshot.data![2].meals.join('\n');
+                if (snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    breakController.text = '';
+                  } else {
+                    breakController.text = snapshot.data![0].meals.join('\n');
+                    lunchController.text = snapshot.data![1].meals.join('\n');
+                    dinerController.text = snapshot.data![2].meals.join('\n');
+                  }
                 }
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +73,7 @@ class MealControlPage extends StatelessWidget {
                     ),
                     _mealTextField(breakController, '아침'),
                     _mealTextField(lunchController, '점심'),
-                    _mealTextField(dinnerController, '저녁'),
+                    _mealTextField(dinerController, '저녁'),
                     const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,7 +86,14 @@ class MealControlPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 10.0),
                           child: ElevatedButton(
-                            onPressed: () => _showToast(context),
+                            onPressed: () {
+                              _postMenu([
+                                breakController,
+                                lunchController,
+                                dinerController,
+                              ], controller.dateText);
+                              _showToast(context);
+                            },
                             child: Text('수정',
                                 style: TextStyle(color: Colors.white)),
                             style: ElevatedButton.styleFrom(
@@ -151,8 +152,38 @@ class MealControlPage extends StatelessWidget {
       SnackBar(
         content: const Text('수정되었습니다'),
         action: SnackBarAction(
-            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+          label: 'OK',
+          onPressed: scaffold.hideCurrentSnackBar,
+        ),
       ),
     );
+  }
+
+  List<Map> createFoodList(List<String> foods) {
+    int orders = 1;
+    List<Map> lists = [];
+    for (var foodString in foods) {
+      Map<String, dynamic> body = {
+        'name': foodString,
+        'allergy': [],
+        'order': orders
+      };
+      lists.add(body);
+      orders++;
+    }
+    return lists;
+  }
+
+  void _postMenu(List<TextEditingController> controllers, DateTime dateTime) {
+    List<String> breakFoods = controllers[0].text.split('\n');
+    List<String> lunchFoods = controllers[1].text.split('\n');
+    List<String> dinerFoods = controllers[2].text.split('\n');
+
+    List<Map> breakFoodList = createFoodList(breakFoods);
+    List<Map> lunchFoodList = createFoodList(lunchFoods);
+    List<Map> dinerFoodList = createFoodList(dinerFoods);
+
+    MenuRepository.postMenu(
+        dateTime, [breakFoodList, lunchFoodList, dinerFoodList]);
   }
 }

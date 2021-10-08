@@ -53,8 +53,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   onPressed: () {
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
-                        minTime: DateTime(2018, 3, 5),
-                        maxTime: DateTime(2019, 6, 7),
+                        minTime: DateTime(2018, 10, 20),
+                        maxTime: DateTime(2022, 10, 20),
                         onChanged: (date) {}, onConfirm: (date) {
                       controller.updateDate(date: date);
                     }, currentTime: DateTime.now(), locale: LocaleType.ko);
