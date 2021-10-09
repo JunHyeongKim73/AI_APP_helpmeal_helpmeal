@@ -7,30 +7,29 @@ import 'menu.dart';
 
 class MenuRepository {
 
-  static Future<Menu> fetchMenu(DateTime dateTime, int order) async {
+  static Future<Menu> fetchMenu(DateTime dateTime, Category category) async {
     String date = dateTime.toString();
     String noTimeDate = date.substring(0, 10);
     final response = await http
-        .get(Uri.parse('https://helpmeal.duckdns.org/menus/1/$noTimeDate/$order'));
+        .get(Uri.parse('https://helpmeal.duckdns.org/menus/1/$noTimeDate/${category.index+1}'));
     if (response.statusCode == 200) {
-      List lists = jsonDecode(response.body);
-      List<String?> meals = [];
+      var lists = jsonDecode(response.body);
+      List<Food> foodList = [];
       for (var element in lists) {
-        Food food = Food.fromJson(element);
-        meals.add(food.name);
+        foodList.add(Food.fromJson(element));
       }
-      return Menu(dateTime: dateTime, order: order, meals: meals);
+      return Menu(dateTime: dateTime, category: category, foodList: foodList);
     } else if (response.statusCode == 400) {
-      return Menu(dateTime: dateTime, order: order, meals: []);
+      return Menu(dateTime: dateTime, category: category, foodList: []);
     } else {
       throw Exception('failed!');
     }
   }
 
   static Future<List<Menu>> getMenus(DateTime dateTime) async {
-    Menu breakMenu = await fetchMenu(dateTime, 1);
-    Menu lunchMenu = await fetchMenu(dateTime, 2);
-    Menu dinnerMenu = await fetchMenu(dateTime, 3);
+    Menu breakMenu = await fetchMenu(dateTime, Category.breakfast);
+    Menu lunchMenu = await fetchMenu(dateTime, Category.lunch);
+    Menu dinnerMenu = await fetchMenu(dateTime, Category.dinner);
 
     return [breakMenu, lunchMenu, dinnerMenu];
   }

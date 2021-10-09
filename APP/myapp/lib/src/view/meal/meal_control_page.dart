@@ -39,9 +39,9 @@ class MealControlPage extends StatelessWidget {
                   if (snapshot.data!.isEmpty) {
                     breakController.text = '';
                   } else {
-                    breakController.text = snapshot.data![0].meals.join('\n');
-                    lunchController.text = snapshot.data![1].meals.join('\n');
-                    dinerController.text = snapshot.data![2].meals.join('\n');
+                    breakController.text = snapshot.data![0].foodNames.join('\n');
+                    lunchController.text = snapshot.data![1].foodNames.join('\n');
+                    dinerController.text = snapshot.data![2].foodNames.join('\n');
                   }
                 }
                 return Column(

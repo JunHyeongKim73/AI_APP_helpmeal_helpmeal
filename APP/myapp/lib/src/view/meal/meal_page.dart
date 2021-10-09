@@ -34,8 +34,7 @@ class _MealPage extends State<MealPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
-      // widget.user
-      futureFood = MenuRepository.fetchMenu(controller.dateText, 1);
+      // widget.user -> 유저의 알러지 확인!
       return Scaffold(
         appBar: const CustomAppBar(),
         body: Column(
@@ -64,6 +63,7 @@ class _MealPage extends State<MealPage> {
             MealContainer(
               scrollController: _scrollController,
               dateTime: controller.dateText,
+              user: widget.user,
             ),
           ],
         ),
@@ -76,12 +76,14 @@ class _MealPage extends State<MealPage> {
 class MealContainer extends StatelessWidget {
   final ScrollController scrollController;
   final DateTime dateTime;
+  User user;
   late final Future<List<Meal>> futureMealList;
 
   MealContainer({
     Key? key,
     required this.scrollController,
     required this.dateTime,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -103,7 +105,7 @@ class MealContainer extends StatelessWidget {
                 return Padding(
                   padding:
                       const EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 16),
-                  child: MealItem(mealData: snapshot.data![index]),
+                  child: MealItem(mealData: snapshot.data![index], user: user),
                 );
               },
             );

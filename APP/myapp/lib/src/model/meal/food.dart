@@ -1,15 +1,24 @@
 class Food {
-  String? name = '';
-  int? order = -1;
-  List<dynamic>? allergy = [];
+  String name;
+  int order;
+  List<dynamic>? allergyList = [];
 
-  Food({this.name, this.order, this.allergy});
+  Food({this.name = '', this.order = -1, this.allergyList});
 
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(
       name: json['name'],
       order: json['order'],
-      allergy: json['allergy'],
+      allergyList: json['allergy'],
     );
+  }
+
+  bool hasAllergy(List<String> userAllergyList){
+    for(var userAllergy in userAllergyList){
+      if(allergyList!.contains(userAllergy)){
+        return true;
+      }
+    }
+    return false;
   }
 }

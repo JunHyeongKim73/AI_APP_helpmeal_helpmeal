@@ -34,7 +34,7 @@ class MyAPP extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      initialRoute: '/',
+      initialRoute: '/first',
       initialBinding: InitBinding(),
       getPages: [
         GetPage(name: '/', page: () => const App()),
