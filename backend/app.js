@@ -6,9 +6,9 @@ const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
 const userRouter = require('./routes/users');
+const auth = require('./middlewares/authorization');
 const cookieParser = require('cookie-parser');
 const https = require('https');
-const passport = require('passport');
 const PORT = process.env.PORT || 443;  
 const options = {
   key: fs.readFileSync(__dirname + '/../../../../etc/letsencrypt/live/helpmeal.duckdns.org/privkey.pem'),
@@ -17,28 +17,12 @@ const options = {
 };
 var mealId;
 db_config.connect(conn);
-//const passportConfig = require('./passport');
-
-//passportConfig();
 
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
 
 app.use(cors()); //CORS문제 해결
 app.use(express.json());//req body 파싱
 app.use(express.urlencoded({ extended: true }))
-/*app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.COOKIE_SECRET,
-  cookie: {
-    httpOnly: true,
-    secure: false,
-  },
-}));*/
-//app.use(passport.initialize());
-//app.use(passport.session());
 app.use(morgan('dev'));
 app.use('/users', userRouter);
 
@@ -85,6 +69,7 @@ app.get('/menus/:troopId/:day/:numberOfDay', function (req, res) {
 							//해당 음식에 알러지가 없는 경우	
 							else{
 								console.log("food ", j+1, ", no allergy");	
+								rows[j].allergy = new Array();
 								k++;	
 								if(k==rows.length) resolve();	
 							}	
@@ -116,7 +101,7 @@ app.post('/menus', function (req, res) {
 				//MEAL table에 삽입	
 				if(meals.length < 1){
 					//console.log("nomealid");	
-					insertMeal = `INSERT INTO helpmeal.meal(troop_id, day, number_of_day) VALUES(${req.body.troopId}, "${req.body.day}", ${req.body.numberOfDay});`
+				insertMeal = `INSERT INTO helpmeal.meal(troop_id, day, number_of_day) VALUES(${req.body.troopId}, "${req.body.day}", ${req.body.numberOfDay});`
 					conn.query(insertMeal, function (err, rows, fields) {
 						if(err) console.log('query error\n' + err);
 						else{
@@ -155,7 +140,7 @@ app.post('/menus', function (req, res) {
 					else{
 						//food insert	
 						if(food.length < 1){
-							insertFood[i] = `INSERT INTO helpmeal.food(name) VALUES("${req.body.menus[i].name}");`;	
+							insertFood[i] = `INSERT IGNORE INTO helpmeal.food(name) VALUES("${req.body.menus[i].name}");`;	
 							conn.query(insertFood[i], function (err, rows, fields) {
 									if(err) console.log('food insert query error\n' + err);
 									else{
