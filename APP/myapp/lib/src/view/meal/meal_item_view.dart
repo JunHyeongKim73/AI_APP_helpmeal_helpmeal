@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/src/model/meal/meal.dart';
-import 'package:myapp/src/model/user.dart';
+import 'package:myapp/src/model/user/user.dart';
 
 // 아침, 점심, 저녁 위젯
-class MealItem extends StatelessWidget {
+class MealItem extends StatefulWidget {
   final Meal mealData;
   User user;
 
-  MealItem({Key? key, required this.mealData, required this.user}) : super(key: key);
+  MealItem({
+    Key? key,
+    required this.mealData,
+    required this.user,
+  }) : super(key: key);
 
+  @override
+  State<MealItem> createState() => _MealItemState();
+}
+
+class _MealItemState extends State<MealItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,8 +26,8 @@ class MealItem extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(mealData.startColor),
-            Color(mealData.endColor),
+            Color(widget.mealData.startColor),
+            Color(widget.mealData.endColor),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -36,21 +45,27 @@ class MealItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 40),
-            Text(mealData.titleText,
+            Text(widget.mealData.titleText,
                 style: GoogleFonts.doHyeon(color: Colors.white, fontSize: 20)),
             const SizedBox(height: 10),
-            ListView.builder(
-                itemCount: mealData.foodList.length,
+            Expanded(
+              child: ListView.builder(
+                itemCount: widget.mealData.foodList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Text(
-                    mealData.foodList[index].name,
+                    widget.mealData.foodList[index].name,
                     style: GoogleFonts.cuteFont(
-                      color: mealData.foodList[index].hasAllergy(user.allergyList) ? Colors.red : Colors.white,
+                      color: widget.mealData.foodList[index]
+                              .hasAllergy(widget.user.allergyList)
+                          ? Colors.red
+                          : Colors.white,
                       fontSize: 20,
                       wordSpacing: 4,
                     ),
                   );
-                }),
+                },
+              ),
+            ),
           ],
         ),
       ),

@@ -107,74 +107,8 @@ class LoginPage extends StatelessWidget {
               ),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 10, bottom: 10),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       Container(height: 1, width: 150, color: Colors.grey),
-          //       Text(' 또는 '),
-          //       Container(height: 1, width: 150, color: Colors.grey),
-          //     ],
-          //   ),
-          // ),
-          // SignInButton(
-          //   buttonType: ButtonType.facebook,
-          //   onPressed: () {},
-          //   btnText: 'Login With Facebook',
-          //   shape:
-          //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          // ),
-          // const SizedBox(height: 8),
-          // SignInButton(
-          //   buttonType: ButtonType.google,
-          //   onPressed: () {},
-          //   btnText: 'Login With Google',
-          //   shape:
-          //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          // ),
-          // const SizedBox(height: 8),
-          // const KakaoButton(),
         ],
       ),
     ));
   }
 }
-
-// class KakaoButton extends StatelessWidget {
-//   const KakaoButton({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialButton(
-//       color: Color(0xFFFEE500),
-//       disabledColor: Theme.of(context).disabledColor.withOpacity(0.12),
-//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-//       onPressed: () {},
-//       elevation: 5.0,
-//       child: Container(
-//         width: 200,
-//         child: Row(
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             Padding(
-//               padding: EdgeInsets.all(5.0),
-//               child: Image.asset(
-//                 '/workspaces/AI_APP_helpmeal_helpmeal/APP/myapp/assets/kakao.png',
-//                 width: 24,
-//                 height: 24,
-//               ),
-//             ),
-//             Padding(
-//               padding: EdgeInsets.all(5.0),
-//               child: Text(
-//                 'Login With Kakao',
-//                 style: TextStyle(fontSize: 15),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

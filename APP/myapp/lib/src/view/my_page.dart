@@ -7,7 +7,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/my_page_icon.dart';
-import 'package:myapp/src/model/user.dart';
+import 'package:myapp/src/model/user/user.dart';
 
 class MyPage extends StatelessWidget {
   User user;

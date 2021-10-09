@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myapp/src/controller/sign_up_controller.dart';
-import 'package:myapp/src/model/user.dart';
+import 'package:myapp/src/model/user/user.dart';
 
 import 'controller/navigate_page_controller.dart';
 import 'view/meal/meal_page.dart';
@@ -15,7 +14,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SignUpController signUpController = Get.arguments;
+    final signUpController = Get.arguments;
     User user;
     if (signUpController == null) {
       user = User(
