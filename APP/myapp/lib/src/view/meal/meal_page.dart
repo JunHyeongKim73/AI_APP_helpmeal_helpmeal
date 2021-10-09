@@ -21,7 +21,7 @@ class MealPage extends StatefulWidget {
 
 class _MealPage extends State<MealPage> {
   final _scrollController = ScrollController();
-  bool isMealEmpty = true;
+  bool isMealEmpty = false;
 
   @override
   Widget build(BuildContext context) {
