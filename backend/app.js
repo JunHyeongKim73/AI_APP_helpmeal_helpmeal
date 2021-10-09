@@ -1,11 +1,25 @@
 const express = require('express');
-const  app = express();
+const app = express();
 const db_config = require(__dirname + '/config/database.js');
 const conn = db_config.init();
+const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
+const userRouter = require('./routes/users');
+const cookieParser = require('cookie-parser');
+const https = require('https');
+const passport = require('passport');
+const PORT = process.env.PORT || 443;  
+const options = {
+  key: fs.readFileSync(__dirname + '/../../../../etc/letsencrypt/live/helpmeal.duckdns.org/privkey.pem'),
+  cert: fs.readFileSync(__dirname + '/../../../../etc/letsencrypt/live/helpmeal.duckdns.org/fullchain.pem'),
+  ca: fs.readFileSync(__dirname + '/../../../../etc/letsencrypt/live/helpmeal.duckdns.org/fullchain.pem')
+};
 var mealId;
 db_config.connect(conn);
+//const passportConfig = require('./passport');
+
+//passportConfig();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -13,7 +27,21 @@ app.set('view engine', 'ejs');
 app.use(cors()); //CORS문제 해결
 app.use(express.json());//req body 파싱
 app.use(express.urlencoded({ extended: true }))
+/*app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+}));*/
+//app.use(passport.initialize());
+//app.use(passport.session());
 app.use(morgan('dev'));
+app.use('/users', userRouter);
+
 app.get('/', function (req, res) {
     res.send('ROOT');
 });
@@ -26,6 +54,9 @@ app.get('/menus/:troopId/:day/:numberOfDay', function (req, res) {
 	const selectMenu = new Promise(function (resolve, reject){
 		conn.query(menuSelection, function (err, rows, fields) {
 			if(err) console.log('menuSelect query is not excuted. select fail...\n' + err);
+			else if (rows.length < 1){
+				res.status(400).json({messege: " 선택한 끼니에 메뉴가 존재하지 않습니다"});			
+			}
 			else { 
 				results = rows;	
 				//알러지 조회하기
@@ -77,7 +108,10 @@ app.post('/menus', function (req, res) {
  	const getMealId = new Promise(function (resolve, reject){	
 		selectMeal = `SELECT id FROM meal WHERE troop_id = ${req.body.troopId} AND day = "${req.body.day}" AND number_of_day = ${req.body.numberOfDay};`;
 		conn.query(selectMeal, function (err, meals, fields) {
-			if(err) console.log('query error\n' + err);
+			if(err) {
+				console.log('query error\n' + err);
+				res.status(400).json({messege: err});				
+			}			
 			else{
 				//MEAL table에 삽입	
 				if(meals.length < 1){
@@ -194,4 +228,4 @@ app.post('/writeAf', function (req, res) {
     });
 });
 
-app.listen(80, () => console.log('Server is running on port 80...'));
+https.createServer(options, app).listen(PORT);
