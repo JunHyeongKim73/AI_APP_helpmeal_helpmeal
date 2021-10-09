@@ -1,24 +1,51 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const crypto = require('crypto');
 const db_config = require(__dirname + '/../../config/database.js');
 const YOUR_SECRET_KEY = process.env.SECRET_KEY;
 const conn = db_config.init();
 db_config.connect(conn);
 
+// 비밀번호 암호화  함수
+const createSalt = () => 
+    new Promise((resolve, reject) => {
+        crypto.randomBytes(64, (err, buf) => {
+            if (err) reject(err);
+            resolve(buf.toString('base64'));
+        });
+    });
+const createHashedPassword = (plainPassword) =>
+    new Promise(async (resolve, reject) => {
+        const salt = await createSalt();
+		crypto.pbkdf2(plainPassword, salt, 9999, 64, 'sha512', (err, key) => {
+            if (err) reject(err);
+			resolve({ password: key.toString('base64'), salt });
+        });
+    });
+const makePasswordHashed = (salt, plainPassword) =>
+    new Promise(async (resolve, reject) => {
+        crypto.pbkdf2(plainPassword, salt, 9999, 64, 'sha512', (err, key) => {
+            if (err) reject(err);
+            resolve(key.toString('base64'));
+        });
+    });
 
+//로그인 함수
 exports.createToken = async function (req, res, next)  {
 	try {
 		const SelectUser = `SELECT * FROM user WHERE email = "${req.body.email}";`;	
-		conn.query(SelectUser, (error, rows) => {	
+		conn.query(SelectUser, async function (error, rows) {	
 			if(error) {
 				res.status(401).json({meesege: error});
 			}	
 			else{
 				if (rows.length > 0) {
-					if (rows[0].password == req.body.password){	
+					let password = await makePasswordHashed(rows[0].salt, req.body.password);//비밀번호 암호화;
+					if (rows[0].password == password){	
 						const token = jwt.sign({
-							email: rows[0].email,
-							name: rows[0].name
+								email: rows[0].email,
+								name: rows[0].name,
+								manageLevel: rows[0].magage_level
 							}, YOUR_SECRET_KEY, {
 							expiresIn: '10d'
 						});
@@ -43,6 +70,7 @@ exports.createToken = async function (req, res, next)  {
 	}
 };
 
+//회원가입 함수
 exports.createNewUser = async function (req, res, next) {
 	let troopId;	
 	//이메일 중복 확인	
@@ -65,62 +93,15 @@ exports.createNewUser = async function (req, res, next) {
 		});	
 	});
 
-	//return troopId	
-	const findTroopId = new Promise(function(resolve, reject) {
-		let troop2, troop1, userId;
-		selectTroop = `SELECT * FROM troop WHERE level4 = ? AND level3 = ?;`;
-			conn.query(selectTroop, [req.body.troop[4], req.body.troop[3]],function (error, troops) {
-				if (error) {
-					res.status(401).json({messege: error});
-					console.log(error);	
-					}
-				else if(troops.length < 0){
-					res.status(401).json({messege: "존재하지 않는 부대입니다!"});
-				}
-				else if (!req.body.troop[2]){
-					troop2 = NULL;		
-					troop1 = NULL;
-				}
-				else if (!req.body.troop[1]){
-					troop1 = NULL; 
-				}
-				else{
-					troop2 = req.body.troop[2]; troop1 = req.body.troop[1]; 
-				}
-				//부대 선택	
-				conn.query(`SELECT id FROM troop WHERE level4 = ? AND level3 = ? AND level2 = ? AND level1 = ?`, [req.body.troop[4], req.body.troop[3], req.body.troop[2], req.body.troop[1]], function (error, troopList) {
-					if (error){
-						res.status(401).json({messege: error});
-						console.log(error);	
-					}
-					//부대 없을 경우
-					else if(troopList.length < 1){
-						conn.query(`INSERT INTO troop(level4, level3, level2, level1) VALUES(?, ?, ?, ?)`, [req.body.troop[4], req.body.troop[3], req.body.troop[2], req.body.troop[1]], function (error, insertedTroop) {
-							if (error){
-								res.status(400).json({messege: error});
-								console.log(error);	
-							}			
-							console.log("insertedTroopId: ", insertedTroop.insertid);
-							troopId = insertedTroop.insertId;
-							resolve(troopId);
-						});
-					}
-					else{
-						troopId = troopList[0].id;
-						console.log("troopId: ", troopId);
-						resolve(troopId); 
-					}
-				});	
-			});
-	});	
-	
-	Promise.all([findTroopId, checkEmailOverlap])
-	.then((promiseResult) => {
-		console.log("foundTroopId: ", promiseResult[0]);
+	//비밀번호 암호화
+	const { password, salt } = await createHashedPassword(req.body.password);	
+	//console.log("salt: ", salt, "len: ", salt.length);	
+	checkEmailOverlap
+	.then((messege) => {
 		//관리자인 경우
 		if(req.body.managerLevel){
-			const createUser = `INSERT INTO user(name, password, troop_id, military_serial_number, email, manage_level) VALUES(?, ?, ?, ?, ?, ?);`;
-			conn.query(createUser, [req.body.name, req.body.password, promiseResult[0], req.body.military_serial_number, req.body.email, req.body.managerLevel], (error, rows) => {
+			const createUser = `INSERT INTO user(name, password, troop_id, military_serial_number, email, manage_level, salt) VALUES(?, ?, ?, ?, ?, ?, ?);`;
+			conn.query(createUser, [req.body.name, password, req.body.troopId, req.body.military_serial_number, req.body.email, req.body.managerLevel, salt], (error, rows) => {
 				if (error) {
 					res.status(400).json({
 						messege: error
@@ -135,8 +116,8 @@ exports.createNewUser = async function (req, res, next) {
 		}
 		//일반 사용자인 경우
 		else{
-			const createUser = `INSERT INTO user(name, password, troop_id, military_serial_number, email) VALUES(?, ?, ?, ?, ?);`;
-			conn.query(createUser, [req.body.name, req.body.password, promiseResult[0], req.body.military_serial_number, req.body.email], async function(error, rows) {
+			const createUser = `INSERT INTO user(name, password, troop_id, military_serial_number, email, salt) VALUES(?, ?, ?, ?, ?, ?);`;
+			conn.query(createUser, [req.body.name, password, req.body.troopId, req.body.military_serial_number, req.body.email, salt], async function(error, rows) {
 				if (error) {
 					res.status(400).json({messege: error});
 					console.log(error);	
