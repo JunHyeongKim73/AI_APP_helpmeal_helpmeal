@@ -3,11 +3,11 @@ class User {
   late String password;
   late String name;
   late String milNum;
-  final String milName;
-  final String troopName;
-  final String groupName;
-  final List<String> allergyList;
-  late bool isAdmin;
+  String? milName;
+  String? troopName;
+  String? groupName;
+  List<String>? allergyList;
+  late int isAdmin;
   late bool isLogined;
 
   User({
@@ -15,14 +15,18 @@ class User {
     this.password = '',
     this.name = '',
     this.milNum = '',
-    this.isAdmin = false,
-    required this.milName,
-    required this.troopName,
-    required this.groupName,
-    required this.allergyList,
+    this.isAdmin = 0,
+    this.milName,
+    this.troopName,
+    this.groupName,
+    this.allergyList,
   }){
     isLogined = (email == '' ? false : true);
   }
 
-  
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      
+    );
+  }
 }
