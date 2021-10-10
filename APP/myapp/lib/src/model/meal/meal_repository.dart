@@ -4,18 +4,7 @@ import 'meal.dart';
 import 'menu.dart';
 
 class MealRepository {
-  final DateTime dateTime;
-
-  MealRepository({required this.dateTime});
-
-  Future<List<Menu>> getMenu() async {
-    List<Menu> menus = await MenuRepository.getMenus(dateTime);
-    return menus;
-  }
-
-  Future<List<Meal>> loadMeals() async {
-    List<Menu> menuList = await getMenu();
-    
+  static List<Meal> loadMeals(List<Menu> menuList) {
     return <Meal>[
       Meal(
         dateTime: menuList[0].dateTime,

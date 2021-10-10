@@ -65,7 +65,7 @@ class MyPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                user.isLogined ? '김준형' : '',
+                                user.isLogined ? user.name : '',
                                 style: GoogleFonts.doHyeon(
                                     fontSize: 20, color: Colors.white),
                               ),

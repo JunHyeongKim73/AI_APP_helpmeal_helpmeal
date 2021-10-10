@@ -26,6 +26,11 @@ class _TroopSelectPage extends State<TroopSelectPage> {
     return GetBuilder<SelectTroopController>(builder: (controller) {
       troopList = controller.troopList;
       return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          bottomOpacity: 0.0,
+          elevation: 0.0,
+        ),
         body: Column(
           children: [
             const SizedBox(height: 50),
@@ -56,11 +61,8 @@ class _TroopSelectPage extends State<TroopSelectPage> {
   }
 
   Widget _buttonBuilder(SelectTroopController controller) {
-    SignUpController signUpController = Get.arguments;
-    if(signUpController == null){
-      signUpController = SignUpController();
-    }
-    
+    SignUpController signUpController = Get.arguments ?? SignUpController();
+
     switch (controller.pageIndex) {
       case 0:
         return CircleAvatar(
@@ -128,7 +130,8 @@ class _TroopSelectPage extends State<TroopSelectPage> {
           return ElevatedButton(
             onPressed: () {
               controller.selectTroopCompleted();
-              signUpController.setTroops(controller.milName, controller.troopName, controller.groupName);
+              signUpController.setTroops(controller.milName,
+                  controller.troopName, controller.groupName);
               Get.toNamed('/allergy', arguments: signUpController);
             },
             child: const Text('완료',

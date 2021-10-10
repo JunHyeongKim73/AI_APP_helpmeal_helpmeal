@@ -5,7 +5,6 @@ import 'food.dart';
 import 'menu.dart';
 
 class MenuRepository {
-  static int num = 1;
 
   static Future<Menu> fetchMenu(DateTime dateTime, Category category) async {
     String date = dateTime.toString();
@@ -20,7 +19,6 @@ class MenuRepository {
       }
       return Menu(dateTime: dateTime, category: category, foodList: foodList);
     } else if (response.statusCode == 400) {
-      num = 0;
       return Menu(dateTime: dateTime, category: category, foodList: []);
     } else {
       throw Exception('failed!');
@@ -33,6 +31,16 @@ class MenuRepository {
     Menu dinnerMenu = await fetchMenu(dateTime, Category.dinner);
 
     return [breakMenu, lunchMenu, dinnerMenu];
+  }
+
+  static bool checkEmpty(List<Menu> menus) {
+    bool isEmpty = true;
+    for(var menu in menus) {
+      if(menu.foodList.isNotEmpty){
+        isEmpty = false;
+      }
+    }
+    return isEmpty;
   }
 
   static Future<MenuForPost> createMenu(DateTime dateTime, int order, List<Map> foods) async {

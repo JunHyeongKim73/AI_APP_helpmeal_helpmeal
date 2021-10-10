@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/src/model/colors.dart';
 
 class FirstPage extends StatelessWidget {
-  const FirstPage({Key? key,}) : super(key: key);
+  const FirstPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +16,7 @@ class FirstPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Icon(
+            const Icon(
               Icons.local_restaurant,
               size: 200,
             ),
@@ -23,14 +28,14 @@ class FirstPage extends StatelessWidget {
                     color: Colors.red.shade400,
                     fontWeight: FontWeight.bold,
                   )),
-              TextSpan(
+              const TextSpan(
                   text: 'elp',
                   style: TextStyle(
                     fontSize: 80.0,
                     fontWeight: FontWeight.bold,
                   ))
             ])),
-            Text.rich(TextSpan(text: '', children: <TextSpan>[
+            const Text.rich(TextSpan(text: '', children: <TextSpan>[
               TextSpan(
                   text: 'M',
                   style: TextStyle(
@@ -45,30 +50,26 @@ class FirstPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ))
             ])),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                ButtonTheme(
-                  minWidth: 200,
+                SizedBox(
                   height: 50,
-                  child: RaisedButton(
-                    child: Text('로그인', style: TextStyle(fontSize: 20)),
-                    onPressed: () {},
-                    color: Colors.blue,
-                    textColor: Colors.white,
+                  width: 150,
+                  child: ElevatedButton(
+                    child: Text('로그인', style: GoogleFonts.doHyeon(fontSize: 18, color: Colors.white)),
+                    onPressed: () => Get.toNamed('/login'),
                   ),
                 ),
-                ButtonTheme(
-                  minWidth: 200,
+                SizedBox(
                   height: 50,
-                  child: RaisedButton(
-                    child: Text('로그인 없이 시작', style: TextStyle(fontSize: 20)),
-                    onPressed: () {},
-                    color: Colors.blue,
-                    textColor: Colors.white,
+                  width: 150,
+                  child: ElevatedButton(
+                    child: Text('로그인 없이 시작', style: GoogleFonts.doHyeon(fontSize: 18, color: Colors.white)),
+                    onPressed: () => Get.toNamed('/troopSelect'),
                   ),
                 ),
               ],

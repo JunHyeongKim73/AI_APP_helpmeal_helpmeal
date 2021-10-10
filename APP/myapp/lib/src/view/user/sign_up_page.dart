@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:myapp/src/controller/sign_up_controller.dart';
 import 'package:myapp/src/model/colors.dart';
+import 'package:myapp/src/model/meal/menu_repository.dart';
+import 'package:myapp/src/model/user/user.dart';
+import 'package:myapp/src/model/user/user_repository.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -12,6 +15,11 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SignUpController>(builder: (controller) {
       return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          bottomOpacity: 0.0,
+          elevation: 0.0,
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -65,18 +73,7 @@ class SignUpPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                OutlinedButton(
-                                  onPressed: () {},
-                                  child: const Text('중복확인'),
-                                  style: OutlinedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    side: const BorderSide(
-                                        width: 1,
-                                        color: CustomColor.themeColor),
-                                  ),
-                                ),
+                                _checkOverlap(controller.email),
                               ],
                             ),
                             const SizedBox(height: 20.0),
@@ -132,8 +129,7 @@ class SignUpPage extends StatelessWidget {
                                 children: <Widget>[
                                   Expanded(
                                     child: ElevatedButton(
-                                      onPressed: () =>
-                                          controller.setAdmin(0),
+                                      onPressed: () => controller.setAdmin(0),
                                       child: Text("병사",
                                           style: TextStyle(
                                               color: controller.isAdmin == 1
@@ -154,8 +150,7 @@ class SignUpPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: ElevatedButton(
-                                      onPressed: () =>
-                                          controller.setAdmin(1),
+                                      onPressed: () => controller.setAdmin(1),
                                       child: Text("식당 관리자",
                                           style: TextStyle(
                                               color: controller.isAdmin == 1
@@ -209,5 +204,40 @@ class SignUpPage extends StatelessWidget {
         ),
       );
     });
+  }
+
+  FutureBuilder<Object?> _checkOverlap(String email) {
+    Future<bool> isOverlapped = UserRepository.checkUser(email);
+    return FutureBuilder(
+      future: isOverlapped,
+      builder: (context, snapshot) {
+        return OutlinedButton(
+          onPressed: () {
+            if (snapshot.hasData) {
+              String text = '중복된 이메일입니다.';
+              if (snapshot.data == false) {
+                text = '사용할 수 있는 이메일입니다.';
+              }
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(content: Text(text), actions: <Widget>[
+                    TextButton(onPressed: () => Get.back(), child: Text('확인'))
+                  ]);
+                },
+              );
+            }
+          },
+          child: const Text('중복확인'),
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            side: const BorderSide(width: 1, color: CustomColor.themeColor),
+          ),
+        );
+      },
+    );
   }
 }

@@ -9,7 +9,5 @@ class InitBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<NavigatePageController>(() => NavigatePageController());
     Get.lazyPut<DateController>(() => DateController());
-    Get.lazyPut<SelectTroopController>(() => SelectTroopController());
-    Get.lazyPut<SignUpController>(() => SignUpController());
   }
 }

@@ -16,9 +16,9 @@ class User {
     this.name = '',
     this.milNum = '',
     this.isAdmin = 0,
-    this.milName,
-    this.troopName,
-    this.groupName,
+    this.milName = '',
+    this.troopName = '',
+    this.groupName = '',
     this.allergyList,
   }){
     isLogined = (email == '' ? false : true);

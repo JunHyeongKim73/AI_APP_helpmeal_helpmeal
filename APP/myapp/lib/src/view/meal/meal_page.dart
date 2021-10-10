@@ -8,6 +8,8 @@ import 'package:myapp/src/controller/date_controller.dart';
 import 'package:myapp/src/model/fonts.dart';
 import 'package:myapp/src/model/meal/meal.dart';
 import 'package:myapp/src/model/meal/meal_repository.dart';
+import 'package:myapp/src/model/meal/menu.dart';
+import 'package:myapp/src/model/meal/menu_repository.dart';
 import 'package:myapp/src/model/user/user.dart';
 import 'meal_item_view.dart';
 
@@ -22,11 +24,13 @@ class MealPage extends StatefulWidget {
 class _MealPage extends State<MealPage> {
   final _scrollController = ScrollController();
   bool isMealEmpty = true;
+  Future<List<Menu>>? futureMenuList;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
-      // widget.user -> 유저의 알러지 확인!
+      futureMenuList =
+          MenuRepository.getMenus(controller.dateText);
       return Scaffold(
         appBar: const CustomAppBar(),
         body: Column(
@@ -39,26 +43,35 @@ class _MealPage extends State<MealPage> {
                   padding: const EdgeInsets.only(left: 20),
                   child: Text('오늘의 식단', style: CustomFont().title),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: isMealEmpty
-                      ? ElevatedButton(
-                          onPressed: () => Get.toNamed('/mealControl'),
-                          child: const Icon(MdiIcons.plus, size: 32),
-                          style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
-                            primary: Colors.white,
-                            onPrimary: Colors.blue[400],
-                            shadowColor: Colors.grey,
-                          ))
-                      : null,
+                FutureBuilder<List<Menu>>(
+                  future: futureMenuList,
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData){
+                      isMealEmpty = MenuRepository.checkEmpty(snapshot.data!);
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: (snapshot.hasData ? isMealEmpty : true)
+                          ? ElevatedButton(
+                              onPressed: () => Get.toNamed('/mealControl'),
+                              child: const Icon(MdiIcons.plus, size: 32),
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                primary: Colors.white,
+                                onPrimary: Colors.blue[400],
+                                shadowColor: Colors.grey,
+                              ))
+                          : null,
+                    );
+                  }
                 ),
               ],
             ),
             MealContainer(
-                scrollController: _scrollController,
-                dateTime: controller.dateText,
-                user: widget.user),
+              scrollController: _scrollController,
+              user: widget.user,
+              futureMenuList: futureMenuList!,
+            ),
           ],
         ),
       );
@@ -69,44 +82,45 @@ class _MealPage extends State<MealPage> {
 // 식단 위젯
 class MealContainer extends StatefulWidget {
   final ScrollController scrollController;
-  final DateTime dateTime;
+  final Future<List<Menu>> futureMenuList;
   final User user;
 
-  const MealContainer({
-    Key? key,
-    required this.scrollController,
-    required this.dateTime,
-    required this.user,
-  }) : super(key: key);
+  const MealContainer(
+      {Key? key,
+      required this.scrollController,
+      required this.user,
+      required this.futureMenuList})
+      : super(key: key);
 
   @override
   State<MealContainer> createState() => _MealContainerState();
 }
 
 class _MealContainerState extends State<MealContainer> {
-  Future<List<Meal>>? futureMealList;
-
   @override
   Widget build(BuildContext context) {
-    futureMealList = MealRepository(dateTime: widget.dateTime).loadMeals();
     return SizedBox(
       height: 280,
       child: Scrollbar(
         controller: widget.scrollController,
         isAlwaysShown: true,
-        child: FutureBuilder<List<Meal>>(
-            future: futureMealList,
+        child: FutureBuilder<List<Menu>>(
+            future: widget.futureMenuList,
             builder: (context, snapshot) {
+              List<Meal> mealList = [];
+              if(snapshot.hasData){
+                mealList = MealRepository.loadMeals(snapshot.data!);
+              }
               return ListView.builder(
                 controller: widget.scrollController,
                 scrollDirection: Axis.horizontal,
-                itemCount: snapshot.hasData ? snapshot.data!.length : 0,
+                itemCount: snapshot.hasData ? mealList.length : 0,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.only(
                         top: 16, left: 8, right: 8, bottom: 16),
                     child: MealItem(
-                        mealData: snapshot.data![index], user: widget.user),
+                        mealData: mealList[index], user: widget.user),
                   );
                 },
               );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myapp/src/app.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/fonts.dart';
@@ -18,6 +20,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+      ),
       body: Center(
         child: Column(
           children: [
@@ -109,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 40.0,
               width: 240,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => Get.toNamed('/signUp'),
                 child: const Center(
                   child: Text(
                     "회원가입",
