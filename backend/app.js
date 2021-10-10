@@ -6,6 +6,7 @@ const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
 const userRouter = require('./routes/users');
+const starRouter = require('./routes/stars');
 const auth = require('./middlewares/authorization');
 const cookieParser = require('cookie-parser');
 const https = require('https');
@@ -25,6 +26,8 @@ app.use(express.json());//req body 파싱
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'));
 app.use('/users', userRouter);
+app.use('/stars', starRouter);
+app.use(cookieParser);
 
 app.get('/', function (req, res) {
     res.send('ROOT');
