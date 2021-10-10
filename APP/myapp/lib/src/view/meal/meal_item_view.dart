@@ -6,9 +6,9 @@ import 'package:myapp/src/model/user/user.dart';
 // 아침, 점심, 저녁 위젯
 class MealItem extends StatefulWidget {
   final Meal mealData;
-  User user;
+  final User user;
 
-  MealItem({
+  const MealItem({
     Key? key,
     required this.mealData,
     required this.user,
@@ -56,7 +56,7 @@ class _MealItemState extends State<MealItem> {
                     widget.mealData.foodList[index].name,
                     style: GoogleFonts.cuteFont(
                       color: widget.mealData.foodList[index]
-                              .hasAllergy(widget.user.allergyList)
+                              .hasAllergy(widget.user.allergyList!)
                           ? Colors.red
                           : Colors.white,
                       fontSize: 20,

@@ -13,7 +13,7 @@ class SignUpController extends GetxController {
   String milNum = '';
   bool isMilNum = false;
 
-  bool isAdmin = false;
+  int isAdmin = 0;
   bool isNextPage = false;
 
   List<String> allergy = [];
@@ -56,8 +56,8 @@ class SignUpController extends GetxController {
     update();
   }
 
-  void setAdmin(bool flag) {
-    isAdmin = flag;
+  void setAdmin(int num) {
+    isAdmin = num;
     update();
   }
 

@@ -133,10 +133,10 @@ class SignUpPage extends StatelessWidget {
                                   Expanded(
                                     child: ElevatedButton(
                                       onPressed: () =>
-                                          controller.setAdmin(false),
+                                          controller.setAdmin(0),
                                       child: Text("병사",
                                           style: TextStyle(
-                                              color: controller.isAdmin
+                                              color: controller.isAdmin == 1
                                                   ? CustomColor.themeColor
                                                   : Colors.white)),
                                       style: ElevatedButton.styleFrom(
@@ -146,7 +146,7 @@ class SignUpPage extends StatelessWidget {
                                             bottomLeft: Radius.circular(10),
                                           ),
                                         ),
-                                        primary: controller.isAdmin
+                                        primary: controller.isAdmin == 1
                                             ? Colors.white
                                             : CustomColor.themeColor,
                                       ),
@@ -155,10 +155,10 @@ class SignUpPage extends StatelessWidget {
                                   Expanded(
                                     child: ElevatedButton(
                                       onPressed: () =>
-                                          controller.setAdmin(true),
+                                          controller.setAdmin(1),
                                       child: Text("식당 관리자",
                                           style: TextStyle(
-                                              color: controller.isAdmin
+                                              color: controller.isAdmin == 1
                                                   ? Colors.white
                                                   : CustomColor.themeColor)),
                                       style: ElevatedButton.styleFrom(
@@ -168,7 +168,7 @@ class SignUpPage extends StatelessWidget {
                                             bottomRight: Radius.circular(10),
                                           ),
                                         ),
-                                        primary: controller.isAdmin
+                                        primary: controller.isAdmin == 1
                                             ? CustomColor.themeColor
                                             : Colors.white,
                                       ),
@@ -191,10 +191,7 @@ class SignUpPage extends StatelessWidget {
                   onPressed: () {
                     controller.checkComplete();
                     if (controller.isNextPage) {
-                      Get.toNamed(
-                        '/troopSelect',
-                        arguments: controller
-                      );
+                      Get.toNamed('/troopSelect', arguments: controller);
                     }
                   },
                   child: Text(

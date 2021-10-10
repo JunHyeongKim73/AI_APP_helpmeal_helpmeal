@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:myapp/src/model/colors.dart';
-import 'package:myapp/src/view/allergy_page.dart';
 import 'package:myapp/src/view/first_page.dart';
-import 'package:myapp/src/view/login_page.dart';
 import 'package:myapp/src/view/my_review.dart';
 import 'package:myapp/src/view/notice_check_page.dart';
 import 'package:myapp/src/view/notice_pass_page.dart';
 import 'package:myapp/src/view/review_analysis_page.dart';
-import 'package:myapp/src/view/sign_up_page.dart';
-import 'package:myapp/src/view/troop_select_page.dart';
 import 'package:myapp/src/view/suggestion_check_page.dart';
 import 'package:myapp/src/view/suggestion_complain_page.dart';
 import 'src/app.dart';
 import 'src/binding/init_binding.dart';
 import 'src/view/meal/meal_control_page.dart';
+import 'src/view/user/allergy_page.dart';
+import 'src/view/user/login_page.dart';
+import 'src/view/user/sign_up_page.dart';
+import 'src/view/user/troop_select_page.dart';
 
 void main() {
   runApp(const MyAPP());
@@ -34,12 +34,12 @@ class MyAPP extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      initialRoute: '/signUp',
+      initialRoute: '/login',
       initialBinding: InitBinding(),
       getPages: [
         GetPage(name: '/', page: () => const App()),
         GetPage(name: '/first', page: () => const FirstPage()),
-        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(name: '/login', page: () => LoginPage()),
         GetPage(name: '/allergy', page: () => const AllergyPage()),
         GetPage(name: '/suggestComplain', page: () => const SuggestionComplainPage()),
         GetPage(name: '/noticeCheck', page: () => const NoticeCheckPage()),

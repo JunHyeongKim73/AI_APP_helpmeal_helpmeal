@@ -7,6 +7,8 @@ import 'package:myapp/src/controller/sign_up_controller.dart';
 import 'package:myapp/src/model/allergy.dart';
 import 'package:myapp/src/model/allergy_repository.dart';
 import 'package:myapp/src/model/fonts.dart';
+import 'package:myapp/src/model/user/user.dart';
+import 'package:myapp/src/model/user/user_repository.dart';
 
 class AllergyPage extends StatelessWidget {
   const AllergyPage({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class AllergyView extends StatefulWidget {
   State<AllergyView> createState() => _AllergyViewState();
 }
 
-class _AllergyViewState extends State<AllergyView> { 
+class _AllergyViewState extends State<AllergyView> {
   late List<Allergy> allergyList;
   late List<bool> selectedList;
   int selectedNum = 0;
@@ -57,7 +59,7 @@ class _AllergyViewState extends State<AllergyView> {
     selectedList = List.filled(allergyList.length, false);
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final SignUpController signUpController = Get.arguments;
@@ -85,9 +87,13 @@ class _AllergyViewState extends State<AllergyView> {
                     child: IconButton(
                       icon: Image.asset(allergyList[index].assetPath),
                       onPressed: () => setState(() {
-                        allergyList[index].isSelected = !allergyList[index].isSelected;
+                        allergyList[index].isSelected =
+                            !allergyList[index].isSelected;
                         selectedList[index] = !selectedList[index];
-                        selectedNum = selectedList.where((element) => element == true).toList().length;
+                        selectedNum = selectedList
+                            .where((element) => element == true)
+                            .toList()
+                            .length;
                       }),
                       iconSize: 36,
                     ),
@@ -99,31 +105,43 @@ class _AllergyViewState extends State<AllergyView> {
             },
           ),
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: SizedBox(
-                width: 180,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    List<String> selectedAllergy = [];
-                    selectedList.forEachIndexed((index, element) { 
-                      if(element == true){
-                        selectedAllergy.add(allergyList[index].engName);
-                      }
-                    });
-                    signUpController.setAllergy(selectedAllergy);
-                    Get.offAllNamed('/', arguments: signUpController);
-                  },
-                  child: Text(
-                    selectedNum == 0 ? '알레르기가 없어요': '선택 완료',
-                    style: GoogleFonts.doHyeon(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: SizedBox(
+              width: 180,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  List<String> selectedAllergy = [];
+                  selectedList.forEachIndexed((index, element) {
+                    if (element == true) {
+                      selectedAllergy.add(allergyList[index].engName);
+                    }
+                  });
+                  signUpController.setAllergy(selectedAllergy);
+                  // 여기에 회원가입 하는 코드가 들어가야 함
+                  UserRepository.postUser(User(
+                    email: signUpController.email,
+                    password: signUpController.password,
+                    name: signUpController.name,
+                    milNum: signUpController.milNum,
+                    isAdmin: signUpController.isAdmin,
+                    milName: signUpController.milName,
+                    troopName: signUpController.troopName,
+                    groupName: signUpController.groupName,
+                    allergyList: signUpController.allergy,
+                  ));
+                  Get.offAllNamed('/', arguments: signUpController);
+                },
+                child: Text(
+                  selectedNum == 0 ? '알레르기가 없어요' : '선택 완료',
+                  style: GoogleFonts.doHyeon(
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
+          ),
         ],
       ),
     );

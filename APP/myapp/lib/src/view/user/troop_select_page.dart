@@ -57,7 +57,9 @@ class _TroopSelectPage extends State<TroopSelectPage> {
 
   Widget _buttonBuilder(SelectTroopController controller) {
     SignUpController signUpController = Get.arguments;
-    signUpController = SignUpController();
+    if(signUpController == null){
+      signUpController = SignUpController();
+    }
     
     switch (controller.pageIndex) {
       case 0:

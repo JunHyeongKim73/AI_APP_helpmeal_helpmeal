@@ -25,8 +25,8 @@ class ReviewAnalysisPage extends StatelessWidget {
               children: [
                 const SizedBox(height: 30),
                 Row(
-                  children: [
-                    const SizedBox(width: 20),
+                  children: const [
+                    SizedBox(width: 20),
                     Text(
                       '리뷰 정리본은 매주 월요일에 제공됩니다.',
                       style: TextStyle(color: Colors.grey),
@@ -76,13 +76,13 @@ class ReviewAnalysisPage extends StatelessWidget {
                     Text('개선점', style: GoogleFonts.doHyeon(fontSize: 28, color: CustomColor.themeColor)),
                   ],
                 ),
-                Image(
+                const Image(
                   image: AssetImage('assets/wordcloud.jpg'),
                   height: 300,
                 ),
                 Row(
-                  children: [
-                    const SizedBox(width: 10),
+                  children: const [
+                    SizedBox(width: 10),
                     Text('밥 바꿔야해요!'),
                   ],
                 ),
@@ -93,7 +93,7 @@ class ReviewAnalysisPage extends StatelessWidget {
                     Text('긍정', style: GoogleFonts.doHyeon(fontSize: 28, color: Colors.blue)),
                   ],
                 ),
-                Image(
+                const Image(
                   image: AssetImage('assets/wordcloud.jpg'),
                   height: 300,
                 ),
@@ -104,7 +104,7 @@ class ReviewAnalysisPage extends StatelessWidget {
                     Text('부정', style: GoogleFonts.doHyeon(fontSize: 28, color: Colors.red)),
                   ],
                 ),
-                Image(
+                const Image(
                   image: AssetImage('assets/wordcloud.jpg'),
                   height: 300,
                 ),
@@ -126,7 +126,7 @@ class ReviewAnalysisPage extends StatelessWidget {
           height: 50,
           decoration: BoxDecoration(
               color: containerColor,
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(15),
               ),
               boxShadow: [
@@ -134,7 +134,7 @@ class ReviewAnalysisPage extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 3,
                   blurRadius: 5,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 )
               ]),
           child: Row(
@@ -143,7 +143,7 @@ class ReviewAnalysisPage extends StatelessWidget {
               CircleAvatar(
                 radius: 15,
                 backgroundColor: circleColor,
-                child: Text(rank, style: TextStyle(color: Colors.white)),
+                child: Text(rank, style: const TextStyle(color: Colors.white)),
               ),
               const SizedBox(width: 10),
               Text(text,

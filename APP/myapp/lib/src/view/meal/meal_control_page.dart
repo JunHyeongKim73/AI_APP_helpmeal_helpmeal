@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myapp/src/controller/date_controller.dart';
 import 'package:myapp/src/model/colors.dart';
-import 'package:myapp/src/model/meal/food.dart';
 import 'package:myapp/src/model/meal/menu.dart';
 import 'package:myapp/src/model/meal/menu_repository.dart';
 
@@ -78,8 +77,8 @@ class MealControlPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10.0),
                           child: Text('음식들을 enter로 구분해주세요!',
                               style: TextStyle(color: Colors.grey)),
                         ),
@@ -94,7 +93,7 @@ class MealControlPage extends StatelessWidget {
                               ], controller.dateText);
                               _showToast(context);
                             },
-                            child: Text('수정',
+                            child: const Text('수정',
                                 style: TextStyle(color: Colors.white)),
                             style: ElevatedButton.styleFrom(
                               shape: const RoundedRectangleBorder(
@@ -118,8 +117,8 @@ class MealControlPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 20, left: 20),
-          child: Text(text, style: TextStyle(fontWeight: FontWeight.w800)),
+          padding: const EdgeInsets.only(top: 20, left: 20),
+          child: Text(text, style: const TextStyle(fontWeight: FontWeight.w800)),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
@@ -129,11 +128,11 @@ class MealControlPage extends StatelessWidget {
             decoration: InputDecoration(
               fillColor: Colors.white,
               filled: true,
-              focusedBorder: OutlineInputBorder(
+              focusedBorder: const OutlineInputBorder(
                 borderSide:
                     BorderSide(color: CustomColor.themeColor, width: 2.0),
               ),
-              enabledBorder: OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 2.0),
               ),
               hintText: textController.text == '' ? '식단을 입력해주세요!' : '',

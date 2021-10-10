@@ -13,7 +13,6 @@ class MenuRepository {
     final response = await http.get(Uri.parse(
         'https://helpmeal.duckdns.org/menus/1/$noTimeDate/${category.index + 1}'));
     if (response.statusCode == 200) {
-      print('GET SUCCESS');
       var lists = jsonDecode(response.body);
       List<Food> foodList = [];
       for (var element in lists) {
@@ -53,8 +52,6 @@ class MenuRepository {
       }),
     );
     if (response.statusCode == 200) {
-      print('POST SUCCESS');
-      print(jsonDecode(response.body));
       return MenuForPost.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('failed');
@@ -62,8 +59,11 @@ class MenuRepository {
   }
 
   static Future<void> postMenu(DateTime dateTime, List<List<Map>> foodList) async {
+    // ignore: unused_local_variable
     MenuForPost menu1 = await createMenu(dateTime, 1, foodList[0]);
+    // ignore: unused_local_variable
     MenuForPost menu2 = await createMenu(dateTime, 2, foodList[1]);
+    // ignore: unused_local_variable
     MenuForPost menu3 = await createMenu(dateTime, 3, foodList[2]);
   }
 }

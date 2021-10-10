@@ -24,7 +24,7 @@ class App extends StatelessWidget {
         troopName: '공군 작전사령부 직할부대',
         groupName: '오산기지',
         allergyList: ['고기'],
-        isAdmin: true,
+        isAdmin: 1,
       );
     } else {
       user = User(

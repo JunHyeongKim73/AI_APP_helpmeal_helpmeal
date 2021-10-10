@@ -10,13 +10,12 @@ import 'package:myapp/src/model/my_page_icon.dart';
 import 'package:myapp/src/model/user/user.dart';
 
 class MyPage extends StatelessWidget {
-  User user;
+  final User user;
 
-  MyPage({required this.user, Key? key}) : super(key: key);
+  const MyPage({required this.user, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(user);
     return Scaffold(
       body: Column(children: [
         Container(
@@ -70,12 +69,12 @@ class MyPage extends StatelessWidget {
                                 style: GoogleFonts.doHyeon(
                                     fontSize: 20, color: Colors.white),
                               ),
-                              user.isAdmin ? const SizedBox(width: 2) : const SizedBox(),
-                              user.isAdmin ? _masterIcon() : Container(),
+                              user.isAdmin == 1 ? const SizedBox(width: 2) : const SizedBox(),
+                              user.isAdmin == 1 ? _masterIcon() : Container(),
                             ],
                           ),
                         ),
-                        Text(user.isLogined ? user.groupName : '',
+                        Text(user.isLogined ? user.groupName! : '',
                             style: GoogleFonts.doHyeon(
                                 fontSize: 20, color: Colors.white)),
                       ],
@@ -152,7 +151,7 @@ class MyPage extends StatelessWidget {
   }
 
   Widget _myPageIconsView() {
-    List<MyPageIcon> myPageIconList = user.isAdmin
+    List<MyPageIcon> myPageIconList = user.isAdmin == 1
         ? MyPageIcon.adminMyPageIconList
         : MyPageIcon.userMyPageIconList;
 
@@ -172,9 +171,9 @@ class MyPage extends StatelessWidget {
           ),
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

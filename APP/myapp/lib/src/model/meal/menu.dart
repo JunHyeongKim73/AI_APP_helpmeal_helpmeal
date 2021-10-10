@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:myapp/src/model/meal/food.dart';
 
 enum Category { breakfast, lunch, dinner }

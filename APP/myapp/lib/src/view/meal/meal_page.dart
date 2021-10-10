@@ -12,8 +12,8 @@ import 'package:myapp/src/model/user/user.dart';
 import 'meal_item_view.dart';
 
 class MealPage extends StatefulWidget {
-  User user;
-  MealPage({required this.user, Key? key}) : super(key: key);
+  final User user;
+  const MealPage({required this.user, Key? key}) : super(key: key);
 
   @override
   _MealPage createState() => _MealPage();
@@ -21,13 +21,12 @@ class MealPage extends StatefulWidget {
 
 class _MealPage extends State<MealPage> {
   final _scrollController = ScrollController();
-  bool isMealEmpty = false;
+  bool isMealEmpty = true;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
       // widget.user -> 유저의 알러지 확인!
-      print('page refreshed');
       return Scaffold(
         appBar: const CustomAppBar(),
         body: Column(
@@ -71,9 +70,9 @@ class _MealPage extends State<MealPage> {
 class MealContainer extends StatefulWidget {
   final ScrollController scrollController;
   final DateTime dateTime;
-  User user;
+  final User user;
 
-  MealContainer({
+  const MealContainer({
     Key? key,
     required this.scrollController,
     required this.dateTime,
@@ -85,7 +84,7 @@ class MealContainer extends StatefulWidget {
 }
 
 class _MealContainerState extends State<MealContainer> {
-  late final Future<List<Meal>> futureMealList;
+  Future<List<Meal>>? futureMealList;
 
   @override
   Widget build(BuildContext context) {
