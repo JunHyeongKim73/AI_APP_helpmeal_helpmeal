@@ -1,11 +1,15 @@
+const express = require('express');
+const app = express();
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const crypto = require('crypto');
 const db_config = require(__dirname + '/../../config/database.js');
 const YOUR_SECRET_KEY = process.env.SECRET_KEY;
 const conn = db_config.init();
+const cookieParser = require('cookie-parser');
 db_config.connect(conn);
-
+app.use(express.json());//req body 파싱
+app.use(cookieParser);
 // 비밀번호 암호화  함수
 const createSalt = () => 
     new Promise((resolve, reject) => {
@@ -44,16 +48,39 @@ exports.createToken = async function (req, res, next)  {
 					if (rows[0].password == password){	
 						const token = jwt.sign({
 								email: rows[0].email,
-								name: rows[0].name,
+								name: rows[0].id,
 								manageLevel: rows[0].magage_level
 							}, YOUR_SECRET_KEY, {
 							expiresIn: '10d'
 						});
-						res.cookie('user', token);
-						res.status(201).json({
-						result: 'ok',
-						token
+						res.cookie('user', token, maxAge =  10 * 24 * 60 * 60 * 1000);
+						console.log(res.cookie);
+						//클라이언트에서 활용할 정보
+						const selectAllergyQuery = `SELECT * from user_allergy WHERE user_id = ?`
+					
+						let allergies_res = await new Array();
+						//프로미스로 만들기
+						const selectAllergy = new Promise(async function(resolve, reject){
+							conn.query(selectAllergyQuery, [rows[0].id], async function (error, allergies) {
+								if(error) {
+									res.status(401).json({meesege: error});
+								}	
+								else if (allergies){
+									for(let i = 0; i < allergies.length; i++){
+										allergies_res[i] = allergies[i].allergy;
+										console.log("Allergy ", i, ": ", allergies_res[i]);
+										if(i == allergies.length - 1) resolve();
+									}			
+								}
+								else resolve("no allergy");
+							});	
 						});
+						selectAllergy
+						.then((messege) => {
+							res.send({
+								name: rows[0].name, troopId: rows[0].troop_id, allergy: allergies_res, result: 'ok',token
+							});
+						});	
 					}
 					else {
 						res.status(400).json({ messege: '비밀번호가 잘못되었습니다.'});	
@@ -99,7 +126,7 @@ exports.createNewUser = async function (req, res, next) {
 	checkEmailOverlap
 	.then((messege) => {
 		//관리자인 경우
-		if(req.body.managerLevel){
+		if(req.body.managerLevel > 0){
 			const createUser = `INSERT INTO user(name, password, troop_id, military_serial_number, email, manage_level, salt) VALUES(?, ?, ?, ?, ?, ?, ?);`;
 			conn.query(createUser, [req.body.name, password, req.body.troopId, req.body.military_serial_number, req.body.email, req.body.managerLevel, salt], (error, rows) => {
 				if (error) {
