@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:myapp/src/model/troop/group.dart';
 
 class SignUpController extends GetxController {
   String email = '';
   bool isEmail = false;
+  bool isOverlapCheck = false;
 
   String password = '';
   bool isPassword = false;
@@ -20,9 +22,15 @@ class SignUpController extends GetxController {
   String milName = '';
   String troopName = '';
   String groupName = '';
+  Group? groups;
 
   void setEmail(String text) {
     email = text;
+    update();
+  }
+
+  void setCheck(bool flag){
+    isOverlapCheck = flag;
     update();
   }
 
@@ -47,7 +55,7 @@ class SignUpController extends GetxController {
     isName = (name == '' ? true : false);
     isMilNum = (milNum == '' ? true : false);
 
-    if (!(isEmail || isPassword || isName || isMilNum)) {
+    if (!(isEmail || isPassword || isName || isMilNum) && isOverlapCheck) {
       isNextPage = true;
     } else {
       isNextPage = false;
@@ -61,10 +69,11 @@ class SignUpController extends GetxController {
     update();
   }
 
-  void setTroops(String _milName, String _troopName, String _groupName) {
+  void setTroops(String _milName, String _troopName, String _groupName, Group _groups) {
     milName = _milName;
     troopName = _troopName;
     groupName = _groupName;
+    groups = _groups;
     update();
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/src/model/troop_repository.dart';
+import 'package:myapp/src/model/troop/group.dart';
+import 'package:myapp/src/model/troop/troop_repository.dart';
 
 class SelectTroopController extends GetxController {
   var troopList = TroopRepository.troopList;
@@ -19,6 +20,7 @@ class SelectTroopController extends GetxController {
   String milName = '';
   String troopName = '';
   String groupName = '';
+  Group? groups;
 
   final PageController pageController = PageController(initialPage: 0);
 
@@ -137,8 +139,7 @@ class SelectTroopController extends GetxController {
         break;
     }
 
-    final troop =
-        troopList[selectedIconIndex].troops![selectedTroopIndex].name;
+    final troop = troopList[selectedIconIndex].troops![selectedTroopIndex].name;
     if (selectedDetailTroopIndex == -1) {
       var group = troopList[selectedIconIndex]
           .troops![selectedTroopIndex]
@@ -146,6 +147,7 @@ class SelectTroopController extends GetxController {
 
       troopName = '$_milName $troop';
       groupName = group;
+      groups = Group(lists: [_milName, troop, group]);
     } else {
       var detailTroopName = troopList[selectedIconIndex]
           .troops![selectedTroopIndex]
@@ -158,8 +160,8 @@ class SelectTroopController extends GetxController {
 
       troopName = '$_milName $troop $detailTroopName';
       groupName = group;
+      groups = Group(lists: [_milName, troop, detailTroopName, group]);
     }
-
     update();
   }
 }

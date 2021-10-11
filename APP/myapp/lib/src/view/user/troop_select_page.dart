@@ -6,7 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:myapp/src/controller/select_troop_controller.dart';
 import 'package:myapp/src/controller/sign_up_controller.dart';
 import 'package:myapp/src/model/colors.dart';
-import 'package:myapp/src/model/troop.dart';
+import 'package:myapp/src/model/troop/troop.dart';
 
 class TroopSelectPage extends StatefulWidget {
   const TroopSelectPage({Key? key}) : super(key: key);
@@ -131,7 +131,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
             onPressed: () {
               controller.selectTroopCompleted();
               signUpController.setTroops(controller.milName,
-                  controller.troopName, controller.groupName);
+                  controller.troopName, controller.groupName, controller.groups!);
               Get.toNamed('/allergy', arguments: signUpController);
             },
             child: const Text('완료',

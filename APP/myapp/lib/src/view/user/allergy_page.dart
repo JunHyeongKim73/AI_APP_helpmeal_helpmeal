@@ -119,7 +119,7 @@ class _AllergyViewState extends State<AllergyView> {
                   });
                   signUpController.setAllergy(selectedAllergy);
                   // 여기에 회원가입 하는 코드가 들어가야 함
-                  UserRepository.postUser(User(
+                  User user = User(
                     email: signUpController.email,
                     password: signUpController.password,
                     name: signUpController.name,
@@ -129,8 +129,12 @@ class _AllergyViewState extends State<AllergyView> {
                     troopName: signUpController.troopName,
                     groupName: signUpController.groupName,
                     allergyList: signUpController.allergy,
-                  ));
-                  Get.offAllNamed('/', arguments: signUpController);
+                    groups: signUpController.groups,
+                  );
+                  if(user.isLogined!){
+                    UserRepository.postUser(user);
+                  }
+                  Get.offAllNamed('/', arguments: user);
                 },
                 child: Text(
                   selectedNum == 0 ? '알레르기가 없어요' : '선택 완료',

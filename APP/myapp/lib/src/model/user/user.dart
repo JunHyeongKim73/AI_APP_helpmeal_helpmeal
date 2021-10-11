@@ -1,14 +1,19 @@
+import 'package:myapp/src/model/troop/group.dart';
+
 class User {
-  late String email;
-  late String password;
-  late String name;
-  late String milNum;
+  String? email;
+  String? password;
+  String? name;
+  String? milNum;
   String? milName;
   String? troopName;
   String? groupName;
-  List<String>? allergyList;
-  late int isAdmin;
-  late bool isLogined;
+  int? troopId;
+  List<dynamic>? allergyList = [];
+  Group? groups;
+  int? isAdmin;
+  bool? isLogined;
+  String? messege;
 
   User({
     this.email = '',
@@ -19,14 +24,11 @@ class User {
     this.milName = '',
     this.troopName = '',
     this.groupName = '',
+    this.troopId = 0,
     this.allergyList,
+    this.groups,
+    this.messege
   }){
-    isLogined = (email == '' ? false : true);
-  }
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      
-    );
+    isLogined = (name == '' ? false : true);
   }
 }

@@ -13,7 +13,7 @@ class Food {
     );
   }
 
-  bool hasAllergy(List<String> userAllergyList){
+  bool hasAllergy(List<dynamic> userAllergyList){
     for(var userAllergy in userAllergyList){
       if(allergyList!.contains(userAllergy)){
         return true;

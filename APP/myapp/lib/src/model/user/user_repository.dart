@@ -7,25 +7,21 @@ import 'user.dart';
 class UserRepository {
   static Future<bool> checkUser(String email) async {
     final response = await http.post(
-      Uri.parse('https://helpmeal.duckdns.org/users/check'),
+      Uri.parse('https://helpmeal.duckdns.org/users/checkEmailOverlap'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, dynamic>{
-        'email' : email
-      }),
+      body: jsonEncode(<String, dynamic>{'email': email}),
     );
 
-    if(response.statusCode == 201){
+    if (response.statusCode == 200) {
       print('checkCompleted');
-      print(jsonDecode(response.body));
       String text = jsonDecode(response.body)['result'];
-      if(text == 'Overlapped'){
-        return false;
+      if (text == 'Overlapped') {
+        return true;
       }
-      return true;
-    }
-    else{
+      return false;
+    } else {
       throw Exception('check failed');
     }
   }
@@ -40,7 +36,7 @@ class UserRepository {
         'name': user.name,
         'password': user.password,
         'military_serial_number': user.milNum,
-        'troopId': 1,
+        'troop': user.groups!.troopMap,
         'email': user.email,
         'allergy': user.allergyList,
         'managerLevel': user.isAdmin,
@@ -54,7 +50,7 @@ class UserRepository {
     }
   }
 
-  static Future<void> getUser(String email, String password) async {
+  static Future<User> getUser(String email, String password) async {
     final response = await http.post(
       Uri.parse('https://helpmeal.duckdns.org/users/login'),
       headers: <String, String>{
@@ -65,31 +61,21 @@ class UserRepository {
         'password': password,
       }),
     );
-
-    print(response.statusCode);
-    print(jsonDecode(response.body));
-
-    if (response.statusCode == 201) {
+    
+    final body = jsonDecode(response.body);
+    print(body);
+    if (response.statusCode == 200) {
       print('Get Success');
-      // print(UserForGet.fromJson(jsonDecode(response.body)));
-      // UserForGet userForGet = UserForGet.fromJson(jsonDecode(response.body));
-
-      // Map<String, dynamic> payload = Jwt.parseJwt(userForGet.token);
-
-      // print(payload);
+      Map<String, dynamic> payload = Jwt.parseJwt(body['token']);
+      print(payload);
+      return User(
+          name: body['name'],
+          troopId: body['troopId'],
+          allergyList: body['allergy']);
+    } else if (response.statusCode == 400) {
+      return User(messege: body['messege']);
     } else {
       throw Exception('failed');
     }
-  }
-}
-
-class UserForGet {
-  final String result;
-  final String token;
-
-  UserForGet({required this.result, required this.token});
-
-  factory UserForGet.fromJson(Map<String, dynamic> json) {
-    return UserForGet(result: json['result'], token: json['token']);
   }
 }

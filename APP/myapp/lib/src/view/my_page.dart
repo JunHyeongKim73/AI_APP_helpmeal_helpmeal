@@ -65,7 +65,7 @@ class MyPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                user.isLogined ? user.name : '',
+                                user.isLogined! ? user.name! : '',
                                 style: GoogleFonts.doHyeon(
                                     fontSize: 20, color: Colors.white),
                               ),
@@ -74,7 +74,7 @@ class MyPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Text(user.isLogined ? user.groupName! : '',
+                        Text(user.isLogined! ? user.groupName! : '',
                             style: GoogleFonts.doHyeon(
                                 fontSize: 20, color: Colors.white)),
                       ],
@@ -84,7 +84,7 @@ class MyPage extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 200),
-                        user.isLogined ? _loginButtonView() : _notLoginButtonView(),
+                        user.isLogined! ? _loginButtonView() : _notLoginButtonView(),
                       ],
                     ),
                     right: 0,
@@ -103,7 +103,7 @@ class MyPage extends StatelessWidget {
   }
 
   Widget _imageSelection() {
-    if (user.isLogined) {
+    if (user.isLogined!) {
       return Image.asset('assets/user_icon/${user.milName}.png');
     }
     return const Icon(MdiIcons.account, color: Colors.grey, size: 36);
@@ -155,7 +155,7 @@ class MyPage extends StatelessWidget {
         ? MyPageIcon.adminMyPageIconList
         : MyPageIcon.userMyPageIconList;
 
-    if (!user.isLogined) {
+    if (user.isLogined!) {
       return Container();
     }
     return Expanded(

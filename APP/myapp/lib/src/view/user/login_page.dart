@@ -4,6 +4,7 @@ import 'package:myapp/src/app.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/fonts.dart';
+import 'package:myapp/src/model/user/user.dart';
 import 'package:myapp/src/model/user/user_repository.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,8 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String? email;
-  String? password;
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -82,35 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              height: 40.0,
-              width: 240,
-              child: ElevatedButton(
-                onPressed: () {
-                  print(email);
-                  print(password);
-                  UserRepository.getUser(email!, password!);
-                },
-                child: const Center(
-                  child: Text(
-                    "로그인",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  primary: CustomColor.themeColor,
-                  shadowColor: Colors.white,
-                  elevation: 3,
-                ),
-              ),
-            ),
+            SizedBox(height: 40.0, width: 240, child: _loginBuilder()),
             const SizedBox(height: 10),
             SizedBox(
               height: 40.0,
@@ -139,6 +112,49 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _loginBuilder() {
+
+    return ElevatedButton(
+      onPressed: () async {
+        User user = await UserRepository.getUser(email, password);
+        if (user.isLogined!) {
+          Get.offAllNamed('/', arguments: user);
+        } else {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Text(user.messege!),
+                actions: <Widget>[
+                  TextButton(onPressed: () => Get.back(), child: Text('확인'))
+                ],
+              );
+            },
+          );
+        }
+      },
+      child: const Center(
+        child: Text(
+          "로그인",
+          style: TextStyle(
+            fontSize: 18.0,
+            color: Colors.white,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        primary: CustomColor.themeColor,
+        shadowColor: Colors.white,
+        elevation: 3,
       ),
     );
   }

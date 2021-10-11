@@ -14,31 +14,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signUpController = Get.arguments;
-    User user;
-    if (signUpController == null) {
-      user = User(
-        email: 'rla5764',
-        name: '김준형',
-        milName: 'airforce',
-        troopName: '공군 작전사령부 직할부대',
-        groupName: '오산기지',
-        allergyList: ['고기'],
-        isAdmin: 1,
-      );
-    } else {
-      user = User(
-        email: signUpController.email,
-        password: signUpController.password,
-        name: signUpController.name,
-        milNum: signUpController.milNum,
-        milName: signUpController.milName,
-        troopName: signUpController.milNum,
-        groupName: signUpController.groupName,
-        allergyList: signUpController.allergy,
-        isAdmin: signUpController.isAdmin,
-      );
-    }
+    User user = Get.arguments;
+    print('이메일 : ${user.email}');
+    print('알러지 : ${user.allergyList}');
+    print('그룹 : ${user.groupName}');
+    print('로그인 : ${user.isLogined}');
     return GetBuilder<NavigatePageController>(
       builder: (controller) {
         return Scaffold(

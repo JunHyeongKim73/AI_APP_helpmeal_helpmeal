@@ -8,9 +8,14 @@ import 'package:myapp/src/model/meal/menu_repository.dart';
 import 'package:myapp/src/model/user/user.dart';
 import 'package:myapp/src/model/user/user_repository.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignUpController>(builder: (controller) {
@@ -73,7 +78,7 @@ class SignUpPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                _checkOverlap(controller.email),
+                                _checkOverlap(controller.email, controller),
                               ],
                             ),
                             const SizedBox(height: 20.0),
@@ -190,7 +195,7 @@ class SignUpPage extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    '완료',
+                    '다음',
                     style:
                         GoogleFonts.doHyeon(fontSize: 18, color: Colors.white),
                   ),
@@ -206,38 +211,32 @@ class SignUpPage extends StatelessWidget {
     });
   }
 
-  FutureBuilder<Object?> _checkOverlap(String email) {
-    Future<bool> isOverlapped = UserRepository.checkUser(email);
-    return FutureBuilder(
-      future: isOverlapped,
-      builder: (context, snapshot) {
-        return OutlinedButton(
-          onPressed: () {
-            if (snapshot.hasData) {
-              String text = '중복된 이메일입니다.';
-              if (snapshot.data == false) {
-                text = '사용할 수 있는 이메일입니다.';
-              }
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return AlertDialog(content: Text(text), actions: <Widget>[
-                    TextButton(onPressed: () => Get.back(), child: Text('확인'))
-                  ]);
-                },
-              );
-            }
+  Widget _checkOverlap(String email, SignUpController controller) {
+    return OutlinedButton(
+      onPressed: () async {
+        bool isOverLapped = await UserRepository.checkUser(email);
+        controller.setCheck(!isOverLapped);
+        
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(isOverLapped ? '중복된 이메일입니다!' : '사용가능한 이메일입니다!'),
+              actions: <Widget>[
+                TextButton(onPressed: () => Get.back(), child: Text('확인'))
+              ],
+            );
           },
-          child: const Text('중복확인'),
-          style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            side: const BorderSide(width: 1, color: CustomColor.themeColor),
-          ),
         );
       },
+      child: const Text('중복확인'),
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        side: const BorderSide(width: 1, color: CustomColor.themeColor),
+      ),
     );
   }
 }
