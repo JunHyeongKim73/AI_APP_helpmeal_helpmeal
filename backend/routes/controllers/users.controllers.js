@@ -46,20 +46,31 @@ exports.createToken = async function (req, res, next)  {
 				if (rows.length > 0) {
 					let password = await makePasswordHashed(rows[0].salt, req.body.password);//비밀번호 암호화;
 					if (rows[0].password == password){	
-						const token = jwt.sign({
-								email: rows[0].email,
-								name: rows[0].id,
-								manageLevel: rows[0].magage_level
-							}, YOUR_SECRET_KEY, {
-							expiresIn: '10d'
-						});
-						res.cookie('user', token, maxAge =  10 * 24 * 60 * 60 * 1000);
-						console.log(res.cookie);
 						//클라이언트에서 활용할 정보
-						const selectAllergyQuery = `SELECT * from user_allergy WHERE user_id = ?`
-					
-						let allergies_res = await new Array();
+						const selectTroopQuery = `SELECT * from troop WHERE id = ?`; 
+						let troop = await {'troopId': '', '4': '', '3': '', '2': '', '1': ''};
 						//프로미스로 만들기
+						const selectTroop = new Promise(async function(resolve, reject){ 
+							conn.query(selectTroopQuery, [rows[0].troop_id], async function (error, userTroop) {
+								if(error) {
+									res.status(401).json({meesege: error}); 
+								}	
+								else if (userTroop){
+									troop['troopId'] = userTroop[0].id;
+									troop['4'] = userTroop[0].level4;
+									troop['3'] = userTroop[0].level3;
+									troop['2'] = userTroop[0].level2;
+									troop['1'] = userTroop[0].level1;
+									
+									resolve();
+								}
+								else resolve("no troop");
+							});	
+						});	
+
+						let allergies_res = await new Array();
+						
+						const selectAllergyQuery = `SELECT * from user_allergy WHERE user_id = ?;`;	
 						const selectAllergy = new Promise(async function(resolve, reject){
 							conn.query(selectAllergyQuery, [rows[0].id], async function (error, allergies) {
 								if(error) {
@@ -75,10 +86,22 @@ exports.createToken = async function (req, res, next)  {
 								else resolve("no allergy");
 							});	
 						});
-						selectAllergy
+						
+						const token = jwt.sign({
+							email: rows[0].email,
+							name: rows[0].name,
+							manageLevel: rows[0].manage_level,
+							}, YOUR_SECRET_KEY, {
+							expiresIn: '10d'
+						});
+
+						res.cookie('user', token, maxAge =  10 * 24 * 60 * 60 * 1000);
+						console.log(res.cookie);	
+
+						Promise.all([selectTroop, selectAllergy])
 						.then((messege) => {
 							res.send({
-								name: rows[0].name, troopId: rows[0].troop_id, allergy: allergies_res, result: 'ok',token
+								result: 'ok', token: token, troop: troop, allergy: allergies_res
 							});
 						});	
 					}
@@ -97,9 +120,83 @@ exports.createToken = async function (req, res, next)  {
 	}
 };
 
+//이메일 중복 검증하는 함수
+exports.checkEmailOverlap = async function (req, res) {
+	const checkEmailOverlap = new Promise(function(resolve, reject)  {
+		selectUser = `SELECT * FROM user WHERE email = "${req.body.email}";`;	
+		conn.query(selectUser, (error, emailSameUsers) => {
+			if (error) {
+				res.status(401).json({
+					messege: error
+				});
+				console.log(error);	
+			}	
+			else if(emailSameUsers.length > 0){
+				res.status(200).json({
+					result: "Overlapped"
+				});	
+				return;
+			}
+			else resolve();
+		});	
+	});
+	checkEmailOverlap
+	.then(() => {
+		res.status(200).json({result: "Not Overlapped"})
+	});
+};
+
 //회원가입 함수
 exports.createNewUser = async function (req, res, next) {
 	let troopId;	
+	
+	const findTroopId = new Promise(function(resolve, reject) {
+		let troop2, troop1, userId;
+		selectTroop = `SELECT * FROM troop WHERE level4 = ? AND level3 = ?;`;
+			conn.query(selectTroop, [req.body.troop[4], req.body.troop[3]],function (error, troops) {
+				if (error) {
+					res.status(401).json({messege: error});
+					console.log(error);	
+					}
+				else if(troops.length < 0){
+					res.status(401).json({messege: "존재하지 않는 부대입니다!"});
+				}
+				else if (!req.body.troop[2]){
+					troop2 = NULL;		
+					troop1 = NULL;
+				}
+				else if (!req.body.troop[1]){
+					troop1 = NULL; 
+				}
+				else{
+					troop2 = req.body.troop[2]; troop1 = req.body.troop[1]; 
+				}
+				//부대 선택	
+				conn.query(`SELECT id FROM troop WHERE level4 = ? AND level3 = ? AND level2 = ? AND level1 = ?`, [req.body.troop[4], req.body.troop[3], req.body.troop[2], req.body.troop[1]], function (error, troopList) {
+					if (error){
+						res.status(401).json({messege: error});
+						console.log(error);	
+					}
+					//부대 없을 경우
+					else if(troopList.length < 1){
+						conn.query(`INSERT INTO troop(level4, level3, level2, level1) VALUES(?, ?, ?, ?)`, [req.body.troop[4], req.body.troop[3], req.body.troop[2], req.body.troop[1]], function (error, insertedTroop) {
+							if (error){
+								res.status(400).json({messege: error});
+								console.log(error);	
+							}			
+							console.log("insertedTroopId: ", insertedTroop.insertid);
+							troopId = insertedTroop.insertId;
+							resolve(troopId);
+						});
+					}
+					else{
+						troopId = troopList[0].id;
+						console.log("troopId: ", troopId);
+						resolve(troopId); 
+					}
+				});	
+			});
+	});	
 	//이메일 중복 확인	
 	const checkEmailOverlap = new Promise(function(resolve, reject)  {
 		selectUser = `SELECT * FROM user WHERE email = "${req.body.email}";`;	
@@ -123,12 +220,12 @@ exports.createNewUser = async function (req, res, next) {
 	//비밀번호 암호화
 	const { password, salt } = await createHashedPassword(req.body.password);	
 	//console.log("salt: ", salt, "len: ", salt.length);	
-	checkEmailOverlap
+	findTroopId
 	.then((messege) => {
 		//관리자인 경우
 		if(req.body.managerLevel > 0){
 			const createUser = `INSERT INTO user(name, password, troop_id, military_serial_number, email, manage_level, salt) VALUES(?, ?, ?, ?, ?, ?, ?);`;
-			conn.query(createUser, [req.body.name, password, req.body.troopId, req.body.military_serial_number, req.body.email, req.body.managerLevel, salt], (error, rows) => {
+			conn.query(createUser, [req.body.name, password, troopId, req.body.military_serial_number, req.body.email, req.body.managerLevel, salt], (error, rows) => {
 				if (error) {
 					res.status(400).json({
 						messege: error
@@ -144,7 +241,7 @@ exports.createNewUser = async function (req, res, next) {
 		//일반 사용자인 경우
 		else{
 			const createUser = `INSERT INTO user(name, password, troop_id, military_serial_number, email, salt) VALUES(?, ?, ?, ?, ?, ?);`;
-			conn.query(createUser, [req.body.name, password, req.body.troopId, req.body.military_serial_number, req.body.email, salt], async function(error, rows) {
+			conn.query(createUser, [req.body.name, password, troopId, req.body.military_serial_number, req.body.email, salt], async function(error, rows) {
 				if (error) {
 					res.status(400).json({messege: error});
 					console.log(error);	
