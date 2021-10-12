@@ -6,11 +6,11 @@ import 'menu.dart';
 
 class MenuRepository {
 
-  static Future<Menu> fetchMenu(DateTime dateTime, Category category) async {
+  static Future<Menu> fetchMenu(DateTime dateTime, Category category, int troopId) async {
     String date = dateTime.toString();
     String noTimeDate = date.substring(0, 10);
     final response = await http.get(Uri.parse(
-        'https://helpmeal.duckdns.org/menus/1/$noTimeDate/${category.index + 1}'));
+        'https://helpmeal.duckdns.org/menus/$troopId/$noTimeDate/${category.index + 1}'));
     if (response.statusCode == 200) {
       var lists = jsonDecode(response.body);
       List<Food> foodList = [];
@@ -25,10 +25,10 @@ class MenuRepository {
     }
   }
 
-  static Future<List<Menu>> getMenus(DateTime dateTime) async {
-    Menu breakMenu = await fetchMenu(dateTime, Category.breakfast);
-    Menu lunchMenu = await fetchMenu(dateTime, Category.lunch);
-    Menu dinnerMenu = await fetchMenu(dateTime, Category.dinner);
+  static Future<List<Menu>> getMenus(DateTime dateTime, int troopId) async {
+    Menu breakMenu = await fetchMenu(dateTime, Category.breakfast, troopId);
+    Menu lunchMenu = await fetchMenu(dateTime, Category.lunch, troopId);
+    Menu dinnerMenu = await fetchMenu(dateTime, Category.dinner, troopId);
 
     return [breakMenu, lunchMenu, dinnerMenu];
   }
@@ -43,7 +43,7 @@ class MenuRepository {
     return isEmpty;
   }
 
-  static Future<MenuForPost> createMenu(DateTime dateTime, int order, List<Map> foods) async {
+  static Future<MenuForPost> createMenu(DateTime dateTime, int order, List<Map> foods, int troopId) async {
     String date = dateTime.toString();
     String noTimeDate = date.substring(0, 10);
 
@@ -53,7 +53,7 @@ class MenuRepository {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "troopId": 1,
+        "troopId": troopId,
         "numberOfDay": order,
         "day": noTimeDate,
         "menus": foods,
@@ -66,13 +66,13 @@ class MenuRepository {
     }
   }
 
-  static Future<void> postMenu(DateTime dateTime, List<List<Map>> foodList) async {
+  static Future<void> postMenu(DateTime dateTime, List<List<Map>> foodList, int troopId) async {
     // ignore: unused_local_variable
-    MenuForPost menu1 = await createMenu(dateTime, 1, foodList[0]);
+    MenuForPost menu1 = await createMenu(dateTime, 1, foodList[0], troopId);
     // ignore: unused_local_variable
-    MenuForPost menu2 = await createMenu(dateTime, 2, foodList[1]);
+    MenuForPost menu2 = await createMenu(dateTime, 2, foodList[1], troopId);
     // ignore: unused_local_variable
-    MenuForPost menu3 = await createMenu(dateTime, 3, foodList[2]);
+    MenuForPost menu3 = await createMenu(dateTime, 3, foodList[2], troopId);
   }
 }
 

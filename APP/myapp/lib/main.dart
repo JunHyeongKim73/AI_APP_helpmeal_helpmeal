@@ -53,7 +53,7 @@ class MyAPP extends StatelessWidget {
         GetPage(name: '/noticePass', page: () => const NoticePassPage()),
         GetPage(
             name: '/reviewAnalysis', page: () => const ReviewAnalysisPage()),
-        GetPage(name: '/mealControl', page: () => const MealControlPage()),
+        GetPage(name: '/mealControl', page: () => MealControlPage()),
         GetPage(
           name: '/troopSelect',
           page: () => const TroopSelectPage(),

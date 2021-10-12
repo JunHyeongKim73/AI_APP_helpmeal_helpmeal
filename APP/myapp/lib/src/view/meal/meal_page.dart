@@ -30,7 +30,7 @@ class _MealPage extends State<MealPage> {
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
       futureMenuList =
-          MenuRepository.getMenus(controller.dateText);
+          MenuRepository.getMenus(controller.dateText, widget.user.groups!.troopId!);
       return Scaffold(
         appBar: const CustomAppBar(),
         body: Column(
@@ -53,7 +53,7 @@ class _MealPage extends State<MealPage> {
                       padding: const EdgeInsets.only(right: 20),
                       child: (snapshot.hasData ? isMealEmpty : true)
                           ? ElevatedButton(
-                              onPressed: () => Get.toNamed('/mealControl'),
+                              onPressed: () => Get.toNamed('/mealControl', arguments: widget.user),
                               child: const Icon(MdiIcons.plus, size: 32),
                               style: ElevatedButton.styleFrom(
                                 shape: const CircleBorder(),

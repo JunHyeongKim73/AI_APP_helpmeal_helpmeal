@@ -8,9 +8,11 @@ import 'package:myapp/src/controller/date_controller.dart';
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/meal/menu.dart';
 import 'package:myapp/src/model/meal/menu_repository.dart';
+import 'package:myapp/src/model/user/user.dart';
 
 class MealControlPage extends StatelessWidget {
-  const MealControlPage({Key? key}) : super(key: key);
+  User user = Get.arguments;
+  MealControlPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class MealControlPage extends StatelessWidget {
           // final List<Menu> menuList =
           //     MenuRepository.loadMenusWithDate(controller.dateText);
           Future<List<Menu>> menuList =
-              MenuRepository.getMenus(controller.dateText);
+              MenuRepository.getMenus(controller.dateText, user.groups!.troopId!);
 
           return FutureBuilder<List<Menu>>(
               future: menuList,
@@ -38,9 +40,12 @@ class MealControlPage extends StatelessWidget {
                   if (snapshot.data!.isEmpty) {
                     breakController.text = '';
                   } else {
-                    breakController.text = snapshot.data![0].foodNames.join('\n');
-                    lunchController.text = snapshot.data![1].foodNames.join('\n');
-                    dinerController.text = snapshot.data![2].foodNames.join('\n');
+                    breakController.text =
+                        snapshot.data![0].foodNames.join('\n');
+                    lunchController.text =
+                        snapshot.data![1].foodNames.join('\n');
+                    dinerController.text =
+                        snapshot.data![2].foodNames.join('\n');
                   }
                 }
                 return Column(
@@ -118,7 +123,8 @@ class MealControlPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 20, left: 20),
-          child: Text(text, style: const TextStyle(fontWeight: FontWeight.w800)),
+          child:
+              Text(text, style: const TextStyle(fontWeight: FontWeight.w800)),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
@@ -183,6 +189,6 @@ class MealControlPage extends StatelessWidget {
     List<Map> dinerFoodList = createFoodList(dinerFoods);
 
     MenuRepository.postMenu(
-        dateTime, [breakFoodList, lunchFoodList, dinerFoodList]);
+        dateTime, [breakFoodList, lunchFoodList, dinerFoodList], user.groups!.troopId!);
   }
 }

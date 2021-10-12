@@ -20,8 +20,6 @@ class SignUpController extends GetxController {
 
   List<String> allergy = [];
   String milName = '';
-  String troopName = '';
-  String groupName = '';
   Group? groups;
 
   void setEmail(String text) {
@@ -69,10 +67,8 @@ class SignUpController extends GetxController {
     update();
   }
 
-  void setTroops(String _milName, String _troopName, String _groupName, Group _groups) {
+  void setTroops(String _milName, Group _groups) {
     milName = _milName;
-    troopName = _troopName;
-    groupName = _groupName;
     groups = _groups;
     update();
   }

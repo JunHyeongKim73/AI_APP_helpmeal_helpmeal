@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:myapp/src/model/troop/group.dart';
 
 import 'user.dart';
 
@@ -61,17 +62,19 @@ class UserRepository {
         'password': password,
       }),
     );
-    
+
     final body = jsonDecode(response.body);
     print(body);
     if (response.statusCode == 200) {
       print('Get Success');
-      Map<String, dynamic> payload = Jwt.parseJwt(body['token']);
-      print(payload);
+      Map<String, dynamic> tokenData = Jwt.parseJwt(body['token']);
       return User(
-          name: body['name'],
-          troopId: body['troopId'],
-          allergyList: body['allergy']);
+        email: tokenData['email'],
+        name: tokenData['name'],
+        groups: Group.fromJson(body['troop']),
+        allergyList: body['allergy'],
+        isAdmin: tokenData['manageLevel'] == null ? 0 : 1,
+      );
     } else if (response.statusCode == 400) {
       return User(messege: body['messege']);
     } else {

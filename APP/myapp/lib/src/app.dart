@@ -17,7 +17,8 @@ class App extends StatelessWidget {
     User user = Get.arguments;
     print('이메일 : ${user.email}');
     print('알러지 : ${user.allergyList}');
-    print('그룹 : ${user.groupName}');
+    print('그룹 : ${user.groups}');
+    print('군 : ${user.milName}');
     print('로그인 : ${user.isLogined}');
     return GetBuilder<NavigatePageController>(
       builder: (controller) {

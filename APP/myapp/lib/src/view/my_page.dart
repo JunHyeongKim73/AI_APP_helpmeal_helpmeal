@@ -74,7 +74,7 @@ class MyPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Text(user.isLogined! ? user.groupName! : '',
+                        Text(user.isLogined! ? user.groups!.groupName! : '',
                             style: GoogleFonts.doHyeon(
                                 fontSize: 20, color: Colors.white)),
                       ],
@@ -155,7 +155,7 @@ class MyPage extends StatelessWidget {
         ? MyPageIcon.adminMyPageIconList
         : MyPageIcon.userMyPageIconList;
 
-    if (user.isLogined!) {
+    if (!user.isLogined!) {
       return Container();
     }
     return Expanded(
@@ -180,7 +180,7 @@ class MyPage extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () =>
-                        Get.toNamed(myPageIconList[index].pageName),
+                        Get.toNamed(myPageIconList[index].pageName, arguments: user),
                     icon: Icon(myPageIconList[index].iconData,
                         color: CustomColor.themeColor),
                     iconSize: 42,

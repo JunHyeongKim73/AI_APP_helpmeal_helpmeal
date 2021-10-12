@@ -126,8 +126,6 @@ class _AllergyViewState extends State<AllergyView> {
                     milNum: signUpController.milNum,
                     isAdmin: signUpController.isAdmin,
                     milName: signUpController.milName,
-                    troopName: signUpController.troopName,
-                    groupName: signUpController.groupName,
                     allergyList: signUpController.allergy,
                     groups: signUpController.groups,
                   );

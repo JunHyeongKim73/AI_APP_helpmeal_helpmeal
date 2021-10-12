@@ -18,8 +18,6 @@ class SelectTroopController extends GetxController {
   var selectedGroupIndex = -1;
   bool isThirdPageOn = false;
   String milName = '';
-  String troopName = '';
-  String groupName = '';
   Group? groups;
 
   final PageController pageController = PageController(initialPage: 0);
@@ -145,8 +143,6 @@ class SelectTroopController extends GetxController {
           .troops![selectedTroopIndex]
           .groups![selectedGroupIndex];
 
-      troopName = '$_milName $troop';
-      groupName = group;
       groups = Group(lists: [_milName, troop, group]);
     } else {
       var detailTroopName = troopList[selectedIconIndex]
@@ -158,8 +154,6 @@ class SelectTroopController extends GetxController {
           .troops![selectedDetailTroopIndex]
           .groups![selectedGroupIndex];
 
-      troopName = '$_milName $troop $detailTroopName';
-      groupName = group;
       groups = Group(lists: [_milName, troop, detailTroopName, group]);
     }
     update();
