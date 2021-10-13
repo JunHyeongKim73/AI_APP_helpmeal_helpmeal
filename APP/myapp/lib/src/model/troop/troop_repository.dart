@@ -138,12 +138,7 @@ class TroopRepository {
 
   static Future<List<Group>> getTroop(Group group) async {
     print(group.troopMap);
-    Group plusGroup = group;
-    if (group.troopMap['3'] == '') {
-      plusGroup.troopMap['3'] = '+';
-    } else {
-      plusGroup.troopMap['4'] = '+';
-    }
+    Group plusGroup = Group.clone(group);
 
     final response = await http.post(
       Uri.parse('https://helpmeal.duckdns.org/troops/get'),
@@ -156,7 +151,7 @@ class TroopRepository {
     print(response.statusCode);
 
     final body = jsonDecode(response.body);
-    print(jsonDecode(response.body));
+    print(body);
 
     if (response.statusCode == 200) {
       List<Group> groupList = [];

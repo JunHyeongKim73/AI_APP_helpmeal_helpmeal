@@ -1,15 +1,3 @@
-/*import 'package:flutter/material.dart';
-
-class SuggestionCheckPage extends StatelessWidget {
-  const SuggestionCheckPage({ Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text('sugges check'),
-    );
-  }
-}*/
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,8 +16,6 @@ final List<String> suggestionCheck = <String>[
   "너무 맛없고, 너무 정확도가 떨어지고, 너무 못 만들었어요. 미완성인 것처럼 보이기도 하고요. 좀 많이 개선점이 필요해보여요."
 ];
 
-void main() => runApp(SuggestionCheckPage());
-
 class SuggestionCheckPage extends StatefulWidget {
   const SuggestionCheckPage({Key? key}) : super(key: key);
 
@@ -40,84 +26,82 @@ class SuggestionCheckPage extends StatefulWidget {
 class SuggestionCheckPageState extends State<SuggestionCheckPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white),
-          title: Text('건의사항',
-              style: GoogleFonts.doHyeon(fontSize: 24, color: Colors.white)),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          physics: const ScrollPhysics(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 50),
-              Flexible(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int i) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: SizedBox(
-                        height: 100,
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const SizedBox(width: 10),
-                                Text(suggestionName[i],
-                                    style: GoogleFonts.doHyeon(fontSize: 15)),
-                              ],
-                            ),
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 5,
-                                  horizontal: 5,
-                                ),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border:
-                                        Border.all(color: Colors.grey, width: 1),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        //spreadRadius: 3,
-                                        //blurRadius: 5,
-                                        offset: const Offset(3, 3),
-                                      )
-                                    ]),
-                                //alignment: Alignment.center,
-                                child: Text(
-                                  suggestionCheck[i],
-                                  style: GoogleFonts.doHyeon(fontSize: 15),
-                                  softWrap: true,
-                                ),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text('건의사항',
+            style: GoogleFonts.doHyeon(fontSize: 24, color: Colors.white)),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 50),
+            Flexible(
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int i) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: SizedBox(
+                      height: 100,
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 10),
+                              Text(suggestionName[i],
+                                  style: GoogleFonts.doHyeon(fontSize: 15)),
+                            ],
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      //spreadRadius: 3,
+                                      //blurRadius: 5,
+                                      offset: const Offset(3, 3),
+                                    )
+                                  ]),
+                              //alignment: Alignment.center,
+                              child: Text(
+                                suggestionCheck[i],
+                                style: GoogleFonts.doHyeon(fontSize: 15),
+                                softWrap: true,
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            )
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          )
+                        ],
                       ),
-                    );
-                  },
-                  itemCount: suggestionCheck.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(color: Colors.grey.shade400, thickness: 1.0);
-                  },
-                ),
+                    ),
+                  );
+                },
+                itemCount: suggestionCheck.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(color: Colors.grey.shade400, thickness: 1.0);
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

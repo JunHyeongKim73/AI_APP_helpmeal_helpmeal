@@ -110,26 +110,28 @@ class MyPage extends StatelessWidget {
   }
 
   Widget _notLoginButtonView() {
-    return _myPageButton('로그인');
+    return _myPageButton('로그인', '/login');
   }
 
   Widget _loginButtonView() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _myPageButton('로그아웃'),
+        _myPageButton('로그아웃', '/login'),
         const SizedBox(width: 20),
-        _myPageButton('정보 변경'),
+        _myPageButton('정보 변경', '/login'),
       ],
     );
   }
 
-  Widget _myPageButton(String text) {
+  Widget _myPageButton(String text, String page) {
     return SizedBox(
       height: 40,
       width: 90,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.offAllNamed(page);
+        },
         child: Center(
           child: Text(
             text,

@@ -6,6 +6,7 @@ const int minus = -1;
 class DateController extends GetxController {
   //var dateText = DateFormat.yMd('ko').format(DateTime.now());
   var dateText = DateTime.now();
+  var dateChanged = true;
 
   void updateDate({DateTime? date, int i = 0}) {
 
@@ -25,6 +26,12 @@ class DateController extends GetxController {
         break;
     }
 
+    dateChanged = !dateChanged;
+    update();
+  }
+
+  void updateDateChanged(){
+    dateChanged = !dateChanged;
     update();
   }
 }

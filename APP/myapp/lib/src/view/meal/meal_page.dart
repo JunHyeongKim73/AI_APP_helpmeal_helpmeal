@@ -29,8 +29,11 @@ class _MealPage extends State<MealPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
-      futureMenuList =
-          MenuRepository.getMenus(controller.dateText, widget.user.groups!.troopId!);
+      if(controller.dateChanged){
+        futureMenuList = MenuRepository.getMenus(
+          controller.dateText, widget.user.groups!.troopId!);
+        controller.updateDateChanged();
+      }
       return Scaffold(
         appBar: const CustomAppBar(),
         body: Column(
@@ -44,27 +47,31 @@ class _MealPage extends State<MealPage> {
                   child: Text('오늘의 식단', style: CustomFont().title),
                 ),
                 FutureBuilder<List<Menu>>(
-                  future: futureMenuList,
-                  builder: (context, snapshot) {
-                    if(snapshot.hasData){
-                      isMealEmpty = MenuRepository.checkEmpty(snapshot.data!);
-                    }
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: (snapshot.hasData ? isMealEmpty : true)
-                          ? ElevatedButton(
-                              onPressed: () => Get.toNamed('/mealControl', arguments: widget.user),
-                              child: const Icon(MdiIcons.plus, size: 32),
-                              style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                primary: Colors.white,
-                                onPrimary: Colors.blue[400],
-                                shadowColor: Colors.grey,
-                              ))
-                          : null,
-                    );
-                  }
-                ),
+                    future: futureMenuList,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        isMealEmpty = MenuRepository.checkEmpty(snapshot.data!);
+
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: (isMealEmpty && widget.user.isLogined!)
+                              ? ElevatedButton(
+                                  onPressed: () => Get.toNamed('/mealControl',
+                                      arguments: widget.user),
+                                  child: const Icon(MdiIcons.plus, size: 32),
+                                  style: ElevatedButton.styleFrom(
+                                    shape: const CircleBorder(),
+                                    primary: Colors.white,
+                                    onPrimary: Colors.blue[400],
+                                    shadowColor: Colors.grey,
+                                  ))
+                              : null,
+                        );
+                      }
+                      else {
+                        return Container();
+                      }
+                    }),
               ],
             ),
             MealContainer(
@@ -108,7 +115,7 @@ class _MealContainerState extends State<MealContainer> {
             future: widget.futureMenuList,
             builder: (context, snapshot) {
               List<Meal> mealList = [];
-              if(snapshot.hasData){
+              if (snapshot.hasData) {
                 mealList = MealRepository.loadMeals(snapshot.data!);
               }
               return ListView.builder(
@@ -119,8 +126,8 @@ class _MealContainerState extends State<MealContainer> {
                   return Padding(
                     padding: const EdgeInsets.only(
                         top: 16, left: 8, right: 8, bottom: 16),
-                    child: MealItem(
-                        mealData: mealList[index], user: widget.user),
+                    child:
+                        MealItem(mealData: mealList[index], user: widget.user),
                   );
                 },
               );

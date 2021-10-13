@@ -37,7 +37,7 @@ class UserRepository {
         'name': user.name,
         'password': user.password,
         'military_serial_number': user.milNum,
-        'troop': user.groups!.troopMap,
+        'troopId': user.groups!.troopId,
         'email': user.email,
         'allergy': user.allergyList,
         'managerLevel': user.isAdmin,
@@ -71,8 +71,8 @@ class UserRepository {
       return User(
         email: tokenData['email'],
         name: tokenData['name'],
-        groups: Group.fromJson(body['troop']),
-        allergyList: body['allergy'],
+        groups: Group.fromJson(tokenData['troop']),
+        allergyList: tokenData['allergy'],
         isAdmin: tokenData['manageLevel'] == null ? 0 : 1,
       );
     } else if (response.statusCode == 400) {

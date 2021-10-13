@@ -34,7 +34,6 @@ class Group {
   }
 
   Group.withNoGroup({this.lists}){
-    print(lists);
     if(lists!.length == 2){
       troopMap['4'] = lists![0];
       troopMap['3'] = lists![1];
@@ -68,6 +67,17 @@ class Group {
     }
 
     setMilName(troopMap['4']);
+  }
+
+  Group.clone(Group _group) {
+    troopMap = _group.troopMap;
+    if (_group.troopMap['2'] == '') {
+      troopMap['2'] = '+';
+    } else {
+      troopMap['1'] = '+';
+    }
+    troopName = _group.troopName;
+    groupName = '+';
   }
 
   void setMilName(String text) {

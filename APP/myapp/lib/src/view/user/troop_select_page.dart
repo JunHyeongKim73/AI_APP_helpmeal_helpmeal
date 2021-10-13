@@ -325,8 +325,9 @@ class _TroopSelectPage extends State<TroopSelectPage> {
                 // 여기에 postGroup 함수가 와야함
                 List<String> paramList = controller.getParams();
                 paramList.add(textController.text);
-
+                
                 TroopRepository.postTroop(Group(lists: paramList));
+                setState(() {});
                 Get.back();
               },
               child: Text('확인', style: GoogleFonts.doHyeon(fontSize: 16)),
