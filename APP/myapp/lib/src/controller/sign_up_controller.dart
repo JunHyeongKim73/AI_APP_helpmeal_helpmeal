@@ -19,7 +19,6 @@ class SignUpController extends GetxController {
   bool isNextPage = false;
 
   List<String> allergy = [];
-  String milName = '';
   Group? groups;
 
   void setEmail(String text) {
@@ -67,8 +66,7 @@ class SignUpController extends GetxController {
     update();
   }
 
-  void setTroops(String _milName, Group _groups) {
-    milName = _milName;
+  void setTroops(Group _groups) {
     groups = _groups;
     update();
   }

@@ -8,17 +8,20 @@ class SelectTroopController extends GetxController {
 
   var pageIndex = 0;
 
-  var selectedIconIndex = -1;
   var isIconSelected = [false, false, false];
-
-  bool isPlusContainerOn = false;
+  var selectedIconIndex = -1;
   var selectedTroopIndex = -1;
-
   var selectedDetailTroopIndex = -1;
   var selectedGroupIndex = -1;
+
+  bool isPlusContainerOn = false;
   bool isThirdPageOn = false;
+
   String milName = '';
-  Group? groups;
+  String troopName = '';
+  String detailTroopName = '';
+  String groupName = '';
+  Group? selectedGroup;
 
   final PageController pageController = PageController(initialPage: 0);
 
@@ -70,92 +73,58 @@ class SelectTroopController extends GetxController {
     update();
   }
 
-  void changeSelectedIconIndex(int index) {
+  void changeSelectedIconIndex(int index, String text) {
     if (selectedIconIndex != -1) {
       isIconSelected[selectedIconIndex] = !isIconSelected[selectedIconIndex];
     }
     isIconSelected[index] = !isIconSelected[index];
     selectedIconIndex = index;
+
+    milName = text;
+
     update();
   }
 
-  void changeSelectedTroopIndex(int index) {
+  void changeSelectedTroopIndex(int index, String text) {
     pageController.nextPage(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeIn,
     );
     isPlusContainerOn = true;
     selectedTroopIndex = index;
+    troopName = text;
     update();
   }
 
-  void changeButton(int index) {
+  void changeButton(int index, String text) {
     if (pageIndex == 1) {
       if (isPlusContainerOn) {
         selectedDetailTroopIndex = index;
+        detailTroopName = text;
       } else {
         selectedTroopIndex = index;
+        troopName = text;
       }
       isThirdPageOn = true;
     } else {
       selectedGroupIndex =
           selectedGroupIndex == index ? -1 : selectedGroupIndex = index;
+      groupName = text;
     }
     update();
   }
 
-  void addGroup(String name) {
-    if (selectedDetailTroopIndex == -1) {
-      var tempList =
-          troopList[selectedIconIndex].troops![selectedTroopIndex].groups;
-      tempList!.removeLast();
-      tempList.add(name);
-      tempList.add('+');
-    } else {
-      var tempList = troopList[selectedIconIndex]
-          .troops![selectedTroopIndex]
-          .troops![selectedDetailTroopIndex]
-          .groups;
-      tempList!.removeLast();
-      tempList.add(name);
-      tempList.add('+');
-    }
+  void setGroup(Group group) {
+    selectedGroup = group;
     update();
   }
 
-  void selectTroopCompleted() {
-    final _milName = troopList[selectedIconIndex].name;
-    switch (_milName) {
-      case '육군':
-        milName = 'army';
-        break;
-      case '공군':
-        milName = 'airforce';
-        break;
-      case '해군':
-        milName = 'navy';
-        break;
+  List<String> getParams() {
+    List<String> _lists = [milName, troopName];
+    if (detailTroopName != '') {
+      _lists.add(detailTroopName);
     }
 
-    final troop = troopList[selectedIconIndex].troops![selectedTroopIndex].name;
-    if (selectedDetailTroopIndex == -1) {
-      var group = troopList[selectedIconIndex]
-          .troops![selectedTroopIndex]
-          .groups![selectedGroupIndex];
-
-      groups = Group(lists: [_milName, troop, group]);
-    } else {
-      var detailTroopName = troopList[selectedIconIndex]
-          .troops![selectedTroopIndex]
-          .troops![selectedDetailTroopIndex]
-          .name;
-      var group = troopList[selectedIconIndex]
-          .troops![selectedTroopIndex]
-          .troops![selectedDetailTroopIndex]
-          .groups![selectedGroupIndex];
-
-      groups = Group(lists: [_milName, troop, detailTroopName, group]);
-    }
-    update();
+    return _lists;
   }
 }

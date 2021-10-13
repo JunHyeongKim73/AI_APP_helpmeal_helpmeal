@@ -104,7 +104,7 @@ class MyPage extends StatelessWidget {
 
   Widget _imageSelection() {
     if (user.isLogined!) {
-      return Image.asset('assets/user_icon/${user.milName}.png');
+      return Image.asset('assets/user_icon/${user.groups!.milName}.png');
     }
     return const Icon(MdiIcons.account, color: Colors.grey, size: 36);
   }

@@ -29,16 +29,27 @@ class Group {
       troopName = '${troopMap['4']} ${troopMap['3']} ${troopMap['2']}';
       groupName = '${troopMap['1']}';
     }
-    switch (troopMap['4']) {
-      case '육군':
-        milName = 'army';
-        break;
-      case '공군':
-        milName = 'airforce';
-        break;
-      default:
-        milName = 'navy';
+
+    setMilName(troopMap['4']);
+  }
+
+  Group.withNoGroup({this.lists}){
+    print(lists);
+    if(lists!.length == 2){
+      troopMap['4'] = lists![0];
+      troopMap['3'] = lists![1];
+
+      troopName = '${troopMap['4']} ${troopMap['3']}';
     }
+    else{
+      troopMap['4'] = lists![0];
+      troopMap['3'] = lists![1];
+      troopMap['2'] = lists![2];
+
+      troopName = '${troopMap['4']} ${troopMap['3']} ${troopMap['2']}';
+    }
+
+    setMilName(troopMap['4']);
   }
 
   Group.fromJson(Map<String, dynamic> json) {
@@ -56,7 +67,11 @@ class Group {
       groupName = '${troopMap['1']}';
     }
 
-    switch (troopMap['4']) {
+    setMilName(troopMap['4']);
+  }
+
+  void setMilName(String text) {
+    switch (text) {
       case '육군':
         milName = 'army';
         break;

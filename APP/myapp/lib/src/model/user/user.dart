@@ -5,7 +5,6 @@ class User {
   String? password;
   String? name;
   String? milNum;
-  String? milName;
   List<dynamic>? allergyList = [];
   Group? groups;
   int? isAdmin;
@@ -18,12 +17,10 @@ class User {
     this.name = '',
     this.milNum = '',
     this.isAdmin = 0,
-    this.milName = '',
     this.allergyList,
     this.groups,
     this.messege
   }){
     isLogined = (name == '' ? false : true);
-    milName = groups!.milName;
   }
 }

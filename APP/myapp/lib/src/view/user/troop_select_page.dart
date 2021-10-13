@@ -6,7 +6,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:myapp/src/controller/select_troop_controller.dart';
 import 'package:myapp/src/controller/sign_up_controller.dart';
 import 'package:myapp/src/model/colors.dart';
+import 'package:myapp/src/model/troop/group.dart';
 import 'package:myapp/src/model/troop/troop.dart';
+import 'package:myapp/src/model/troop/troop_repository.dart';
 
 class TroopSelectPage extends StatefulWidget {
   const TroopSelectPage({Key? key}) : super(key: key);
@@ -26,11 +28,6 @@ class _TroopSelectPage extends State<TroopSelectPage> {
     return GetBuilder<SelectTroopController>(builder: (controller) {
       troopList = controller.troopList;
       return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-        ),
         body: Column(
           children: [
             const SizedBox(height: 50),
@@ -65,20 +62,39 @@ class _TroopSelectPage extends State<TroopSelectPage> {
 
     switch (controller.pageIndex) {
       case 0:
-        return CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.white,
-          child: IconButton(
-            onPressed: controller.nextPage,
-            icon: Icon(
-              MdiIcons.chevronRight,
-              color: controller.selectedIconIndex == -1
-                  ? Colors.black
-                  : CustomColor.themeColor,
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.white,
+              child: IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  MdiIcons.chevronLeft,
+                  color: CustomColor.themeColor,
+                ),
+                iconSize: 48,
+              ),
             ),
-            iconSize: 48,
-          ),
+            const SizedBox(width: 15),
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.white,
+              child: IconButton(
+                onPressed: controller.nextPage,
+                icon: Icon(
+                  MdiIcons.chevronRight,
+                  color: controller.selectedIconIndex == -1
+                      ? Colors.black
+                      : CustomColor.themeColor,
+                ),
+                iconSize: 48,
+              ),
+            ),
+          ],
         );
+
       case 1:
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -129,9 +145,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
         } else {
           return ElevatedButton(
             onPressed: () {
-              controller.selectTroopCompleted();
-              signUpController.setTroops(
-                  controller.milName, controller.groups!);
+              signUpController.setTroops(controller.selectedGroup!);
               Get.toNamed('/allergy', arguments: signUpController);
             },
             child: const Text('완료',
@@ -183,8 +197,9 @@ class _TroopSelectPage extends State<TroopSelectPage> {
       itemBuilder: (BuildContext context, int index) {
         return ElevatedButton(
           onPressed: troops![index].isLast
-              ? () => controller.changeButton(index)
-              : () => controller.changeSelectedTroopIndex(index),
+              ? () => controller.changeButton(index, troops[index].name)
+              : () => controller.changeSelectedTroopIndex(
+                  index, troops[index].name),
           child: Text(
             troops[index].name,
             style: GoogleFonts.doHyeon(fontSize: 24),
@@ -219,7 +234,8 @@ class _TroopSelectPage extends State<TroopSelectPage> {
       ),
       itemBuilder: (BuildContext context, int index) {
         return ElevatedButton(
-          onPressed: () => controller.changeButton(index),
+          onPressed: () =>
+              controller.changeButton(index, detailTroops[index].name),
           child: Text(
             detailTroops[index].name,
             style: GoogleFonts.doHyeon(fontSize: 20),
@@ -241,41 +257,48 @@ class _TroopSelectPage extends State<TroopSelectPage> {
   Widget _thirdPage(SelectTroopController controller) {
     if (controller.pageIndex != 2) return Container();
 
-    List<Troop>? troops = troopList[controller.selectedIconIndex].troops;
-    List<String>? groups = troops![controller.selectedTroopIndex].groups;
+    Future<List<Group>> groupList = TroopRepository.getTroop(
+        Group.withNoGroup(lists: controller.getParams()));
 
-    if (controller.selectedDetailTroopIndex != -1) {
-      List<Troop>? detailTroops = troops[controller.selectedTroopIndex].troops;
-      groups = detailTroops![controller.selectedDetailTroopIndex].groups;
-    }
-
-    return GridView.builder(
-      shrinkWrap: true,
-      itemCount: groups!.length,
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        childAspectRatio: 1.5,
-        crossAxisSpacing: 4.0,
-        mainAxisSpacing: 4.0,
-        maxCrossAxisExtent: 150,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        return ElevatedButton(
-          onPressed: index == groups!.length - 1
-              ? () => _displayTroopInputDialog(context, controller)
-              : () => controller.changeButton(index),
-          child: Text(groups[index], style: GoogleFonts.doHyeon(fontSize: 20)),
-          style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              side: BorderSide(
-                width: 2,
-                color: controller.selectedGroupIndex == index
-                    ? CustomColor.themeColor
-                    : Colors.grey,
+    return FutureBuilder<List<Group>>(
+        future: groupList,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return GridView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data!.length,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                childAspectRatio: 1.5,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 4.0,
+                maxCrossAxisExtent: 150,
               ),
-              elevation: 5),
-        );
-      },
-    );
+              itemBuilder: (BuildContext context, int index) {
+                return ElevatedButton(
+                  onPressed: index == snapshot.data!.length - 1
+                      ? () => _displayTroopInputDialog(context, controller)
+                      : () {
+                          controller.changeButton(
+                              index, snapshot.data![index].groupName!);
+                          controller.setGroup(snapshot.data![index]);
+                        },
+                  child: Text(snapshot.data![index].groupName!,
+                      style: GoogleFonts.doHyeon(fontSize: 20)),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2,
+                        color: controller.selectedGroupIndex == index
+                            ? CustomColor.themeColor
+                            : Colors.grey,
+                      ),
+                      elevation: 5),
+                );
+              },
+            );
+          }
+          return Container();
+        });
   }
 
   Future<dynamic> _displayTroopInputDialog(
@@ -299,7 +322,11 @@ class _TroopSelectPage extends State<TroopSelectPage> {
             ),
             TextButton(
               onPressed: () {
-                controller.addGroup(textController.text);
+                // 여기에 postGroup 함수가 와야함
+                List<String> paramList = controller.getParams();
+                paramList.add(textController.text);
+
+                TroopRepository.postTroop(Group(lists: paramList));
                 Get.back();
               },
               child: Text('확인', style: GoogleFonts.doHyeon(fontSize: 16)),
@@ -341,7 +368,8 @@ class _TroopSelectPage extends State<TroopSelectPage> {
             radius: 42,
             backgroundColor: Colors.white,
             child: IconButton(
-              onPressed: () => controller.changeSelectedIconIndex(idx),
+              onPressed: () =>
+                  controller.changeSelectedIconIndex(idx, korNameList[idx]),
               icon: Image.asset('assets/user_icon/${engNameList[idx]}.png'),
               iconSize: engNameList[idx] == 'airforce' ? 56 : 64,
             ),

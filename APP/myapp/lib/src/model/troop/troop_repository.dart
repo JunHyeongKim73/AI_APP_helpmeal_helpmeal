@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+import 'package:myapp/src/model/troop/group.dart';
 import 'troop.dart';
 
 class TroopRepository {
@@ -115,4 +119,56 @@ class TroopRepository {
       Troop(name: '직할부대', isLast: true),
     ]),
   ];
+
+  static Future<void> postTroop(Group group) async {
+    final response =
+        await http.post(Uri.parse('https://helpmeal.duckdns.org/troops/post'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(group.troopMap));
+    print(response.statusCode);
+    print(jsonDecode(response.body));
+    if (response.statusCode == 201) {
+      print('POST Completed!');
+    } else {
+      throw Exception('failed');
+    }
+  }
+
+  static Future<List<Group>> getTroop(Group group) async {
+    print(group.troopMap);
+    Group plusGroup = group;
+    if (group.troopMap['3'] == '') {
+      plusGroup.troopMap['3'] = '+';
+    } else {
+      plusGroup.troopMap['4'] = '+';
+    }
+
+    final response = await http.post(
+      Uri.parse('https://helpmeal.duckdns.org/troops/get'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(group.troopMap),
+    );
+
+    print(response.statusCode);
+
+    final body = jsonDecode(response.body);
+    print(jsonDecode(response.body));
+
+    if (response.statusCode == 200) {
+      List<Group> groupList = [];
+      for (var i = 0; i < body['troop'].length; i++) {
+        groupList.add(Group.fromJson(body['troop'][i]));
+      }
+      groupList.add(plusGroup);
+      return groupList;
+    } else if (response.statusCode == 400) {
+      return [plusGroup];
+    } else {
+      throw Exception('failed to load');
+    }
+  }
 }
