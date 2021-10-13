@@ -7,7 +7,11 @@ const cors = require('cors');
 const morgan = require('morgan');
 const userRouter = require('./routes/users');
 const starRouter = require('./routes/stars');
-const auth = require('./middlewares/authorization');
+const reviewRouter = require('./routes/reviews');
+const troopRouter = require('./routes/troops');
+const bestMenuRouter = require('./routes/bestmenu');
+const suggestionRouter = require('./routes/suggestion');
+const { verifyToken } = require('./middlewares/authorization');
 const cookieParser = require('cookie-parser');
 const https = require('https');
 const PORT = process.env.PORT || 443;  
@@ -27,10 +31,15 @@ app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'));
 app.use('/users', userRouter);
 app.use('/stars', starRouter);
-app.use(cookieParser);
+app.use('/reviews', reviewRouter);
+app.use('/troops', troopRouter);
+app.use('/menus/best', bestMenuRouter);
+app.use('/suggestion', suggestionRouter);
+app.use(cookieParser());
 
-app.get('/', function (req, res) {
-    res.send('ROOT');
+app.get('/', verifyToken, function (req, res) {
+    console.log("jwt token test Seccess!");
+	res.send('ROOT');
 });
 
 app.get('/menus/:troopId/:day/:numberOfDay', function (req, res) {
@@ -203,17 +212,5 @@ app.post('/menus', function (req, res) {
 	});
 });
 
-app.post('/writeAf', function (req, res) {
-    var body = req.body;
-    console.log(body);
-
-    var sql = 'INSERT INTO menu(meal_id, food_id, menu_order, average_star) VALUES(?, ?, ?, ?)';
-    var params = [body.meal_id, body.food_id, body.menu_order, body.average_star];
-    console.log(sql);
-    conn.query(sql, params, function(err) {
-        if(err) console.log('query is not excuted. insert fail...\n' + err);
-        else res.redirect('/list');
-    });
-});
 
 https.createServer(options, app).listen(PORT);
