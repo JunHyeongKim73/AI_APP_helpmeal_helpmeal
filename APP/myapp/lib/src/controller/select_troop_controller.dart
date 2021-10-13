@@ -23,6 +23,8 @@ class SelectTroopController extends GetxController {
   String groupName = '';
   Group? selectedGroup;
 
+  bool isGroupChanged = true;
+
   final PageController pageController = PageController(initialPage: 0);
 
   void nextPage() {
@@ -126,5 +128,10 @@ class SelectTroopController extends GetxController {
     }
 
     return _lists;
+  }
+
+  void updateGroupChanged() {
+    isGroupChanged = !isGroupChanged;
+    update();
   }
 }

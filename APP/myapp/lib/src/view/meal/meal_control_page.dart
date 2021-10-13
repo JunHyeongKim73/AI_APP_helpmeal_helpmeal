@@ -98,6 +98,7 @@ class MealControlPage extends StatelessWidget {
                                 dinerController,
                               ], controller.dateText);
                               _showToast(context);
+                              controller.updateDateChanged();
                             },
                             child: const Text('수정',
                                 style: TextStyle(color: Colors.white)),

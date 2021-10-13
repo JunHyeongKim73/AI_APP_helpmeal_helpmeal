@@ -69,6 +69,7 @@ class UserRepository {
       print('Get Success');
       Map<String, dynamic> tokenData = Jwt.parseJwt(body['token']);
       return User(
+        userId: tokenData['userId'],
         email: tokenData['email'],
         name: tokenData['name'],
         groups: Group.fromJson(tokenData['troop']),

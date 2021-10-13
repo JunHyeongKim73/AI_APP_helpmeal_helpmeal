@@ -1,6 +1,7 @@
 import 'package:myapp/src/model/troop/group.dart';
 
 class User {
+  int? userId;
   String? email;
   String? password;
   String? name;
@@ -12,6 +13,7 @@ class User {
   String? messege;
 
   User({
+    this.userId = -1,
     this.email = '',
     this.password = '',
     this.name = '',

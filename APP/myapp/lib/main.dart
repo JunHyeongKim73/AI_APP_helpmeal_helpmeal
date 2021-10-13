@@ -38,7 +38,7 @@ class MyAPP extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      initialRoute: '/first',
+      initialRoute: '/suggestComplain',
       initialBinding: InitBinding(),
       getPages: [
         GetPage(name: '/', page: () => const App()),
@@ -67,7 +67,7 @@ class MyAPP extends StatelessWidget {
             Get.lazyPut<SignUpController>(() => SignUpController());
           }),
         ),
-        GetPage(name: '/scoreReview', page: () => ScoreReviewPage())
+        GetPage(name: '/scoreReview', page: () => const ScoreReviewPage())
       ],
     );
   }

@@ -22,6 +22,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
   static const korNameList = ['육군', '공군', '해군'];
   late List<Troop> troopList;
   final textController = TextEditingController();
+  Future<List<Group>>? groupList;
 
   @override
   Widget build(BuildContext context) {
@@ -257,8 +258,12 @@ class _TroopSelectPage extends State<TroopSelectPage> {
   Widget _thirdPage(SelectTroopController controller) {
     if (controller.pageIndex != 2) return Container();
 
-    Future<List<Group>> groupList = TroopRepository.getTroop(
-        Group.withNoGroup(lists: controller.getParams()));
+    if (controller.isGroupChanged) {
+      groupList = TroopRepository.getTroop(
+        Group.withNoGroup(lists: controller.getParams()),
+      );
+      controller.updateGroupChanged();
+    }
 
     return FutureBuilder<List<Group>>(
         future: groupList,
@@ -325,9 +330,9 @@ class _TroopSelectPage extends State<TroopSelectPage> {
                 // 여기에 postGroup 함수가 와야함
                 List<String> paramList = controller.getParams();
                 paramList.add(textController.text);
-                
+
                 TroopRepository.postTroop(Group(lists: paramList));
-                setState(() {});
+                controller.updateGroupChanged();
                 Get.back();
               },
               child: Text('확인', style: GoogleFonts.doHyeon(fontSize: 16)),

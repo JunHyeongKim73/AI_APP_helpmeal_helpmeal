@@ -114,7 +114,7 @@ class _AllergyViewState extends State<AllergyView> {
                   List<String> selectedAllergy = [];
                   selectedList.forEachIndexed((index, element) {
                     if (element == true) {
-                      selectedAllergy.add(allergyList[index].engName);
+                      selectedAllergy.add(allergyList[index].korName);
                     }
                   });
                   signUpController.setAllergy(selectedAllergy);

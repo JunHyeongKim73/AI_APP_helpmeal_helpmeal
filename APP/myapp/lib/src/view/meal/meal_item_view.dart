@@ -57,7 +57,7 @@ class _MealItemState extends State<MealItem> {
                     style: GoogleFonts.cuteFont(
                       color: widget.mealData.foodList[index]
                               .hasAllergy(widget.user.allergyList!)
-                          ? Colors.red
+                          ? Colors.yellowAccent
                           : Colors.white,
                       fontSize: 20,
                       wordSpacing: 4,
