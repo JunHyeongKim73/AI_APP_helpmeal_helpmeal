@@ -77,11 +77,13 @@ exports.createToken = async function (req, res, next)  {
 									res.status(401).json({meesege: error});
 								}	
 								else if (allergies){
+									console.log(allergies);
 									for(let i = 0; i < allergies.length; i++){
 										allergies_res[i] = allergies[i].allergy;
 										console.log("Allergy ", i, ": ", allergies_res[i]);
 										if(i == allergies.length - 1) resolve();
 									}			
+									resolve();
 								}
 								else resolve("no allergy");
 							});	

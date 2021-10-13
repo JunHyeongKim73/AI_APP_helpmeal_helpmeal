@@ -10,6 +10,7 @@ const starRouter = require('./routes/stars');
 const reviewRouter = require('./routes/reviews');
 const troopRouter = require('./routes/troops');
 const bestMenuRouter = require('./routes/bestmenu');
+const suggestionRouter = require('./routes/suggestion');
 const { verifyToken } = require('./middlewares/authorization');
 const cookieParser = require('cookie-parser');
 const https = require('https');
@@ -33,6 +34,7 @@ app.use('/stars', starRouter);
 app.use('/reviews', reviewRouter);
 app.use('/troops', troopRouter);
 app.use('/menus/best', bestMenuRouter);
+app.use('/suggestion', suggestionRouter);
 app.use(cookieParser());
 
 app.get('/', verifyToken, function (req, res) {
