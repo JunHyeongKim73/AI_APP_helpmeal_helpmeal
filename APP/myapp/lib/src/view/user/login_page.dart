@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/src/app.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/fonts.dart';
@@ -8,7 +7,7 @@ import 'package:myapp/src/model/user/user.dart';
 import 'package:myapp/src/model/user/user_repository.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -131,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
               return AlertDialog(
                 content: Text(user.messege!),
                 actions: <Widget>[
-                  TextButton(onPressed: () => Get.back(), child: Text('확인'))
+                  TextButton(onPressed: () => Get.back(), child: const Text('확인'))
                 ],
               );
             },

@@ -4,8 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:myapp/src/controller/sign_up_controller.dart';
 import 'package:myapp/src/model/colors.dart';
-import 'package:myapp/src/model/meal/menu_repository.dart';
-import 'package:myapp/src/model/user/user.dart';
 import 'package:myapp/src/model/user/user_repository.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -224,7 +222,7 @@ class _SignUpPageState extends State<SignUpPage> {
             return AlertDialog(
               content: Text(isOverLapped ? '중복된 이메일입니다!' : '사용가능한 이메일입니다!'),
               actions: <Widget>[
-                TextButton(onPressed: () => Get.back(), child: Text('확인'))
+                TextButton(onPressed: () => Get.back(), child: const Text('확인'))
               ],
             );
           },

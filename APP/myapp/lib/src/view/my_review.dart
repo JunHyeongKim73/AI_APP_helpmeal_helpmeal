@@ -13,6 +13,7 @@ class MyReviewPage extends StatelessWidget {
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 /*
 class Date {
   int year;
@@ -36,24 +37,30 @@ class PastReviewTile {
   )
 }*/
 //자료를 담는 list를 구성하는 방식 개선 필요
-final List<int> date_year = <int> [2021,2021,2021,2021,2021];
-final List<int> date_month = <int> [7,8,8,9,10];
-final List<int> date_day = <int> [30,6,25,13,2];
+final List<int> date_year = <int>[2021, 2021, 2021, 2021, 2021];
+final List<int> date_month = <int>[7, 8, 8, 9, 10];
+final List<int> date_day = <int>[30, 6, 25, 13, 2];
 //final List<Date> date; = <Date> [{2021,7,30},{2021,8,6},{2021,8,25},{2021,9,13},{2021,10,2}];
-final List<int> score = <int> [7,5,10,8,9];
-final List<String> pastReview = <String> ["그럭저럭 괜찮은 것 같아요",
-                                          "너무 맛이 없어요 ㅠㅠ",
-                                          "매일이 오늘같았으면 좋겠어요!!",
-                                          "생각보다 맛있는 것 같아요",
-                                          "맛있는 식사 만들어주셔서 감사합니다!"];
+final List<int> score = <int>[7, 5, 10, 8, 9];
+final List<String> pastReview = <String>[
+  "그럭저럭 괜찮은 것 같아요",
+  "너무 맛이 없어요 ㅠㅠ",
+  "매일이 오늘같았으면 좋겠어요!!",
+  "생각보다 맛있는 것 같아요",
+  "맛있는 식사 만들어주셔서 감사합니다!",
+];
 
 void main() => runApp(MyReviewPage());
 
 class MyReviewPage extends StatefulWidget {
+  const MyReviewPage({Key? key}) : super(key: key);
+
+  @override
   MyReviewPageState createState() => MyReviewPageState();
 }
 
 class MyReviewPageState extends State<MyReviewPage> {
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -79,11 +86,10 @@ class MyReviewPageState extends State<MyReviewPage> {
                           child: Row(
                             children: <Widget>[
                               Container(
-                                width: 100,
-                                child: Text(
-                                  '${date_year[i]}.${date_month[i]}.${date_day[i]}'
-                                )
-                                /*Text.rich(
+                                  width: 100,
+                                  child: Text(
+                                      '${date_year[i]}.${date_month[i]}.${date_day[i]}')
+                                  /*Text.rich(
                                   TextSpan(
                                     text: Text('${date[i].year}'),
                                     children: <TextSpan>[
@@ -96,50 +102,74 @@ class MyReviewPageState extends State<MyReviewPage> {
                                     ]
                                   )
                                 )*/
-                              ),
+                                  ),
                               Expanded(
                                 child: Container(
                                   alignment: Alignment.center,
                                   child: Row(
                                     children: <Widget>[
                                       Icon(
-                                        score[i]>1 ? Icons.star_rounded : (score[i]==1 ? Icons.star_half_rounded : Icons.star_border_rounded),
+                                        score[i] > 1
+                                            ? Icons.star_rounded
+                                            : (score[i] == 1
+                                                ? Icons.star_half_rounded
+                                                : Icons.star_border_rounded),
                                         color: Colors.amber.shade500,
                                         size: 30,
                                       ),
                                       Icon(
-                                        score[i]>3 ? Icons.star_rounded : (score[i]==3 ? Icons.star_half_rounded : Icons.star_border_rounded),
+                                        score[i] > 3
+                                            ? Icons.star_rounded
+                                            : (score[i] == 3
+                                                ? Icons.star_half_rounded
+                                                : Icons.star_border_rounded),
                                         color: Colors.amber.shade500,
                                         size: 30,
                                       ),
                                       Icon(
-                                        score[i]>5 ? Icons.star_rounded : (score[i]==5 ? Icons.star_half_rounded : Icons.star_border_rounded),
+                                        score[i] > 5
+                                            ? Icons.star_rounded
+                                            : (score[i] == 5
+                                                ? Icons.star_half_rounded
+                                                : Icons.star_border_rounded),
                                         color: Colors.amber.shade500,
                                         size: 30,
                                       ),
                                       Icon(
-                                        score[i]>7 ? Icons.star_rounded : (score[i]==7 ? Icons.star_half_rounded : Icons.star_border_rounded),
+                                        score[i] > 7
+                                            ? Icons.star_rounded
+                                            : (score[i] == 7
+                                                ? Icons.star_half_rounded
+                                                : Icons.star_border_rounded),
                                         color: Colors.amber.shade500,
                                         size: 30,
                                       ),
                                       Icon(
-                                        score[i]>9 ? Icons.star_rounded : (score[i]==9 ? Icons.star_half_rounded : Icons.star_border_rounded),
+                                        score[i] > 9
+                                            ? Icons.star_rounded
+                                            : (score[i] == 9
+                                                ? Icons.star_half_rounded
+                                                : Icons.star_border_rounded),
                                         color: Colors.amber.shade500,
                                         size: 30,
                                       ),
-                                    ]
-                                  )
-                                )
+                                    ],
+                                  ),
+                                ),
                               )
-                            ]
-                          )
+                            ],
+                          ),
                         ),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5,),
+                            padding: EdgeInsets.symmetric(
+                              vertical: 5,
+                              horizontal: 5,
+                            ),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                             ),
                             //alignment: Alignment.center,
                             height: 40,
@@ -149,21 +179,21 @@ class MyReviewPageState extends State<MyReviewPage> {
                               style: GoogleFonts.doHyeon(fontSize: 15),
                               softWrap: true,
                             ),
-                          )
+                          ),
                         )
-                      ]
-                    )
+                      ],
+                    ),
                   );
                 },
                 itemCount: pastReview.length,
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(color: Colors.grey.shade200, thickness: 1.0);
-                }
-              )
-            )
-          )
-        )
-      )
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

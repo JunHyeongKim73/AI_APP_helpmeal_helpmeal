@@ -1,5 +1,3 @@
-import 'package:myapp/src/model/meal/menu_repository.dart';
-
 import 'meal.dart';
 import 'menu.dart';
 

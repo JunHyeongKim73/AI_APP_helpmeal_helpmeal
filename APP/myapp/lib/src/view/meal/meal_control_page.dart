@@ -11,7 +11,8 @@ import 'package:myapp/src/model/meal/menu_repository.dart';
 import 'package:myapp/src/model/user/user.dart';
 
 class MealControlPage extends StatelessWidget {
-  User user = Get.arguments;
+  final User user = Get.arguments;
+
   MealControlPage({Key? key}) : super(key: key);
 
   @override
