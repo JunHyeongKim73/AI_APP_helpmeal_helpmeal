@@ -9,20 +9,8 @@ const conn = db_config.init();
 db_config.connect(conn);
 app.use(cookieParser());
 
-router.get('/', function(req, res){
-	console.log("root");
-	console.log("cookie.user: ", res.cookie.user);
-	//res.status(200).send({"messege": "test"});
-	//res.cookie('mycookie', 'cookie1');
-	//console.log(req.cookies['mycookie']);
-	console.log(req.cookies);	
-	res.status(200).send({"messege": "test", cookie: req.cookies});
-	//console.log(req.cookies['user']);
-});
-
 //리뷰 작성하는 라우터
 router.post('/:troopId/:day/:numberOfDay', verifyToken, async function(req, res) {
-	//res.locals.userId = 59
 	//필요한 mealID 검색
 	let mealId;
 	const getMealIdQuery = `SELECT id FROM meal WHERE troop_id =? AND day = ? AND number_of_day = ?;`;
@@ -75,7 +63,7 @@ router.get('/myReview', async function(req, res) {
 	res.locals.userId = 59 // cookie 읽는 작업 원활하게 진행되면 제거하기
 	res.set( { 'content-Type': 'application/json'});		
 	const getReviewQuery = `SELECT name, comment, created_at, day FROM review_view WHERE user_id = ?;`;
-	conn.query(getReviewQuery,[res.locals.userId], async function (err, reviews, fields){
+	conn.query(getReviewQuery,[req.body.userId], async function (err, reviews, fields){
 		if (err) {
 			res.status(401).json({meesege: err});	
 			return;
