@@ -6,21 +6,6 @@ import 'package:myapp/src/model/suggestion/suggestion_repository.dart';
 import 'package:intl/date_symbol_data_local.dart' as intl;
 import 'package:myapp/src/model/user/user.dart';
 
-final List<String> suggestionName = <String>[
-  "yangbaechu",
-  "JunHyeongKim73",
-  "star8041",
-  "Army2021",
-  "abmin"
-];
-final List<String> suggestionCheck = <String>[
-  "버그가 너무 많아요 ㅠㅠ",
-  "빵식 좀 적게 나왔으면 좋겠어요",
-  "UI가 너무 구려요",
-  "저희 사단 식단표대로 나오지 않는 것 같습니다",
-  "너무 맛없고, 너무 정확도가 떨어지고, 너무 못 만들었어요. 미완성인 것처럼 보이기도 하고요. 좀 많이 개선점이 필요해보여요."
-];
-
 class SuggestionCheckPage extends StatefulWidget {
   const SuggestionCheckPage({Key? key}) : super(key: key);
 
@@ -29,14 +14,14 @@ class SuggestionCheckPage extends StatefulWidget {
 }
 
 class SuggestionCheckPageState extends State<SuggestionCheckPage> {
-  //User user = Get.arguments;
-  Future<List<Suggestion>> suggestionList =
-      SuggestionRepository.getSuggestion(4);
+  User user = Get.arguments;
+  Future<List<Suggestion>>? suggestionList;
 
   @override
   void initState() {
-    super.initState();
+    suggestionList = SuggestionRepository.getSuggestion(user.groups!.troopId!);
     intl.initializeDateFormatting();
+    super.initState();
   }
 
   @override

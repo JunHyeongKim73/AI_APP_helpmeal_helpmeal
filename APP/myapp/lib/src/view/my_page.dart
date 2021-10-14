@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/my_page_icon.dart';
@@ -84,7 +85,7 @@ class MyPage extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 200),
-                        user.isLogined! ? _loginButtonView() : _notLoginButtonView(),
+                        user.isLogined! ? _loginButtonView(context) : _notLoginButtonView(context),
                       ],
                     ),
                     right: 0,
@@ -109,28 +110,28 @@ class MyPage extends StatelessWidget {
     return const Icon(MdiIcons.account, color: Colors.grey, size: 36);
   }
 
-  Widget _notLoginButtonView() {
-    return _myPageButton('로그인', '/login');
+  Widget _notLoginButtonView(BuildContext context) {
+    return _myPageButton('로그인', '/login', context);
   }
 
-  Widget _loginButtonView() {
+  Widget _loginButtonView(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _myPageButton('로그아웃', '/login'),
+        _myPageButton('로그아웃', '/login', context),
         const SizedBox(width: 20),
-        _myPageButton('정보 변경', '/login'),
+        _myPageButton('정보 변경', '/login', context),
       ],
     );
   }
 
-  Widget _myPageButton(String text, String page) {
+  Widget _myPageButton(String text, String page, BuildContext context) {
     return SizedBox(
       height: 40,
       width: 90,
       child: ElevatedButton(
         onPressed: () {
-          Get.offAllNamed(page);
+          Phoenix.rebirth(context);
         },
         child: Center(
           child: Text(

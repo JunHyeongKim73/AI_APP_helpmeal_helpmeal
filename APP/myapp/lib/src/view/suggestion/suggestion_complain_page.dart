@@ -24,7 +24,7 @@ class SuggestionComplainPage extends StatefulWidget {
 }
 
 class SuggestionComplainPageState extends State<SuggestionComplainPage> {
-  //User user = Get.arguments;
+  User user = Get.arguments;
   TextEditingController controller = TextEditingController();
   Future<List<Suggestion>>? suggestionList;
   bool canBuildSuggestion = true;
@@ -38,7 +38,7 @@ class SuggestionComplainPageState extends State<SuggestionComplainPage> {
   @override
   Widget build(BuildContext context) {
     if (canBuildSuggestion) {
-      suggestionList = SuggestionRepository.getSuggestionByUser(73);
+      suggestionList = SuggestionRepository.getSuggestionByUser(user.userId!);
       setState(() {
         canBuildSuggestion = false;
       });
@@ -110,7 +110,7 @@ class SuggestionComplainPageState extends State<SuggestionComplainPage> {
                         ),
                         onPressed: () async {
                           SuggestionRepository.postSuggestion(
-                              73, controller.text);
+                              user.userId!, controller.text);
                           setState(() {
                             canBuildSuggestion = true;
                           });

@@ -52,10 +52,9 @@ class SuggestionRepository {
       body: jsonEncode(<String, dynamic>{'userId': userId, 'comment': comment}),
     );
 
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
-      print('success');
+      print('success Post');
     } else {
       throw Exception('failed');
     }

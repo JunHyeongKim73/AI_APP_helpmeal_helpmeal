@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/src/controller/sign_up_controller.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/view/first_page.dart';
@@ -21,7 +22,11 @@ import 'src/view/user/sign_up_page.dart';
 import 'src/view/user/troop_select_page.dart';
 
 void main() {
-  runApp(const MyAPP());
+  runApp(
+    Phoenix(
+      child: const MyAPP(),
+    ),
+  );
 }
 
 //Codespace가 갑자기 안되면 10분 있다가 하기
@@ -38,14 +43,16 @@ class MyAPP extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      initialRoute: '/suggestComplain',
+      initialRoute: '/noticeCheck',
       initialBinding: InitBinding(),
       getPages: [
         GetPage(name: '/', page: () => const App()),
         GetPage(name: '/first', page: () => const FirstPage()),
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/allergy', page: () => const AllergyPage()),
-        GetPage(name: '/suggestComplain', page: () => const SuggestionComplainPage()),
+        GetPage(
+            name: '/suggestComplain',
+            page: () => const SuggestionComplainPage()),
         GetPage(name: '/noticeCheck', page: () => const NoticeCheckPage()),
         GetPage(name: '/myReview', page: () => const MyReviewPage()),
         GetPage(name: '/suggestCheck', page: () => const SuggestionCheckPage()),
