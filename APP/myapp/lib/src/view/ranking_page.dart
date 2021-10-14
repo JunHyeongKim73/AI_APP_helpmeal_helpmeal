@@ -51,17 +51,17 @@ class RankingPageState extends State<RankingPage> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child:
+                          Text('일간', style: GoogleFonts.doHyeon(fontSize: 15)),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child:
                           Text('주간', style: GoogleFonts.doHyeon(fontSize: 15)),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child:
                           Text('월간', style: GoogleFonts.doHyeon(fontSize: 15)),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child:
-                          Text('연간', style: GoogleFonts.doHyeon(fontSize: 15)),
                     ),
                   ]),
               SizedBox(

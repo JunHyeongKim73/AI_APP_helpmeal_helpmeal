@@ -1,16 +1,3 @@
-/*import 'package:flutter/material.dart';
-
-class MyReviewPage extends StatelessWidget {
-  const MyReviewPage({ Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text('myReview'),
-    );
-  }
-}*/
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -62,131 +49,76 @@ class MyReviewPageState extends State<MyReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My 리뷰'),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text('My 리뷰',
+            style: GoogleFonts.doHyeon(fontSize: 24, color: Colors.white)),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Center(
-          child: Container(
-            width: 350,
-            height: 1000, //height 크기 가변적 조정 필요
-            child: ListView.separated(
-              itemBuilder: (BuildContext context, int i) {
-                return Container(
-                  width: 350,
-                  height: 100,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        width: 350,
-                        height: 30,
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                                width: 100,
-                                child: Text(
-                                    '${date_year[i]}.${date_month[i]}.${date_day[i]}')
-                                /*Text.rich(
-                                  TextSpan(
-                                    text: Text('${date[i].year}'),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: Text('${date[i].month}'),
-                                      ),
-                                      TextSpan(
-                                        text: Text('${date[i].day}'),
-                                      )
-                                    ]
+        physics: const ScrollPhysics(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const SizedBox(height: 50),
+            Flexible(
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int i) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: SizedBox(
+                      height: 100,
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 10),
+                              Text('${date_year[i]}.${date_month[i]}.${date_day[i]}',
+                                  style: GoogleFonts.doHyeon(fontSize: 15)),
+                            ],
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.amber.shade50,
+                                border: Border.all(color: Colors.grey, width: 1),
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    offset: const Offset(3, 3),
                                   )
-                                )*/
-                                ),
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      score[i] > 1
-                                          ? Icons.star_rounded
-                                          : (score[i] == 1
-                                              ? Icons.star_half_rounded
-                                              : Icons.star_border_rounded),
-                                      color: Colors.amber.shade500,
-                                      size: 30,
-                                    ),
-                                    Icon(
-                                      score[i] > 3
-                                          ? Icons.star_rounded
-                                          : (score[i] == 3
-                                              ? Icons.star_half_rounded
-                                              : Icons.star_border_rounded),
-                                      color: Colors.amber.shade500,
-                                      size: 30,
-                                    ),
-                                    Icon(
-                                      score[i] > 5
-                                          ? Icons.star_rounded
-                                          : (score[i] == 5
-                                              ? Icons.star_half_rounded
-                                              : Icons.star_border_rounded),
-                                      color: Colors.amber.shade500,
-                                      size: 30,
-                                    ),
-                                    Icon(
-                                      score[i] > 7
-                                          ? Icons.star_rounded
-                                          : (score[i] == 7
-                                              ? Icons.star_half_rounded
-                                              : Icons.star_border_rounded),
-                                      color: Colors.amber.shade500,
-                                      size: 30,
-                                    ),
-                                    Icon(
-                                      score[i] > 9
-                                          ? Icons.star_rounded
-                                          : (score[i] == 9
-                                              ? Icons.star_half_rounded
-                                              : Icons.star_border_rounded),
-                                      color: Colors.amber.shade500,
-                                      size: 30,
-                                    ),
-                                  ],
-                                ),
+                                ]
+                              ),
+                              child: Text(
+                                pastReview[i],
+                                style: GoogleFonts.doHyeon(fontSize: 15),
+                                softWrap: true,
                               ),
                             )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: 5,
                           ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          //alignment: Alignment.center,
-                          height: 40,
-                          width: 350,
-                          child: Text(
-                            pastReview[i],
-                            style: GoogleFonts.doHyeon(fontSize: 15),
-                            softWrap: true,
-                          ),
-                        ),
+                          const SizedBox(
+                            height: 10,
+                          )
+                        ]
                       )
-                    ],
-                  ),
-                );
-              },
-              itemCount: pastReview.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(color: Colors.grey.shade200, thickness: 1.0);
-              },
-            ),
-          ),
+                    )
+                  );
+                },
+                itemCount: pastReview.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(color: Colors.grey.shade300, thickness: 1.0);
+                },
+              ),
+            )
+          ]
         ),
       ),
     );
