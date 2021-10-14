@@ -38,7 +38,10 @@ class SuggestionCheckPageState extends State<SuggestionCheckPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
+            const Text('식당을 이용한 장병들의 건의사항입니다',
+                style: TextStyle(color: Colors.grey, fontSize: 10)),
+            const SizedBox(height: 20),
             Flexible(
               child: ListView.separated(
                 shrinkWrap: true,
@@ -62,13 +65,11 @@ class SuggestionCheckPageState extends State<SuggestionCheckPage> {
                             child: Container(
                               width: double.infinity,
                               padding: const EdgeInsets.symmetric(
-                                vertical: 5,
-                                horizontal: 5,
-                              ),
+                                  vertical: 8, horizontal: 8),
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  border:
-                                      Border.all(color: Colors.grey, width: 1),
+                                  // border:
+                                  //     Border.all(color: Colors.grey, width: 1),
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(10)),
                                   boxShadow: [
@@ -97,7 +98,11 @@ class SuggestionCheckPageState extends State<SuggestionCheckPage> {
                 },
                 itemCount: suggestionCheck.length,
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: Colors.grey.shade400, thickness: 1.0);
+                  return Divider(
+                      indent: 10,
+                      endIndent: 10,
+                      color: Colors.grey.shade400,
+                      thickness: 1.0);
                 },
               ),
             ),

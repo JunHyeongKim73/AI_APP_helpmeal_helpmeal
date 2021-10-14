@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/src/model/colors.dart';
 
@@ -27,122 +28,133 @@ class SuggestionComplainPageState extends State<SuggestionComplainPage> {
             style: GoogleFonts.doHyeon(fontSize: 24, color: Colors.white)),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                width: 350,
-                height: 200,
-                child: TextField(
-                  maxLines: 10,
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide:
-                          BorderSide(width: 2, color: CustomColor.themeColor),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide(width: 2, color: Colors.grey),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    hintText: '건의사항을 입력해주세요!',
-                    hintStyle: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SingleChildScrollView(
+          physics: const ScrollPhysics(),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(height: 20),
+                const Text('식당 관리자에게 건의사항이 있으신가요?',
+                    style: TextStyle(color: Colors.grey)),
+                const SizedBox(height: 20),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: TextField(
+                    maxLines: 10,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(width: 2, color: CustomColor.themeColor),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(width: 2, color: Colors.grey),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      hintText: '건의사항을 입력해주세요!',
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                width: 350,
-                height: 30,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: SizedBox(
-                    width: 70,
-                    height: 30,
-                    child: ElevatedButton(
-                      child: const Text(
-                        '보내기',
-                        style: TextStyle(fontSize: 13, color: Colors.white),
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.only(right: 15),
+                  width: double.infinity,
+                  height: 30,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      width: 80,
+                      height: 30,
+                      child: ElevatedButton(
+                        child: const Text(
+                          '보내기',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800),
+                        ),
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            primary: CustomColor.themeColor),
                       ),
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                          primary: CustomColor.themeColor),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              SizedBox(
-                width: 350,
-                height: 30,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "My 건의사항",
-                    style: GoogleFonts.doHyeon(fontSize: 20),
+                const SizedBox(height: 50),
+                Container(
+                  padding: const EdgeInsets.only(left: 24),
+                  width: double.infinity,
+                  height: 30,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "My 건의사항",
+                      style: GoogleFonts.doHyeon(fontSize: 20),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Container(
-                width: 350,
-                height: (suggestion.length + 1) * 100,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 10,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: CustomColor.themeColor, width: 1),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  color: CustomColor.themeColor,
-                ),
-                child: ListView.separated(
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      width: 350,
-                      height: 100,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 10,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: CustomColor.themeColor,
                       ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        color: Colors.white,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: Container(
+                              height: 100,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16,
+                                horizontal: 10,
+                              ),
+                              decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    suggestion[index],
+                                    style: GoogleFonts.doHyeon(fontSize: 15),
+                                    softWrap: true,
+                                  ),
+                                  const Spacer(),
+                                  const Align(alignment: Alignment.bottomRight, child: Text('2021-10-14')),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        itemCount: suggestion.length,
                       ),
-                      child: Text(
-                        suggestion[index],
-                        style: GoogleFonts.doHyeon(fontSize: 15),
-                        softWrap: true,
-                      ),
-                    );
-                  },
-                  itemCount: suggestion.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const Divider(color: Colors.grey, thickness: 2.0);
-                  },
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 30)
-            ],
+                const SizedBox(height: 30)
+              ],
+            ),
           ),
         ),
       ),
