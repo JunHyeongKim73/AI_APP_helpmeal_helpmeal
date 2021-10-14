@@ -20,28 +20,32 @@ const noticeList = [
 ];
 
 class NoticeCheckPageState extends State<NoticeCheckPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   List<bool> lists = List.filled(noticeList.length, false);
-  List<int> numLists = List.filled(noticeList.length, 2);
 
-  Animation<double>? _animation;
-  AnimationController? _controller;
+  List<Animation<double>> _animation = [];
+  List<AnimationController> _controller = [];
 
   @override
   void initState() {
     // TODO: implement initState
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-    _animation = CurvedAnimation(parent: _controller!, curve: Curves.easeIn);
-    _animation!.addListener(() {
-      setState(() {});
-    });
+    for (var i = 0; i < noticeList.length; i++) {
+      AnimationController controller = AnimationController(
+          vsync: this, duration: const Duration(milliseconds: 500));
+      _controller.add(controller);
+
+      Animation<double> animation =
+          CurvedAnimation(parent: controller, curve: Curves.easeIn);
+      animation.addListener(() {
+        setState(() {});
+      });
+      _animation.add(animation);
+    }
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller!.dispose();
     // TODO: implement dispose
     super.dispose();
   }
@@ -95,22 +99,21 @@ class NoticeCheckPageState extends State<NoticeCheckPage>
                                 IconButton(
                                     onPressed: () {
                                       setState(() {
-                                        lists[index] = true;
-                                        numLists[index]--;
+                                        lists[index] = !lists[index];
+
+                                        if (lists[index]) {
+                                          _controller[index].forward();
+                                        } else {
+                                          _controller[index].reverse();
+                                        }
                                       });
-                                      if (lists[index] &&
-                                          numLists[index] == 1) {
-                                        _controller!.forward();
-                                      } else {
-                                        _controller!.reverse();
-                                      }
                                     },
                                     icon: Icon(MdiIcons.chevronDown))
                               ],
                             ),
                           ),
                         ),
-                        _container(lists[index], numLists[index])
+                        _container(index)
                       ],
                     ),
                   );
@@ -126,13 +129,7 @@ class NoticeCheckPageState extends State<NoticeCheckPage>
     );
   }
 
-  Container _container(bool flag, int num) {
-    if (flag && num >= 0) {
-      if(num == 0){
-        set
-      }
-      return Container(height: 150 * _animation!.value, color: Colors.black);
-    }
-    return Container();
+  Widget _container(int index) {
+    return Container(height: 150 * _animation[index].value, color: Colors.black);
   }
 }
