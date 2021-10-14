@@ -41,7 +41,7 @@ class MyAPP extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: CustomColor.orangeColor,
         ),
-        scaffoldBackgroundColor: Colors.grey[100],
+        scaffoldBackgroundColor: Colors.white,
       ),
       initialRoute: '/noticeCheck',
       initialBinding: InitBinding(),

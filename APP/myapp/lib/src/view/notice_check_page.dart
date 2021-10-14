@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:myapp/src/model/suggestion/suggestion.dart';
 import 'package:myapp/src/model/suggestion/suggestion_repository.dart';
 import 'package:myapp/src/model/user/user.dart';
@@ -18,7 +19,33 @@ const noticeList = [
   '마스크 쓰고 밥 받으시길 바랍니다'
 ];
 
-class NoticeCheckPageState extends State<NoticeCheckPage> {
+class NoticeCheckPageState extends State<NoticeCheckPage>
+    with SingleTickerProviderStateMixin {
+  List<bool> lists = List.filled(noticeList.length, false);
+  List<int> numLists = List.filled(noticeList.length, 2);
+
+  Animation<double>? _animation;
+  AnimationController? _controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    _animation = CurvedAnimation(parent: _controller!, curve: Curves.easeIn);
+    _animation!.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller!.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,40 +62,77 @@ class NoticeCheckPageState extends State<NoticeCheckPage> {
           children: [
             const SizedBox(height: 30),
             Flexible(
-                child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: noticeList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: SizedBox(
-                    height: 100,
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: noticeList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
+                      children: [
+                        SizedBox(
+                          height: 50,
                           child: Container(
                             padding: const EdgeInsets.only(left: 8, top: 8),
-                            child: Text(
-                              noticeList[index],
-                              style: GoogleFonts.doHyeon(fontSize: 15),
-                              softWrap: true,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      noticeList[index],
+                                      style: GoogleFonts.doHyeon(fontSize: 18),
+                                    ),
+                                    Text(
+                                      '2021.10.14',
+                                      style: GoogleFonts.doHyeon(
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        lists[index] = true;
+                                        numLists[index]--;
+                                      });
+                                      if (lists[index] &&
+                                          numLists[index] == 1) {
+                                        _controller!.forward();
+                                      } else {
+                                        _controller!.reverse();
+                                      }
+                                    },
+                                    icon: Icon(MdiIcons.chevronDown))
+                              ],
                             ),
                           ),
                         ),
+                        _container(lists[index], numLists[index])
                       ],
                     ),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(color: Colors.grey.shade400, thickness: 1.0);
-              },
-            )),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(color: Colors.grey.shade400, thickness: 1.0);
+                },
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Container _container(bool flag, int num) {
+    if (flag && num >= 0) {
+      if(num == 0){
+        set
+      }
+      return Container(height: 150 * _animation!.value, color: Colors.black);
+    }
+    return Container();
   }
 }
