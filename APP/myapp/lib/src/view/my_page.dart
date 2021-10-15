@@ -115,14 +115,7 @@ class MyPage extends StatelessWidget {
   }
 
   Widget _loginButtonView(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _myPageButton('로그아웃', '/login', context),
-        const SizedBox(width: 20),
-        _myPageButton('정보 변경', '/login', context),
-      ],
-    );
+    return _myPageButton('로그아웃', '/login', context);
   }
 
   Widget _myPageButton(String text, String page, BuildContext context) {

@@ -20,7 +20,7 @@ class MyPageIcon {
 
   static List<MyPageIcon> adminMyPageIconList = <MyPageIcon>[
     MyPageIcon(iconData: MdiIcons.forumOutline, pageName: '/suggestCheck', text: '건의사항'),
-    MyPageIcon(iconData: MdiIcons.bellOutline, pageName: '/noticePass', text: '공지하기'),
+    MyPageIcon(iconData: MdiIcons.bellOutline, pageName: '/noticeCheck', text: '공지사항'),
     MyPageIcon(iconData: MdiIcons.textBoxOutline, pageName: '/reviewAnalysis', text: '리뷰정리'),
     MyPageIcon(iconData: MdiIcons.viewDashboardOutline, pageName: '/mealControl', text: '식단표 관리'),
   ];

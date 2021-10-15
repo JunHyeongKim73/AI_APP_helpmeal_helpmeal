@@ -29,6 +29,7 @@ class _TroopSelectPage extends State<TroopSelectPage> {
     return GetBuilder<SelectTroopController>(builder: (controller) {
       troopList = controller.troopList;
       return Scaffold(
+        backgroundColor: Colors.grey[100],
         body: Column(
           children: [
             const SizedBox(height: 50),

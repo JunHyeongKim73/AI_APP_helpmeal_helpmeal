@@ -5,12 +5,45 @@ import 'package:intl/intl.dart';
 
 import 'package:myapp/src/controller/date_controller.dart';
 import 'package:myapp/src/model/colors.dart';
+import 'package:flutter_scatter/flutter_scatter.dart';
 
-class ReviewAnalysisPage extends StatelessWidget {
-  const ReviewAnalysisPage({Key? key}) : super(key: key);
+class ReviewAnalysisPage extends StatefulWidget {
+  ReviewAnalysisPage({Key? key}) : super(key: key);
+
+  @override
+  State<ReviewAnalysisPage> createState() => _ReviewAnalysisPageState();
+}
+
+class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
+  final List<Map<String, dynamic>> mapList = [
+    {'food': '적당', 'freq': 15},
+    {'food': '치킨', 'freq': 10},
+    {'food': '식단관리', 'freq': 9},
+    {'food': '청결', 'freq': 6},
+    {'food': '식당관리', 'freq': 5},
+    {'food': '휴지', 'freq': 4},
+    {'food': '급식', 'freq': 4},
+    {'food': '양', 'freq': 3},
+    {'food': '개선', 'freq': 2},
+    {'food': '시리얼', 'freq': 1},
+    {'food': '너무', 'freq': 1},
+    {'food': '적어', 'freq': 1},
+  ];
+  List<Widget> widgets = [];
+  @override
+  void initState() {
+    for(var maps in mapList){
+      widgets.add(ScatterItem(text: maps['food'], color: _setItemColor(maps['freq']), size: _setItemSize(maps['freq'])));
+    }
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final ratio = screenSize.width / screenSize.height;
+
     return GetBuilder<DateController>(builder: (controller) {
       return Scaffold(
         appBar: AppBar(
@@ -34,51 +67,57 @@ class ReviewAnalysisPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  _getWeekOfMonth(controller.dateText),
-                  style: GoogleFonts.roboto(fontSize: 18),
+                // Text(
+                //   _getWeekOfMonth(controller.dateText),
+                //   style: GoogleFonts.roboto(fontSize: 18),
+                // ),
+                const SizedBox(height: 30),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        Text('Best 3',
+                            style: GoogleFonts.anton(
+                                fontSize: 28, color: Colors.blue)),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    _rankContainer(
+                        '1', '김치볶음밥', Colors.lightBlue[100], Colors.blue),
+                    const SizedBox(height: 10),
+                    _rankContainer('2', '치킨마요', Colors.lightBlue[100], Colors.blue),
+                    const SizedBox(height: 10),
+                    _rankContainer('3', '참치마요', Colors.lightBlue[100], Colors.blue),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        Text('Worst 3',
+                            style:
+                                GoogleFonts.anton(fontSize: 28, color: Colors.red)),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    _rankContainer('1', '햄소시지찌개', Colors.red[100], Colors.red),
+                    const SizedBox(height: 10),
+                    _rankContainer('2', '고등어순살조림', Colors.red[100], Colors.red),
+                    const SizedBox(height: 10),
+                    _rankContainer('3', '오이무침', Colors.red[100], Colors.red),
+                  ],
                 ),
                 const SizedBox(height: 30),
                 Row(
                   children: [
                     const SizedBox(width: 10),
-                    Text('Best 3',
-                        style: GoogleFonts.anton(
-                            fontSize: 28, color: Colors.blue)),
+                    Text('개선점',
+                        style: GoogleFonts.doHyeon(
+                            fontSize: 28, color: CustomColor.themeColor)),
                   ],
-                ),
-                const SizedBox(height: 15),
-                _rankContainer(
-                    '1', '김치볶음밥', Colors.lightBlue[100], Colors.blue),
-                const SizedBox(height: 10),
-                _rankContainer('2', '치킨마요', Colors.lightBlue[100], Colors.blue),
-                const SizedBox(height: 10),
-                _rankContainer('3', '참치마요', Colors.lightBlue[100], Colors.blue),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    Text('Worst 3',
-                        style:
-                            GoogleFonts.anton(fontSize: 28, color: Colors.red)),
-                  ],
-                ),
-                const SizedBox(height: 15),
-                _rankContainer('1', '햄소시지찌개', Colors.red[100], Colors.red),
-                const SizedBox(height: 10),
-                _rankContainer('2', '고등어순살조림', Colors.red[100], Colors.red),
-                const SizedBox(height: 10),
-                _rankContainer('3', '오이무침', Colors.red[100], Colors.red),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    Text('개선점', style: GoogleFonts.doHyeon(fontSize: 28, color: CustomColor.themeColor)),
-                  ],
-                ),
-                const Image(
-                  image: AssetImage('assets/wordcloud.jpg'),
-                  height: 300,
                 ),
                 Row(
                   children: const [
@@ -90,23 +129,29 @@ class ReviewAnalysisPage extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 10),
-                    Text('긍정', style: GoogleFonts.doHyeon(fontSize: 28, color: Colors.blue)),
+                    Text('긍정',
+                        style: GoogleFonts.doHyeon(
+                            fontSize: 28, color: Colors.blue)),
                   ],
                 ),
-                const Image(
-                  image: AssetImage('assets/wordcloud.jpg'),
-                  height: 300,
+                FittedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Scatter(
+                      alignment: Alignment.topLeft,
+                      delegate: FermatSpiralScatterDelegate(ratio: ratio),
+                      children: widgets,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 30),
                 Row(
                   children: [
                     const SizedBox(width: 10),
-                    Text('부정', style: GoogleFonts.doHyeon(fontSize: 28, color: Colors.red)),
+                    Text('부정',
+                        style: GoogleFonts.doHyeon(
+                            fontSize: 28, color: Colors.red)),
                   ],
-                ),
-                const Image(
-                  image: AssetImage('assets/wordcloud.jpg'),
-                  height: 300,
                 ),
               ],
             ),
@@ -114,6 +159,75 @@ class ReviewAnalysisPage extends StatelessWidget {
         ),
       );
     });
+  }
+
+  Color _setItemColor(int freq){
+    List<int> freqList = [];
+    for(var map in mapList){
+      freqList.add(map['freq']);
+    }
+    freqList.sort((b, a) => a.compareTo(b)); 
+    
+    int len = freqList.length;
+    int idx = freqList.indexOf(freq);
+
+    switch (idx) {
+      case 0:
+        return Colors.blueAccent;
+      case 1:
+        return Colors.redAccent;
+      case 2:
+        return Colors.amber.shade900;
+      default:
+        int percent = (100 * ((len - idx)/len)).ceil();
+        if(percent >=60){
+          return Colors.green;
+        }
+        else if(percent>=40){
+          return Colors.purple;
+        }
+        else if(percent >=30){
+          return Colors.cyan;
+        }
+        else{
+          return Colors.black;
+        }
+    }
+
+  }
+
+  double _setItemSize(int freq){
+    List<int> freqList = [];
+    for(var map in mapList){
+      freqList.add(map['freq']);
+    }
+    freqList.sort((b, a) => a.compareTo(b)); 
+    
+    int len = freqList.length;
+    int idx = freqList.indexOf(freq);
+
+    switch (idx) {
+      case 0:
+        return 50;
+      case 1:
+        return 40;
+      case 2:
+        return 30;
+      default:
+        int percent = 100 * ((len - idx)/len).ceil();
+        if(percent >=60){
+          return 25;
+        }
+        else if(percent>=40){
+          return 20;
+        }
+        else if(percent >=20){
+          return 15;
+        }
+        else{
+          return 10;
+        }
+    }
   }
 
   Widget _rankContainer(
@@ -172,5 +286,19 @@ class ReviewAnalysisPage extends StatelessWidget {
     }
     weekOfMonth = ((testDate.day + weekDay) / 7).ceil();
     return '${DateFormat.yMMM('ko').format(dateTime)} ${weekOfMonth.toString()}주차';
+  }
+}
+
+class ScatterItem extends StatelessWidget {
+  final String text;
+  final Color color;
+  final double size;
+  const ScatterItem(
+      {Key? key, required this.text, required this.color, required this.size})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, style: GoogleFonts.poorStory(color: color, fontSize: size + 10));
   }
 }
