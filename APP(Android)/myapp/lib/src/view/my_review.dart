@@ -19,7 +19,6 @@ class MyReviewPageState extends State<MyReviewPage> {
   @override
   void initState() {
     reviewList = ReviewRepository.getMyReview(user.userId!);
-    // TODO: implement initState
     super.initState();
   }
 

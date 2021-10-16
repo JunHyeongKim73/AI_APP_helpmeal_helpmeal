@@ -10,10 +10,18 @@ import 'package:myapp/src/model/meal/menu.dart';
 import 'package:myapp/src/model/meal/menu_repository.dart';
 import 'package:myapp/src/model/user/user.dart';
 
-class MealControlPage extends StatelessWidget {
-  final User user = Get.arguments;
+class MealControlPage extends StatefulWidget {
 
-  MealControlPage({Key? key}) : super(key: key);
+  const MealControlPage({Key? key}) : super(key: key);
+
+  @override
+  State<MealControlPage> createState() => _MealControlPageState();
+}
+
+class _MealControlPageState extends State<MealControlPage> {
+  final User user = Get.arguments;
+  Future<List<Menu>>? menuList;
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +37,9 @@ class MealControlPage extends StatelessWidget {
           final TextEditingController breakController = TextEditingController();
           final TextEditingController lunchController = TextEditingController();
           final TextEditingController dinerController = TextEditingController();
-      
-          Future<List<Menu>> menuList =
-              MenuRepository.getMenus(controller.dateText, user.groups!.troopId!);
+          
+            menuList = MenuRepository.getMenus(
+                controller.dateText, user.groups!.troopId!);
 
           return FutureBuilder<List<Menu>>(
               future: menuList,
@@ -90,14 +98,14 @@ class MealControlPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 10.0),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async{
                               _postMenu([
                                 breakController,
                                 lunchController,
                                 dinerController,
                               ], controller.dateText);
                               _showToast(context);
-                              //controller.updateDateChanged();
+                              controller.dateChanged = true;
                             },
                             child: const Text('수정',
                                 style: TextStyle(color: Colors.white)),
@@ -189,7 +197,7 @@ class MealControlPage extends StatelessWidget {
     List<Map> lunchFoodList = createFoodList(lunchFoods);
     List<Map> dinerFoodList = createFoodList(dinerFoods);
 
-    MenuRepository.postMenu(
-        dateTime, [breakFoodList, lunchFoodList, dinerFoodList], user.groups!.troopId!);
+    MenuRepository.postMenu(dateTime,
+        [breakFoodList, lunchFoodList, dinerFoodList], user.groups!.troopId!);
   }
 }

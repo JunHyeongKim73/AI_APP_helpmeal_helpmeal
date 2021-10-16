@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/src/model/colors.dart';
 
 import 'package:myapp/src/model/fonts.dart';
+import 'package:myapp/src/model/review/review.dart';
+import 'package:myapp/src/model/review/review_repository.dart';
 import 'package:myapp/src/model/user/user.dart';
 
 //api로부터 리뷰 데이터를 받아오는 작업이 필요
@@ -35,9 +37,12 @@ class ScoreReviewPage extends StatefulWidget {
 
 class ScoreReviewPageState extends State<ScoreReviewPage> {
   final Map<String, dynamic> mapData = Get.arguments;
+  Future<List<Review>>? reviewList;
   User? user;
   DateTime? date;
   int? index;
+  bool canUpdatePage = true;
+
   final List<String> menu = <String>[
     "돈가스",
     "스팸마요덮밥",
@@ -46,13 +51,13 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
     "오삼불고기"
   ];
   //List<int> score = <int>[0, 0, 0, 0, 0];
-  List<int?> selected = [5, 5, 5, 5, 5];
+  List<int?> selected = [0, 0, 0, 0, 0];
+
   @override
   void initState() {
     user = mapData['user'];
     date = mapData['date'];
     index = mapData['index'];
-    // TODO: implement initState
     super.initState();
   }
 
@@ -60,6 +65,10 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (canUpdatePage) {
+      reviewList =
+          ReviewRepository.getFoodReview(date!, user!.groups!.troopId!, index!);
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -67,7 +76,6 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
           children: CustomFont(fontSize: 28).logo,
         ),
         centerTitle: true,
-        titleSpacing: 25,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(30),
@@ -118,166 +126,11 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                                 child: DropdownButton(
                                   value: selected[i],
                                   items: [
-                                    DropdownMenuItem(
-                                        value: 1,
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                            ])),
-                                    DropdownMenuItem(
-                                        value: 2,
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                            ])),
-                                    DropdownMenuItem(
-                                        value: 3,
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                            ])),
-                                    DropdownMenuItem(
-                                        value: 4,
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_border_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                            ])),
-                                    DropdownMenuItem(
-                                        value: 5,
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: CustomColor.themeColor,
-                                                size: 30,
-                                              ),
-                                            ])),
+                                    _starDropItem(1),
+                                    _starDropItem(2),
+                                    _starDropItem(3),
+                                    _starDropItem(4),
+                                    _starDropItem(5),
                                   ],
                                   onChanged: (int? value) {
                                     setState(() {
@@ -311,7 +164,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    hintText: '건의사항을 입력해주세요!',
+                    hintText: '리뷰를 입력해주세요!',
                     hintStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -336,7 +189,31 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                             fontSize: 15,
                             color: Colors.white,
                             fontWeight: FontWeight.w800)),
-                    onPressed: () {},
+                    onPressed: () async {
+                      String result = await ReviewRepository.postReview(
+                          date!,
+                          user!.groups!.troopId!,
+                          index!,
+                          user!.userId!,
+                          controller.text);
+                      setState(() {
+                        canUpdatePage = true;
+                      });
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: Text(result),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () => Get.back(),
+                                  child: const Text('확인'))
+                            ],
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
               ),
@@ -347,58 +224,119 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                   indent: 15,
                   endIndent: 15),
               const SizedBox(height: 10),
-              Container(
-                  padding: const EdgeInsets.only(left: 15),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '전체 리뷰 ??개',
-                    style: GoogleFonts.doHyeon(fontSize: 15),
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.only(right: 10),
-                            child: CircleAvatar(
-                                child: Text(name[index][0].toUpperCase())),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(name[index],
-                                    style: GoogleFonts.doHyeon(fontSize: 18)),
-                                const SizedBox(height: 5),
-                                Text(
-                                  review[index],
-                                  style: GoogleFonts.doHyeon(fontSize: 15),
-                                  softWrap: true,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                  itemCount: review.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(color: Colors.grey.shade200, thickness: 2.0);
-                  },
-                ),
+              FutureBuilder<List<Review>>(
+                future: reviewList,
+                builder: (context, snapshot) {
+                  return Container(
+                    padding: const EdgeInsets.only(left: 15),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      snapshot.hasData
+                          ? '전체 리뷰 ${snapshot.data!.length}개'
+                          : '전체 리뷰 0개',
+                      style: GoogleFonts.doHyeon(fontSize: 15),
+                    ),
+                  );
+                },
               ),
+              FutureBuilder<List<Review>>(
+                  future: reviewList,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            left: 15, right: 15, bottom: 20),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 8, bottom: 8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    margin: const EdgeInsets.only(right: 10),
+                                    child: CircleAvatar(
+                                        backgroundColor: CustomColor.themeColor,
+                                        child: Text(
+                                            snapshot.data![index].name![0])),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(snapshot.data![index].name!,
+                                            style: GoogleFonts.doHyeon(
+                                                fontSize: 18)),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          snapshot.data![index].comment!,
+                                          style:
+                                              GoogleFonts.doHyeon(fontSize: 15),
+                                          softWrap: true,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return Divider(
+                                color: Colors.grey.shade200, thickness: 2.0);
+                          },
+                        ),
+                      );
+                    }
+                    return Container(
+                      padding: const EdgeInsets.only(left: 15, bottom: 20),
+                      alignment: Alignment.center,
+                      height: 100,
+                      child: const Text('아무도 리뷰를 작성하지 않았어요!'),
+                    );
+                  }),
             ],
           ),
         ),
       ),
     );
+  }
+
+  DropdownMenuItem<int> _starDropItem(int num) {
+    return DropdownMenuItem(
+        value: num,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const <Widget>[
+              Icon(
+                Icons.star_rounded,
+                color: CustomColor.themeColor,
+                size: 30,
+              ),
+              Icon(
+                Icons.star_border_rounded,
+                color: CustomColor.themeColor,
+                size: 30,
+              ),
+              Icon(
+                Icons.star_border_rounded,
+                color: CustomColor.themeColor,
+                size: 30,
+              ),
+              Icon(
+                Icons.star_border_rounded,
+                color: CustomColor.themeColor,
+                size: 30,
+              ),
+              Icon(
+                Icons.star_border_rounded,
+                color: CustomColor.themeColor,
+                size: 30,
+              ),
+            ]));
   }
 }

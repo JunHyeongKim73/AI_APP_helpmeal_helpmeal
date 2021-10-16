@@ -32,7 +32,7 @@ class _MealPage extends State<MealPage> {
       if(controller.dateChanged){
         futureMenuList = MenuRepository.getMenus(
           controller.dateText, widget.user.groups!.troopId!);
-        controller.updateDateChanged();
+        controller.dateChanged = false;
       }
       return Scaffold(
         appBar: const CustomAppBar(),
