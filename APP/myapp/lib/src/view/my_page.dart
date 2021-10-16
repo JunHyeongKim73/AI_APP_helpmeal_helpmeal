@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:restart_app/restart_app.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/my_page_icon.dart';
@@ -70,7 +70,9 @@ class MyPage extends StatelessWidget {
                                 style: GoogleFonts.doHyeon(
                                     fontSize: 20, color: Colors.white),
                               ),
-                              user.isAdmin == 1 ? const SizedBox(width: 2) : const SizedBox(),
+                              user.isAdmin == 1
+                                  ? const SizedBox(width: 2)
+                                  : const SizedBox(),
                               user.isAdmin == 1 ? _masterIcon() : Container(),
                             ],
                           ),
@@ -85,7 +87,9 @@ class MyPage extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 200),
-                        user.isLogined! ? _loginButtonView(context) : _notLoginButtonView(context),
+                        user.isLogined!
+                            ? _loginButtonView(context)
+                            : _notLoginButtonView(context),
                       ],
                     ),
                     right: 0,
@@ -124,7 +128,7 @@ class MyPage extends StatelessWidget {
       width: 90,
       child: ElevatedButton(
         onPressed: () {
-          Phoenix.rebirth(context);
+          Restart.restartApp();
         },
         child: Center(
           child: Text(
@@ -167,23 +171,35 @@ class MyPage extends StatelessWidget {
           ),
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () =>
-                        Get.toNamed(myPageIconList[index].pageName, arguments: user),
-                    icon: Icon(myPageIconList[index].iconData,
-                        color: CustomColor.themeColor),
-                    iconSize: 42,
-                  ),
-                  Text(myPageIconList[index].text,
-                      style: GoogleFonts.doHyeon(fontSize: 16)),
-                ],
+              padding: const EdgeInsets.all(3.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 2,
+                      offset: const Offset(0, 1),
+                    )
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () => Get.toNamed(
+                          myPageIconList[index].pageName,
+                          arguments: user),
+                      icon: Icon(myPageIconList[index].iconData,
+                          color: CustomColor.themeColor),
+                      iconSize: 42,
+                    ),
+                    Text(myPageIconList[index].text,
+                        style: GoogleFonts.doHyeon(fontSize: 16)),
+                  ],
+                ),
               ),
             );
           },

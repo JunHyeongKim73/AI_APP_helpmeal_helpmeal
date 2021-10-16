@@ -34,9 +34,9 @@ class _MealItemState extends State<MealItem> {
         ),
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(54),
-          topLeft: Radius.circular(8),
-          bottomLeft: Radius.circular(8),
-          bottomRight: Radius.circular(8),
+          topLeft: Radius.circular(12),
+          bottomLeft: Radius.circular(12),
+          bottomRight: Radius.circular(12),
         ),
       ),
       child: Padding(

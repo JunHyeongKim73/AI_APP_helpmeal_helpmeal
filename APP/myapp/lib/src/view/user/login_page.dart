@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/model/fonts.dart';

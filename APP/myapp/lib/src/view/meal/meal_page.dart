@@ -63,7 +63,7 @@ class _MealPage extends State<MealPage> {
                                     shape: const CircleBorder(),
                                     primary: Colors.white,
                                     onPrimary: Colors.blue[400],
-                                    shadowColor: Colors.grey,
+                                    shadowColor: Colors.blue[400],
                                   ))
                               : null,
                         );

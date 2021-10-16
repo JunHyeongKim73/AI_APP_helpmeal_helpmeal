@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/src/controller/sign_up_controller.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/view/first_page.dart';
@@ -22,11 +21,7 @@ import 'src/view/user/sign_up_page.dart';
 import 'src/view/user/troop_select_page.dart';
 
 void main() {
-  runApp(
-    Phoenix(
-      child: const MyAPP(),
-    ),
-  );
+  runApp(const MyAPP());
 }
 
 //Codespace가 갑자기 안되면 10분 있다가 하기
@@ -57,8 +52,7 @@ class MyAPP extends StatelessWidget {
         GetPage(name: '/noticeAdd', page: () => const NoticeAddPage()),
         GetPage(name: '/myReview', page: () => const MyReviewPage()),
         GetPage(name: '/suggestCheck', page: () => const SuggestionCheckPage()),
-        GetPage(
-            name: '/reviewAnalysis', page: () => ReviewAnalysisPage()),
+        GetPage(name: '/reviewAnalysis', page: () => ReviewAnalysisPage()),
         GetPage(name: '/mealControl', page: () => MealControlPage()),
         GetPage(
           name: '/troopSelect',
