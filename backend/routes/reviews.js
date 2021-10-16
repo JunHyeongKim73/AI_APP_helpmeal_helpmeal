@@ -59,7 +59,7 @@ router.get('/:troopId/:day/:numberOfDay', async function(req, res) {
 });
 
 //자기 자신이 작성한 리뷰를 읽어오는 라우터
-router.get('/myReview', async function(req, res) {
+router.post('/myReview', async function(req, res) {
 	//res.locals.userId = 59 // cookie 읽는 작업 원활하게 진행되면 제거하기
 	res.set( { 'content-Type': 'application/json'});		
 	const getReviewQuery = `SELECT name, comment, created_at, day FROM review_view WHERE user_id = ?;`;
