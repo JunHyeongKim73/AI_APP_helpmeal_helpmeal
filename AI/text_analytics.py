@@ -79,6 +79,13 @@ def split_by_sentiment(text, sentimental_response):
 	positive_text = text[text['sentiment'] == "positive"]
 	return positive_text, negative_text
 
+def insert_word_number(word_number, sentiment):
+	insert_queries = []
+	for i in range(len(negative_word_number)):
+		insert_queries.append(f'INSERT INTO helpmeal.review_data(word, count, day, sentiment, troop_id) VALUES("{word_number.index[i]}", {word_number[i]}, "2021-10-16", sentiment, 1);')
+		cursor.execute(insert_queries[i])
+		my_db.commit()
+
 #DB에서 분석 대상 데이터 추출
 cursor = my_db.cursor(pymysql.cursors.DictCursor)
 sql = 'SELECT comment FROM ai_test'
@@ -90,15 +97,11 @@ sentimental_response = sentiment_analysis(client, text['comment'])
 
 positive_text, negative_text = split_by_sentiment(text, sentimental_response)
 
-word_number = count_word(negative_text['comment'])
-insert_queries = []
-for i in range(len(word_number)):
-	insert_queries.append(f'INSERT INTO helpmeal.review_data(word, count, day, sentiment, troop_id) VALUES("{word_number.index[i]}", {word_number[i]}, "2021-10-16", "positive", 1);')
-	cursor.execute(insert_queries[i])
-	#print(word_number.index[i], word_number[i])
-	my_db.commit()
-#print(result)
+negative_word_number = count_word(negative_text['comment'])
+positive_word_number = count_word(positive_test['comment'])
 
+insert_word_number(negative_word_number, "negative")
+insert_word_number(positive_word_number, "positive")
 #insertQuery = f'INSERT INTO helpmeal.review_data(word_count, sentiment) VALUES({result}, negative);'
 #cursor.execute(insertQuery)
 #my_db.commit()
