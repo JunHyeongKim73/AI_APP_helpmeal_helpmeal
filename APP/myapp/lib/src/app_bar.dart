@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart' as intl;
 
 import 'package:myapp/src/controller/date_controller.dart';
-import 'package:myapp/src/model/colors.dart';
 import 'model/fonts.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {

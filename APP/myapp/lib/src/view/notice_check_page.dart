@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:myapp/src/model/colors.dart';
-import 'package:myapp/src/model/suggestion/suggestion.dart';
-import 'package:myapp/src/model/suggestion/suggestion_repository.dart';
-import 'package:myapp/src/model/user/user.dart';
 
 class NoticeCheckPage extends StatefulWidget {
   const NoticeCheckPage({Key? key}) : super(key: key);
@@ -35,7 +31,6 @@ class NoticeCheckPageState extends State<NoticeCheckPage>
 
   @override
   void initState() {
-    // TODO: implement initState
     for (var i = 0; i < noticeTitleList.length; i++) {
       AnimationController controller = AnimationController(
           vsync: this, duration: const Duration(milliseconds: 300));
@@ -49,12 +44,6 @@ class NoticeCheckPageState extends State<NoticeCheckPage>
       _animation.add(animation);
     }
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override

@@ -12,6 +12,7 @@ class MenuRepository {
     final response = await http.get(Uri.parse(
         'https://helpmeal.duckdns.org/menus/$troopId/$noTimeDate/${category.index + 1}'));
     if (response.statusCode == 200) {
+      print('Get Menu!');
       var lists = jsonDecode(response.body);
       List<Food> foodList = [];
       for (var element in lists) {

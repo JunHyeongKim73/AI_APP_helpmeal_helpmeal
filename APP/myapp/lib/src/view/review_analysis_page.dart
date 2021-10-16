@@ -8,7 +8,7 @@ import 'package:myapp/src/model/colors.dart';
 import 'package:flutter_scatter/flutter_scatter.dart';
 
 class ReviewAnalysisPage extends StatefulWidget {
-  ReviewAnalysisPage({Key? key}) : super(key: key);
+  const ReviewAnalysisPage({Key? key}) : super(key: key);
 
   @override
   State<ReviewAnalysisPage> createState() => _ReviewAnalysisPageState();
@@ -32,10 +32,12 @@ class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
   List<Widget> widgets = [];
   @override
   void initState() {
-    for(var maps in mapList){
-      widgets.add(ScatterItem(text: maps['food'], color: _setItemColor(maps['freq']), size: _setItemSize(maps['freq'])));
+    for (var maps in mapList) {
+      widgets.add(ScatterItem(
+          text: maps['food'],
+          color: _setItemColor(maps['freq']),
+          size: _setItemSize(maps['freq'])));
     }
-    // TODO: implement initState
     super.initState();
   }
 
@@ -56,50 +58,54 @@ class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
           child: Center(
             child: Column(
               children: [
-                const SizedBox(height: 30),
-                Row(
-                  children: const [
-                    SizedBox(width: 20),
-                    Text(
-                      '리뷰 정리본은 매주 월요일에 제공됩니다.',
-                      style: TextStyle(color: Colors.grey),
-                    )
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 30, bottom: 20),
+                  child: Row(
+                    children: const [
+                      SizedBox(width: 20),
+                      Text(
+                        '리뷰 정리본은 매주 월요일에 제공됩니다.',
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                // Text(
-                //   _getWeekOfMonth(controller.dateText),
-                //   style: GoogleFonts.roboto(fontSize: 18),
-                // ),
-                const SizedBox(height: 30),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        Text('Best 3',
-                            style: GoogleFonts.anton(
-                                fontSize: 28, color: Colors.blue)),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    _rankContainer(
-                        '1', '김치볶음밥', Colors.lightBlue[100], Colors.blue),
-                    const SizedBox(height: 10),
-                    _rankContainer('2', '치킨마요', Colors.lightBlue[100], Colors.blue),
-                    const SizedBox(height: 10),
-                    _rankContainer('3', '참치마요', Colors.lightBlue[100], Colors.blue),
-                  ],
+                Text(
+                  _getWeekOfMonth(controller.dateText),
+                  style: GoogleFonts.roboto(fontSize: 18),
                 ),
-                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const SizedBox(width: 10),
+                          Text('Best 3',
+                              style: GoogleFonts.anton(
+                                  fontSize: 28, color: Colors.blue)),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      _rankContainer(
+                          '1', '김치볶음밥', Colors.lightBlue[100], Colors.blue),
+                      const SizedBox(height: 10),
+                      _rankContainer(
+                          '2', '치킨마요', Colors.lightBlue[100], Colors.blue),
+                      const SizedBox(height: 10),
+                      _rankContainer(
+                          '3', '참치마요', Colors.lightBlue[100], Colors.blue),
+                    ],
+                  ),
+                ),
                 Column(
                   children: [
                     Row(
                       children: [
                         const SizedBox(width: 10),
                         Text('Worst 3',
-                            style:
-                                GoogleFonts.anton(fontSize: 28, color: Colors.red)),
+                            style: GoogleFonts.anton(
+                                fontSize: 28, color: Colors.red)),
                       ],
                     ),
                     const SizedBox(height: 15),
@@ -108,21 +114,6 @@ class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
                     _rankContainer('2', '고등어순살조림', Colors.red[100], Colors.red),
                     const SizedBox(height: 10),
                     _rankContainer('3', '오이무침', Colors.red[100], Colors.red),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    const SizedBox(width: 10),
-                    Text('개선점',
-                        style: GoogleFonts.doHyeon(
-                            fontSize: 28, color: CustomColor.themeColor)),
-                  ],
-                ),
-                Row(
-                  children: const [
-                    SizedBox(width: 10),
-                    Text('밥 바꿔야해요!'),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -161,13 +152,13 @@ class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
     });
   }
 
-  Color _setItemColor(int freq){
+  Color _setItemColor(int freq) {
     List<int> freqList = [];
-    for(var map in mapList){
+    for (var map in mapList) {
       freqList.add(map['freq']);
     }
-    freqList.sort((b, a) => a.compareTo(b)); 
-    
+    freqList.sort((b, a) => a.compareTo(b));
+
     int len = freqList.length;
     int idx = freqList.indexOf(freq);
 
@@ -179,30 +170,26 @@ class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
       case 2:
         return Colors.amber.shade900;
       default:
-        int percent = (100 * ((len - idx)/len)).ceil();
-        if(percent >=60){
+        int percent = (100 * ((len - idx) / len)).ceil();
+        if (percent >= 60) {
           return Colors.green;
-        }
-        else if(percent>=40){
+        } else if (percent >= 40) {
           return Colors.purple;
-        }
-        else if(percent >=30){
+        } else if (percent >= 30) {
           return Colors.cyan;
-        }
-        else{
+        } else {
           return Colors.black;
         }
     }
-
   }
 
-  double _setItemSize(int freq){
+  double _setItemSize(int freq) {
     List<int> freqList = [];
-    for(var map in mapList){
+    for (var map in mapList) {
       freqList.add(map['freq']);
     }
-    freqList.sort((b, a) => a.compareTo(b)); 
-    
+    freqList.sort((b, a) => a.compareTo(b));
+
     int len = freqList.length;
     int idx = freqList.indexOf(freq);
 
@@ -214,17 +201,14 @@ class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
       case 2:
         return 30;
       default:
-        int percent = 100 * ((len - idx)/len).ceil();
-        if(percent >=60){
+        int percent = 100 * ((len - idx) / len).ceil();
+        if (percent >= 60) {
           return 25;
-        }
-        else if(percent>=40){
+        } else if (percent >= 40) {
           return 20;
-        }
-        else if(percent >=20){
+        } else if (percent >= 20) {
           return 15;
-        }
-        else{
+        } else {
           return 10;
         }
     }
@@ -299,6 +283,7 @@ class ScatterItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: GoogleFonts.poorStory(color: color, fontSize: size + 10));
+    return Text(text,
+        style: GoogleFonts.poorStory(color: color, fontSize: size + 10));
   }
 }
