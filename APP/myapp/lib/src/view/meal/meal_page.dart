@@ -127,7 +127,7 @@ class _MealContainerState extends State<MealContainer> {
                     padding: const EdgeInsets.only(
                         top: 16, left: 8, right: 8, bottom: 16),
                     child:
-                        MealItem(mealData: mealList[index], user: widget.user),
+                        MealItem(mealData: mealList[index], user: widget.user, index: index),
                   );
                 },
               );

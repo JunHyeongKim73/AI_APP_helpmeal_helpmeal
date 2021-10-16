@@ -9,12 +9,12 @@ class Suggestion {
 
   Suggestion({this.troopId, this.comment, this.time, this.name}) {
     DateTime dateTime = DateTime.parse(time!);
-    createdTime = DateFormat.yMMMd('ko').format(dateTime);
+    createdTime = DateFormat.yMMMd('ko').add_jm().format(dateTime);
   }
 
   Suggestion.fromJsonByUser({this.comment, this.time}) {
     DateTime dateTime = DateTime.parse(time!);
-    createdTime = DateFormat.yMMMd('ko').format(dateTime);
+    createdTime = DateFormat.yMMMd('ko').add_jm().format(dateTime);
   }
 
   factory Suggestion.fromJson(Map<String, dynamic> json) {
