@@ -33,4 +33,15 @@ router.get('/:troopId', async function(req, res){
 	});
 });
 
+//사용자의 건의사항을 조회하는 라우터
+router.get('/users/:userId', async function(req, res){
+	const getSuggestionQuery = `SELECT * FROM suggestion WHERE user_id = ? ORDER BY created_at DESC;`;
+	conn.query(getSuggestionQuery, [req.params.userId], async function(err, suggestions, field){
+		if(err) {
+			console.log(err);
+		}
+		res.send(suggestions);
+	});
+});
+
 module.exports = router;
