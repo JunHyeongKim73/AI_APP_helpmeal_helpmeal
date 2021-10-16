@@ -83,7 +83,7 @@ class _AllergyViewState extends State<AllergyView> {
                     radius: 36,
                     backgroundColor: allergyList[index].isSelected
                         ? Colors.grey[350]
-                        : Colors.white,
+                        : Colors.grey[100],
                     child: IconButton(
                       icon: Image.asset(allergyList[index].assetPath),
                       onPressed: () => setState(() {

@@ -8,7 +8,7 @@ import 'package:myapp/src/view/my_review.dart';
 import 'package:myapp/src/view/notice_check_page.dart';
 import 'package:myapp/src/view/notice_add_page.dart';
 import 'package:myapp/src/view/review_analysis_page.dart';
-import 'package:myapp/src/view/score_review_page.dart';
+import 'package:myapp/src/view/review/score_review_page.dart';
 import 'src/app.dart';
 import 'src/binding/init_binding.dart';
 import 'src/controller/select_troop_controller.dart';

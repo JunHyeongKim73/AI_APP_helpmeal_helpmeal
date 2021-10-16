@@ -29,8 +29,7 @@ class MealControlPage extends StatelessWidget {
           final TextEditingController breakController = TextEditingController();
           final TextEditingController lunchController = TextEditingController();
           final TextEditingController dinerController = TextEditingController();
-          // final List<Menu> menuList =
-          //     MenuRepository.loadMenusWithDate(controller.dateText);
+      
           Future<List<Menu>> menuList =
               MenuRepository.getMenus(controller.dateText, user.groups!.troopId!);
 
@@ -98,7 +97,7 @@ class MealControlPage extends StatelessWidget {
                                 dinerController,
                               ], controller.dateText);
                               _showToast(context);
-                              controller.updateDateChanged();
+                              //controller.updateDateChanged();
                             },
                             child: const Text('수정',
                                 style: TextStyle(color: Colors.white)),
