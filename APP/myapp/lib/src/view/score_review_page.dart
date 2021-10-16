@@ -41,7 +41,8 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
     "소고기미역국",
     "오삼불고기"
   ];
-  List<int> score = <int>[0, 0, 0, 0, 0];
+  //List<int> score = <int>[0, 0, 0, 0, 0];
+  List<int?> selected = [5, 5, 5, 5, 5];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,59 +96,82 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                                 //alignment: Alignment.center,
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 25),
-                                width: 200,
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: Row(
-                                    children: <Widget>[
-                                      Icon(
-                                        score[i] > 1
-                                            ? Icons.star_rounded
-                                            : (score[i] == 1
-                                                ? Icons.star_half_rounded
-                                                : Icons.star_border_rounded),
-                                        color: CustomColor.themeColor,
-                                        size: 30,
-                                      ),
-                                      Icon(
-                                        score[i] > 3
-                                            ? Icons.star_rounded
-                                            : (score[i] == 3
-                                                ? Icons.star_half_rounded
-                                                : Icons.star_border_rounded),
-                                        color: CustomColor.themeColor,
-                                        size: 30,
-                                      ),
-                                      Icon(
-                                        score[i] > 5
-                                            ? Icons.star_rounded
-                                            : (score[i] == 5
-                                                ? Icons.star_half_rounded
-                                                : Icons.star_border_rounded),
-                                        color: CustomColor.themeColor,
-                                        size: 30,
-                                      ),
-                                      Icon(
-                                        score[i] > 7
-                                            ? Icons.star_rounded
-                                            : (score[i] == 7
-                                                ? Icons.star_half_rounded
-                                                : Icons.star_border_rounded),
-                                        color: CustomColor.themeColor,
-                                        size: 30,
-                                      ),
-                                      Icon(
-                                        score[i] > 9
-                                            ? Icons.star_rounded
-                                            : (score[i] == 9
-                                                ? Icons.star_half_rounded
-                                                : Icons.star_border_rounded),
-                                        color: CustomColor.themeColor,
-                                        size: 30,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                width: 250,
+                                child: DropdownButton(
+                                  value: selected[i],
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: 1,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                        ]
+                                      )
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 2,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                        ]
+                                      )
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 3,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                        ]
+                                      )
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 4,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_border_rounded, color: CustomColor.themeColor, size: 30,),
+                                        ]
+                                      )
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 5,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                          Icon(Icons.star_rounded, color: CustomColor.themeColor, size: 30,),
+                                        ]
+                                      )
+                                    ),
+                                  ],
+                                  onChanged: (int? value) {
+                                    setState(() {
+                                      selected[i] = value;
+                                    });
+                                  },
+                                )
                               ),
                             ],
                           ),
