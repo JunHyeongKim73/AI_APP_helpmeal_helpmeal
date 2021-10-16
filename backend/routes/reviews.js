@@ -40,6 +40,13 @@ router.post('/:troopId/:day/:numberOfDay', async function(req, res) {
 	});
 });
 
+router.get('/analytics/wordCount/:sentiment', async function(req, res) {
+	const getwordsCountQuery = `SELECT word, count from review_data WHERE sentiment = ? AND day = '2021-10-16' AND troop_id = 1;`;
+	conn.query(getwordsCountQuery, [req.params.sentiment], async function(err, wordCounts, field){
+		res.send(wordCounts);
+	});
+});
+
 //해당 끼니의 리뷰 읽어오는 라우터
 router.get('/:troopId/:day/:numberOfDay', async function(req, res) {
 	res.set( { 'content-Type': 'application/json'});		
@@ -75,6 +82,33 @@ router.post('/myReview', async function(req, res) {
 		res.send(reviews);	
 		return;
 	});
+});
+
+router.get('/', function(req, res){	
+	console.log(moment());
+	const startDay = moment().format('YYYY-MM-DD');
+	console.log(typeof startDay);	
+	if(req.query.duration == "day"){
+		endDay = moment().format('YYYY-MM-DD');
+	}
+	else{
+		endDay = moment().subtract(1, req.query.duration).format('YYYY-MM-DD');
+		console.log(endDay);
+	}
+	const getBestMenusQuery = `SELECT * FROM best_menu_view WHERE day <= ? AND day >= ? AND rate_number >= 1 ORDER BY average_star DESC, rate_number DESC LIMIT 5;`; 
+	conn.query(getBestMenusQuery, [startDay, endDay], async function(err, bestMenus, fields){
+		if (err) {
+			res.status(401).json({meesege: err});	
+			return;
+		}
+		else if (bestMenus.length < 1){
+			res.status(401).json({meesege: "조건에 맞는 메뉴가 없습니다!"});	
+			return;
+		}
+		console.log(bestMenus);
+		res.send(bestMenus);		
+	});
+
 });
 
 module.exports = router;
