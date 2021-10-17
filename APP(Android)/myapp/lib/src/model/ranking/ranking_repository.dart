@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'ranking.dart';
 
 class RankingRepository {
-  static Future<List<Ranking>> getBestMenu() async {
+  static Future<List<Ranking>> getBestMenu(String unit) async {
     final response = await http.get(
-        Uri.parse('https://helpmeal.duckdns.org/menus/best/?duration=week'));
+      Uri.parse('https://helpmeal.duckdns.org/menus/best/?duration=$unit'),
+    );
     var rankingList = jsonDecode(response.body);
     if (response.statusCode == 200) {
       print('Review Get!');
