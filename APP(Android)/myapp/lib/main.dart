@@ -4,15 +4,15 @@ import 'package:myapp/src/controller/sign_up_controller.dart';
 
 import 'package:myapp/src/model/colors.dart';
 import 'package:myapp/src/view/first_page.dart';
-import 'package:myapp/src/view/my_review.dart';
-import 'package:myapp/src/view/notice_check_page.dart';
-import 'package:myapp/src/view/notice_add_page.dart';
+import 'package:myapp/src/view/review/my_review.dart';
 import 'package:myapp/src/view/review_analysis_page.dart';
 import 'package:myapp/src/view/review/score_review_page.dart';
 import 'src/app.dart';
 import 'src/binding/init_binding.dart';
 import 'src/controller/select_troop_controller.dart';
 import 'src/view/meal/meal_control_page.dart';
+import 'src/view/notice/notice_add_page.dart';
+import 'src/view/notice/notice_check_page.dart';
 import 'src/view/suggestion/suggestion_check_page.dart';
 import 'src/view/suggestion/suggestion_complain_page.dart';
 import 'src/view/user/allergy_page.dart';
@@ -49,7 +49,7 @@ class MyAPP extends StatelessWidget {
             name: '/suggestComplain',
             page: () => const SuggestionComplainPage()),
         GetPage(name: '/noticeCheck', page: () => const NoticeCheckPage()),
-        GetPage(name: '/noticeAdd', page: () => const NoticeAddPage()),
+        GetPage(name: '/noticeAdd', page: () => NoticeAddPage()),
         GetPage(name: '/myReview', page: () => const MyReviewPage()),
         GetPage(name: '/suggestCheck', page: () => const SuggestionCheckPage()),
         GetPage(name: '/reviewAnalysis', page: () => ReviewAnalysisPage()),
@@ -68,7 +68,7 @@ class MyAPP extends StatelessWidget {
             Get.lazyPut<SignUpController>(() => SignUpController());
           }),
         ),
-        GetPage(name: '/scoreReview', page: () => const ScoreReviewPage())
+        GetPage(name: '/scoreReview', page: () => const ScoreReviewPage()),
       ],
     );
   }

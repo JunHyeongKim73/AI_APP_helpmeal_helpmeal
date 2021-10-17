@@ -27,11 +27,16 @@ class _MealItemState extends State<MealItem> {
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
       return InkWell(
-        onTap: () => Get.toNamed('/scoreReview', arguments: {
-          'user': widget.user,
-          'date': controller.dateText,
-          'index': widget.index + 1,
-        }),
+        onTap: () {
+          if (widget.mealData.foodList.length != 0) {
+            Get.toNamed('/scoreReview', arguments: {
+              'user': widget.user,
+              'date': controller.dateText,
+              'index': widget.index + 1,
+              'food': widget.mealData.foodList
+            });
+          }
+        },
         child: Container(
           width: 160,
           decoration: BoxDecoration(

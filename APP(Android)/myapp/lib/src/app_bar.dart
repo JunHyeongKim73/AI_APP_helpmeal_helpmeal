@@ -58,7 +58,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         maxTime: DateTime(2022, 10, 20),
                         onChanged: (date) {}, onConfirm: (date) {
                       controller.updateDate(date: date);
-                    }, currentTime: DateTime.now(), locale: LocaleType.ko);
+                    }, currentTime: controller.dateText, locale: LocaleType.ko);
                   },
                   iconSize: 16,
                   icon: const Icon(MdiIcons.calendarBlankOutline, size: 16),

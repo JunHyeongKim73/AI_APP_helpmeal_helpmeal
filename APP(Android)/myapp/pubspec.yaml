@@ -44,6 +44,7 @@ dependencies:
   jwt_decode: ^0.3.1
   flutter_scatter: ^0.2.0
   restart_app: ^1.1.0
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:

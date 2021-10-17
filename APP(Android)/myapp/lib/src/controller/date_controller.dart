@@ -25,13 +25,7 @@ class DateController extends GetxController {
         dateText = DateTime(date!.year, date.month, date.day);
         break;
     }
-
-    dateChanged = !dateChanged;
-    update();
-  }
-
-  void updateDateChanged(){
-    dateChanged = !dateChanged;
+    dateChanged = true;
     update();
   }
 }

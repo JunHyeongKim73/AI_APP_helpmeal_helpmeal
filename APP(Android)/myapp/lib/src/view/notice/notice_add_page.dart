@@ -2,15 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/src/model/colors.dart';
+import 'package:myapp/src/model/notice/notice_repository.dart';
+import 'package:myapp/src/model/user/user.dart';
 
 class NoticeAddPage extends StatelessWidget {
-  const NoticeAddPage({Key? key}) : super(key: key);
+  NoticeAddPage({Key? key}) : super(key: key);
+
+  User user = Get.arguments;
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Get.offNamed('noticeCheck', arguments: user),
+        ),
         title: Text('공지사항 추가',
             style: GoogleFonts.doHyeon(fontSize: 24, color: Colors.white)),
         centerTitle: true,
@@ -19,11 +29,12 @@ class NoticeAddPage extends StatelessWidget {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(
+            Padding(
+              padding: const EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 20, bottom: 10),
               child: TextField(
-                decoration: InputDecoration(
+                controller: titleController,
+                decoration: const InputDecoration(
                   labelText: '제목',
                   hintText: '제목을 입력하세요',
                   focusedBorder: OutlineInputBorder(
@@ -45,8 +56,9 @@ class NoticeAddPage extends StatelessWidget {
               padding: const EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 10, bottom: 10),
               child: TextField(
+                controller: contentController,
                 maxLines: 10,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '내용',
                   hintText: '내용을 입력하세요',
                   focusedBorder: OutlineInputBorder(
@@ -68,7 +80,9 @@ class NoticeAddPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    NoticeRepository.postnotice(
+                        user.groups!.troopId!, titleController.text, contentController.text);
                     showDialog(
                       context: context,
                       barrierDismissible: false,

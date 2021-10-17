@@ -25,14 +25,16 @@ class _MealPage extends State<MealPage> {
   final _scrollController = ScrollController();
   bool isMealEmpty = true;
   Future<List<Menu>>? futureMenuList;
+  bool canGetMenu = true;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateController>(builder: (controller) {
-      if(controller.dateChanged){
+      if (canGetMenu || controller.dateChanged) {
         futureMenuList = MenuRepository.getMenus(
-          controller.dateText, widget.user.groups!.troopId!);
+            controller.dateText, widget.user.groups!.troopId!);
         controller.dateChanged = false;
+        canGetMenu = false;
       }
       return Scaffold(
         appBar: const CustomAppBar(),
@@ -56,8 +58,13 @@ class _MealPage extends State<MealPage> {
                           padding: const EdgeInsets.only(right: 20),
                           child: (isMealEmpty && widget.user.isLogined!)
                               ? ElevatedButton(
-                                  onPressed: () => Get.toNamed('/mealControl',
-                                      arguments: widget.user),
+                                  onPressed: () async {
+                                    await Get.toNamed('/mealControl',
+                                        arguments: widget.user);
+                                    setState(() {
+                                      canGetMenu = true;
+                                    });
+                                  },
                                   child: const Icon(MdiIcons.plus, size: 32),
                                   style: ElevatedButton.styleFrom(
                                     shape: const CircleBorder(),
@@ -67,8 +74,7 @@ class _MealPage extends State<MealPage> {
                                   ))
                               : null,
                         );
-                      }
-                      else {
+                      } else {
                         return Container();
                       }
                     }),
@@ -126,8 +132,10 @@ class _MealContainerState extends State<MealContainer> {
                   return Padding(
                     padding: const EdgeInsets.only(
                         top: 16, left: 8, right: 8, bottom: 16),
-                    child:
-                        MealItem(mealData: mealList[index], user: widget.user, index: index),
+                    child: MealItem(
+                        mealData: mealList[index],
+                        user: widget.user,
+                        index: index),
                   );
                 },
               );

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/src/model/colors.dart';
 
 import 'package:myapp/src/model/fonts.dart';
+import 'package:myapp/src/model/meal/food.dart';
 import 'package:myapp/src/model/review/review.dart';
 import 'package:myapp/src/model/review/review_repository.dart';
+import 'package:myapp/src/model/review/star.dart';
 import 'package:myapp/src/model/user/user.dart';
 
 //api로부터 리뷰 데이터를 받아오는 작업이 필요
@@ -41,27 +44,27 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
   User? user;
   DateTime? date;
   int? index;
+  List<Food>? foods;
   bool canUpdatePage = true;
 
-  final List<String> menu = <String>[
-    "돈가스",
-    "스팸마요덮밥",
-    "김치볶음",
-    "소고기미역국",
-    "오삼불고기"
-  ];
-  //List<int> score = <int>[0, 0, 0, 0, 0];
-  List<int?> selected = [0, 0, 0, 0, 0];
+  List<int>? selected;
+  List<Star>? starList = [];
+
+  final TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
     user = mapData['user'];
     date = mapData['date'];
     index = mapData['index'];
+    foods = mapData['food'];
+    selected = List.filled(foods!.length, 0);
+    for (var food in foods!) {
+      starList!.add(Star(name: food.name, order: food.order, stars: 0));
+    }
+
     super.initState();
   }
-
-  final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +72,10 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
       reviewList =
           ReviewRepository.getFoodReview(date!, user!.groups!.troopId!, index!);
     }
+
+    // ReviewRepository.postStar(
+    //     date!, user!.groups!.troopId!, index!, starList!);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -98,7 +105,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: menu.length,
+                    itemCount: foods!.length,
                     itemBuilder: (BuildContext context, int i) {
                       return SizedBox(
                         height: 50,
@@ -109,7 +116,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                                 alignment: Alignment.center,
                                 height: 40,
                                 child: Text(
-                                  menu[i],
+                                  foods![i].name,
                                   style: GoogleFonts.doHyeon(fontSize: 20),
                                 ),
                                 decoration: BoxDecoration(
@@ -118,26 +125,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                                 ),
                               ),
                             ),
-                            Container(
-                                //alignment: Alignment.center,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 25),
-                                width: 250,
-                                child: DropdownButton(
-                                  value: selected[i],
-                                  items: [
-                                    _starDropItem(1),
-                                    _starDropItem(2),
-                                    _starDropItem(3),
-                                    _starDropItem(4),
-                                    _starDropItem(5),
-                                  ],
-                                  onChanged: (int? value) {
-                                    setState(() {
-                                      selected[i] = value;
-                                    });
-                                  },
-                                )),
+                            _starRating(i),
                           ],
                         ),
                       );
@@ -164,7 +152,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    hintText: '리뷰를 입력해주세요!',
+                    hintText: '리뷰를 입력해주세요!\n 리뷰를 작성하지 않아도 별점만 저장할 수 있어요!',
                     hintStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -190,29 +178,33 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                             color: Colors.white,
                             fontWeight: FontWeight.w800)),
                     onPressed: () async {
-                      String result = await ReviewRepository.postReview(
-                          date!,
-                          user!.groups!.troopId!,
-                          index!,
-                          user!.userId!,
-                          controller.text);
-                      setState(() {
-                        canUpdatePage = true;
-                      });
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            content: Text(result),
-                            actions: <Widget>[
-                              TextButton(
-                                  onPressed: () => Get.back(),
-                                  child: const Text('확인'))
-                            ],
-                          );
-                        },
-                      );
+                      ReviewRepository.postStar(
+                          date!, user!.groups!.troopId!, index!, starList!);
+                      if (controller.text != '') {
+                        String result = await ReviewRepository.postReview(
+                            date!,
+                            user!.groups!.troopId!,
+                            index!,
+                            user!.userId!,
+                            controller.text);
+                        setState(() {
+                          canUpdatePage = true;
+                        });
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Text(result),
+                              actions: <Widget>[
+                                TextButton(
+                                    onPressed: () => Get.back(),
+                                    child: const Text('확인'))
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
@@ -261,7 +253,11 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                                     child: CircleAvatar(
                                         backgroundColor: CustomColor.themeColor,
                                         child: Text(
-                                            snapshot.data![index].name![0])),
+                                          snapshot.data![index].name![0],
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800),
+                                        )),
                                   ),
                                   Expanded(
                                     child: Column(
@@ -306,37 +302,22 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
     );
   }
 
-  DropdownMenuItem<int> _starDropItem(int num) {
-    return DropdownMenuItem(
-        value: num,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const <Widget>[
-              Icon(
-                Icons.star_rounded,
-                color: CustomColor.themeColor,
-                size: 30,
-              ),
-              Icon(
-                Icons.star_border_rounded,
-                color: CustomColor.themeColor,
-                size: 30,
-              ),
-              Icon(
-                Icons.star_border_rounded,
-                color: CustomColor.themeColor,
-                size: 30,
-              ),
-              Icon(
-                Icons.star_border_rounded,
-                color: CustomColor.themeColor,
-                size: 30,
-              ),
-              Icon(
-                Icons.star_border_rounded,
-                color: CustomColor.themeColor,
-                size: 30,
-              ),
-            ]));
+  RatingBar _starRating(int i) {
+    return RatingBar.builder(
+      initialRating: 0,
+      minRating: 1,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      itemSize: 30,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber),
+      onRatingUpdate: (rating) {
+        print(rating);
+        setState(() {
+          starList![i].stars = rating;
+        });
+      },
+    );
   }
 }

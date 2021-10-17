@@ -11,7 +11,6 @@ import 'package:myapp/src/model/meal/menu_repository.dart';
 import 'package:myapp/src/model/user/user.dart';
 
 class MealControlPage extends StatefulWidget {
-
   const MealControlPage({Key? key}) : super(key: key);
 
   @override
@@ -21,7 +20,6 @@ class MealControlPage extends StatefulWidget {
 class _MealControlPageState extends State<MealControlPage> {
   final User user = Get.arguments;
   Future<List<Menu>>? menuList;
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +35,13 @@ class _MealControlPageState extends State<MealControlPage> {
           final TextEditingController breakController = TextEditingController();
           final TextEditingController lunchController = TextEditingController();
           final TextEditingController dinerController = TextEditingController();
-          
-            menuList = MenuRepository.getMenus(
-                controller.dateText, user.groups!.troopId!);
+
+          bool breakFlag = false;
+          bool lunchFlag = false;
+          bool dinerFlag = false;
+
+          menuList = MenuRepository.getMenus(
+              controller.dateText, user.groups!.troopId!);
 
           return FutureBuilder<List<Menu>>(
               future: menuList,
@@ -54,6 +56,9 @@ class _MealControlPageState extends State<MealControlPage> {
                         snapshot.data![1].foodNames.join('\n');
                     dinerController.text =
                         snapshot.data![2].foodNames.join('\n');
+                    if(breakController.text == '') breakFlag = true;
+                    if(lunchController.text == '') lunchFlag = true;
+                    if(dinerController.text == '') dinerFlag = true;
                   }
                 }
                 return Column(
@@ -72,7 +77,7 @@ class _MealControlPageState extends State<MealControlPage> {
                                 onChanged: (date) {}, onConfirm: (date) {
                               controller.updateDate(date: date);
                             },
-                                currentTime: DateTime.now(),
+                                currentTime: controller.dateText,
                                 locale: LocaleType.ko);
                           },
                           iconSize: 16,
@@ -98,11 +103,15 @@ class _MealControlPageState extends State<MealControlPage> {
                         Padding(
                           padding: const EdgeInsets.only(right: 10.0),
                           child: ElevatedButton(
-                            onPressed: () async{
-                              _postMenu([
+                            onPressed: () async {
+                              await _postMenu([
                                 breakController,
                                 lunchController,
                                 dinerController,
+                              ], [
+                                breakFlag,
+                                lunchFlag,
+                                dinerFlag
                               ], controller.dateText);
                               _showToast(context);
                               controller.dateChanged = true;
@@ -188,7 +197,7 @@ class _MealControlPageState extends State<MealControlPage> {
     return lists;
   }
 
-  void _postMenu(List<TextEditingController> controllers, DateTime dateTime) {
+ Future<void> _postMenu(List<TextEditingController> controllers, List<bool> flags, DateTime dateTime) async{
     List<String> breakFoods = controllers[0].text.split('\n');
     List<String> lunchFoods = controllers[1].text.split('\n');
     List<String> dinerFoods = controllers[2].text.split('\n');
@@ -198,6 +207,6 @@ class _MealControlPageState extends State<MealControlPage> {
     List<Map> dinerFoodList = createFoodList(dinerFoods);
 
     MenuRepository.postMenu(dateTime,
-        [breakFoodList, lunchFoodList, dinerFoodList], user.groups!.troopId!);
+        [breakFoodList, lunchFoodList, dinerFoodList], flags, user.groups!.troopId!);
   }
 }
