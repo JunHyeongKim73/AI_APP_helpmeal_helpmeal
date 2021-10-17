@@ -73,9 +73,6 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
           ReviewRepository.getFoodReview(date!, user!.groups!.troopId!, index!);
     }
 
-    // ReviewRepository.postStar(
-    //     date!, user!.groups!.troopId!, index!, starList!);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -152,7 +149,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    hintText: '리뷰를 입력해주세요!\n 리뷰를 작성하지 않아도 별점만 저장할 수 있어요!',
+                    hintText: '리뷰를 입력해주세요!\n리뷰를 작성하지 않아도 별점만 저장할 수 있어요!',
                     hintStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -178,7 +175,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                             color: Colors.white,
                             fontWeight: FontWeight.w800)),
                     onPressed: () async {
-                      ReviewRepository.postStar(
+                      await ReviewRepository.postStar(
                           date!, user!.groups!.troopId!, index!, starList!);
                       if (controller.text != '') {
                         String result = await ReviewRepository.postReview(
