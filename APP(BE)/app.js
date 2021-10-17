@@ -5,6 +5,7 @@ const conn = db_config.init();
 const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
+const logger = require('./logger');
 
 const userRouter = require('./routes/users');
 const starRouter = require('./routes/stars');
@@ -12,6 +13,7 @@ const reviewRouter = require('./routes/reviews');
 const troopRouter = require('./routes/troops');
 const menuRouter = require('./routes/menus');
 const suggestionRouter = require('./routes/suggestion');
+const noticeRouter = require('./routes/notice');
 
 const { verifyToken } = require('./middlewares/authorization');
 const cookieParser = require('cookie-parser');
@@ -36,7 +38,16 @@ app.use('/reviews', reviewRouter);
 app.use('/troops', troopRouter);
 app.use('/menus', menuRouter);
 app.use('/suggestion', suggestionRouter);
+app.use('/notice', noticeRouter);
+
 app.use(cookieParser());
+app.use((req, res, next) => {
+  const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  error.status = 404;
+  logger.info('hello');
+  logger.error(error.message);
+  next(error);
+});
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(morgan('combined'));

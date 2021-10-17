@@ -67,22 +67,25 @@ def count_word(texts):
 		word_list.extend(okt.nouns(texts.iloc[[i][0]]))
 	
 	word_list = pd.Series(word_list)
-	result = word_list.value_counts().head(20)	
+	result = word_list.value_counts().head(25)	
 	return result
 
 def split_by_sentiment(text, sentimental_response):
-	for i in range(10):
-		text['sentiment'] = sentimental_response[i].sentiment
-
+	text = text.assign(sentiment ="")
+	for i in range(len(text)):
+		text.iloc[i, 1] = sentimental_response[i].sentiment
+	
 	negative_text_row = text['sentiment'] == "negative"
 	negative_text = text[negative_text_row]
-	positive_text = text[text['sentiment'] == "positive"]
+	positive_text_row = text['sentiment'] == "positive" 
+	positive_text = text[positive_text_row]	
+	print(positive_text)
 	return positive_text, negative_text
 
 def insert_word_number(word_number, sentiment):
 	insert_queries = []
-	for i in range(len(negative_word_number)):
-		insert_queries.append(f'INSERT INTO helpmeal.review_data(word, count, day, sentiment, troop_id) VALUES("{word_number.index[i]}", {word_number[i]}, "2021-10-16", sentiment, 1);')
+	for i in range(len(word_number)):
+		insert_queries.append(f'INSERT INTO helpmeal.review_data(word, count, day, sentiment, troop_id) VALUES("{word_number.index[i]}", {word_number[i]}, "2021-10-16", "{sentiment}", 1);')
 		cursor.execute(insert_queries[i])
 		my_db.commit()
 
@@ -97,11 +100,9 @@ sentimental_response = sentiment_analysis(client, text['comment'])
 
 positive_text, negative_text = split_by_sentiment(text, sentimental_response)
 
+#print(positive_text)
 negative_word_number = count_word(negative_text['comment'])
-positive_word_number = count_word(positive_test['comment'])
+positive_word_number = count_word(positive_text['comment'])
 
 insert_word_number(negative_word_number, "negative")
 insert_word_number(positive_word_number, "positive")
-#insertQuery = f'INSERT INTO helpmeal.review_data(word_count, sentiment) VALUES({result}, negative);'
-#cursor.execute(insertQuery)
-#my_db.commit()

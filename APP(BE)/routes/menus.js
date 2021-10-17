@@ -67,6 +67,131 @@ router.get('/:troopId/:day/:numberOfDay', function (req, res) {
 	});
 });
 
+//메뉴 수정 API
+router.put('/', async function (req, res) {
+	res.set({ 'Content-Type': 'application/json'});
+	//기존 메뉴 삭제
+	menuDeleteQuery = `DELETE FROM menu WHERE meal_id IN (SELECT id FROM meal WHERE troop_id = ? AND day = ? AND number_of_day = ?);`;
+	async function deleteMenus(){
+		conn.query(menuDeleteQuery, [req.body.troopId, req.body.day, req.body.numberOfDay], function (err, result, fields) {
+			console.log("menu Delete Success!");
+			return;
+		});
+	}
+	await deleteMenus();
+	const result = new Object(); 
+	//Meal id 얻기	
+ 	const getMealId = new Promise(function (resolve, reject){	
+		selectMeal = `SELECT id FROM meal WHERE troop_id = ${req.body.troopId} AND day = "${req.body.day}" AND number_of_day = ${req.body.numberOfDay};`;
+		conn.query(selectMeal, function (err, meals, fields) {
+			if(err) {
+				console.log('query error\n' + err);
+				res.status(400).json({messege: err});				
+			}			
+			else{
+				//MEAL table에 삽입	
+				if(meals.length < 1){
+					//console.log("nomealid");	
+				insertMeal = `INSERT INTO helpmeal.meal(troop_id, day, number_of_day) VALUES(${req.body.troopId}, "${req.body.day}", ${req.body.numberOfDay});`
+					conn.query(insertMeal, function (err, rows, fields) {
+						if(err) console.log('query error\n' + err);
+						else{
+							conn.query(selectMeal, function(err, meals, fields){
+								if(err) console.log('query error\n' + err);
+								else{
+									mealId = meals[0].id;	
+									console.log("meal insert success!, mealId: ", mealId);
+									resolve();	
+								}	
+							});	
+						}
+					});	
+				}
+				else{
+					mealId = meals[0].id	
+					console.log("meal already exist!, mealId: " , mealId);
+					resolve();	
+				}
+			}
+		});	
+	});	
+	//각각의 메뉴에 대해서 반복	
+   	let count = 0; 
+	const getFoodId = new Array(10);
+	const foodId = new Array();
+   	const insertFood = new Array();
+	const selectFood = new Array();
+	const insertMenus = new Promise(function (resolve, reject){	
+		for(let i = 0; i < req.body.menus.length; i++){	
+			//food id 얻기
+			getFoodId[i] = new Promise(function (resolve, reject) { 
+				selectFood[i] = `SELECT id FROM food WHERE name = "${req.body.menus[i].name}";`; 	
+				conn.query(selectFood[i], function (err, food, fields) {
+					if(err) console.log('query error\n' + err);
+					else{
+						//food insert	
+						if(food.length < 1){
+							insertFood[i] = `INSERT IGNORE INTO helpmeal.food(name) VALUES("${req.body.menus[i].name}");`;	
+							conn.query(insertFood[i], function (err, rows, fields) {
+									if(err) console.log('food insert query error\n' + err);
+									else{
+										conn.query(selectFood[i], function(err, food2, fields){
+											if(err) console.log('food select query error\n' + err);
+											else{
+												console.log(food2);	
+												foodId[i] = food2[0].id;	
+												console.log(`food ${i} insert success!, foodId: ${foodId[i]}`);
+												resolve();	
+											}	
+										});	
+									}
+								});	
+							}
+							else{
+								foodId[i] = food[0].id	
+								console.log(`food ${i} ${req.body.menus[i].name} already exist!, foodId: ${foodId[i]}`);
+								resolve();	
+							}
+					}
+				});	
+			});	
+			//알러지 있을 경우	
+			getFoodId[i].then(() => {	
+				if(req.body.menus[i].allergy){
+					for(let j = 0; j < req.body.menus[i].allergy.length; j++){
+						insertAllergy =`INSERT IGNORE INTO helpmeal.food_allergy(food_id, allergy) VALUES(${foodId[i]}, "${req.body.menus[i].allergy[j]}");`; 	
+						conn.query(insertAllergy, function (err, rows, fields) {
+							if(err) console.log('allergy query error\n' + err);
+							else{
+								console.log(`allergy ${i}-${j} insert success!`);	
+							}
+						});	
+					}	
+				}
+				//menu 추가
+				getMealId.then(() => {
+					insertMenu = `INSERT IGNORE INTO helpmeal.menu(meal_id, food_id, menu_order) VALUES(${mealId}, ${foodId[i]}, ${i+1});`;	
+					conn.query(insertMenu, function (err, rows, fields) {
+						if(err) console.log('query error\n' + err);
+						else{
+							console.log(`menu ${i} insert success!`);	
+							req.body.menus[i].order = i+1;
+							count++;
+							console.log(`count: ${count}`);	
+							if(count==req.body.menus.length) resolve();	
+						}
+					});
+				});
+			});
+		}
+	});	
+	insertMenus.then(() => {	
+		console.log("end");	
+		res.send(JSON.stringify(req.body));
+	});
+});
+
+
 router.post('/', function (req, res) {
     res.set( { 'content-Type': 'application/json'});	
     const result = new Object(); 
