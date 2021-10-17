@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-//나중에 MaterialApp 제거해야함
+import 'package:myapp/src/model/ranking/ranking.dart';
+import 'package:myapp/src/model/ranking/ranking_repository.dart';
 
 class RankingPage extends StatefulWidget {
   RankingPageState createState() => RankingPageState();
@@ -18,14 +19,24 @@ class RankingPageState extends State<RankingPage> {
     "오삼불고기"
   ];
   final List<int> score = <int>[10, 9, 8, 6, 5];
+  Future<List<Ranking>>? rankingList;
+  String unit = '일간';
+  
+  @override
+  void initState() {
+    rankingList = RankingRepository.getBestMenu(unit);
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HelpMeal'),
+        title: Text('랭킹'),
       ),
       body: Center(
         child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -45,6 +56,9 @@ class RankingPageState extends State<RankingPage> {
                         isSelected[1] = false;
                         isSelected[2] = false;
                         isSelected[index] = true;
+                        if(index == 0) unit = '일간';
+                        if(index == 1) unit = '주간';
+                        if(index == 2) unit = '월간';
                       }
                     });
                   },
@@ -79,7 +93,107 @@ class RankingPageState extends State<RankingPage> {
                   ),
                   width: 350,
                   height: 300,
-                  child: ListView.separated(
+                  child: Flexible(
+                    child: FutureBuilder<List<Ranking>>(
+                      future: rankingList,
+                      builder: (context, snapshot) {
+                        if(snapshot.hasData) {
+                          return ListView.separated(
+                            scrollDirection: Axis.vertical,
+                            separatorBuilder: (BuildContext context, int index) =>
+                                const Divider(),
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (BuildContext context, int i) {
+                              //final int rank = i + 1;
+                              return Container(
+                                  height: 40,
+                                  child: Row(
+                                      //mainAxisAlignment: MainAxisAlignment.center,
+                                      //crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          alignment: Alignment.center,
+                                          width: 40,
+                                          child: Text(
+                                            "${i+1}",
+                                            style: GoogleFonts.doHyeon(
+                                                fontSize: 20, color: Colors.white),
+                                          ),
+                                          color: Colors.amber.shade400,
+                                        ),
+                                        Expanded(
+                                          
+                                            child: Container(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            snapshot.data![i].name!,
+                                            style: GoogleFonts.doHyeon(fontSize: 20),
+                                          ),
+                                        )),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          width: 150,
+                                          child: Text(
+                                            '${snapshot.data![i].averageStar!} / 5.0',
+                                            style: GoogleFonts.doHyeon(fontSize: 20),
+                                          )
+                                        )
+                                        /*Row(children: <Widget>[
+                                          Icon(
+                                            score[i] > 1
+                                                ? Icons.star_rounded
+                                                : (score[i] == 1
+                                                    ? Icons.star_half_rounded
+                                                    : Icons.star_border_rounded),
+                                            color: Colors.amber.shade500,
+                                            size: 30,
+                                          ),
+                                          Icon(
+                                            score[i] > 3
+                                                ? Icons.star_rounded
+                                                : (score[i] == 3
+                                                    ? Icons.star_half_rounded
+                                                    : Icons.star_border_rounded),
+                                            color: Colors.amber.shade500,
+                                            size: 30,
+                                          ),
+                                          Icon(
+                                            score[i] > 5
+                                                ? Icons.star_rounded
+                                                : (score[i] == 5
+                                                    ? Icons.star_half_rounded
+                                                    : Icons.star_border_rounded),
+                                            color: Colors.amber.shade500,
+                                            size: 30,
+                                          ),
+                                          Icon(
+                                            score[i] > 7
+                                                ? Icons.star_rounded
+                                                : (score[i] == 7
+                                                    ? Icons.star_half_rounded
+                                                    : Icons.star_border_rounded),
+                                            color: Colors.amber.shade500,
+                                            size: 30,
+                                          ),
+                                          Icon(
+                                            score[i] > 9
+                                                ? Icons.star_rounded
+                                                : (score[i] == 9
+                                                    ? Icons.star_half_rounded
+                                                    : Icons.star_border_rounded),
+                                            color: Colors.amber.shade500,
+                                            size: 30,
+                                          ),
+                                        ])*/
+                                      ]));
+                            },
+                          );
+                        }
+                        return Container();
+                      }
+                    )
+                  )
+                  /*ListView.separated(
                     scrollDirection: Axis.vertical,
                     separatorBuilder: (BuildContext context, int index) =>
                         const Divider(),
@@ -159,7 +273,7 @@ class RankingPageState extends State<RankingPage> {
                                 ])
                               ]));
                     },
-                  )),
+                  )*/),
             ]),
       ),
     );
