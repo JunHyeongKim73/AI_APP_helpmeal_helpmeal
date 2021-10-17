@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 //나중에 MaterialApp 제거해야함
 
 class RankingPage extends StatefulWidget {
