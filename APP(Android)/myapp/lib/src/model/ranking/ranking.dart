@@ -31,7 +31,7 @@ class Ranking {
         "name": name,
         "average_star": averageStar,
         "rate_number": rateNumber,
-        "day": day.toIso8601String(),
+        "day": day!.toIso8601String(),
         "troop_id": troopId,
     };
 }
