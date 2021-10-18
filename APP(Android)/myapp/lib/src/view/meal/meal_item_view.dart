@@ -28,7 +28,7 @@ class _MealItemState extends State<MealItem> {
     return GetBuilder<DateController>(builder: (controller) {
       return InkWell(
         onTap: () {
-          if (widget.mealData.foodList.length != 0) {
+          if (widget.mealData.foodList.isNotEmpty) {
             Get.toNamed('/scoreReview', arguments: {
               'user': widget.user,
               'date': controller.dateText,
