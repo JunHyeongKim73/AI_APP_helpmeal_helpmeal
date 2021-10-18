@@ -71,10 +71,8 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
     if (canUpdatePage) {
       reviewList =
           ReviewRepository.getFoodReview(date!, user!.groups!.troopId!, index!);
+      canUpdatePage = false;
     }
-
-    // ReviewRepository.postStar(
-    //     date!, user!.groups!.troopId!, index!, starList!);
 
     return Scaffold(
       appBar: AppBar(
@@ -152,7 +150,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    hintText: '리뷰를 입력해주세요!\n 리뷰를 작성하지 않아도 별점만 저장할 수 있어요!',
+                    hintText: '리뷰를 입력해주세요!\n리뷰를 작성하지 않아도 별점만 저장할 수 있어요!',
                     hintStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -178,10 +176,10 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                             color: Colors.white,
                             fontWeight: FontWeight.w800)),
                     onPressed: () async {
-                      ReviewRepository.postStar(
+                      String result = await ReviewRepository.postStar(
                           date!, user!.groups!.troopId!, index!, starList!);
                       if (controller.text != '') {
-                        String result = await ReviewRepository.postReview(
+                        result = await ReviewRepository.postReview(
                             date!,
                             user!.groups!.troopId!,
                             index!,
@@ -190,21 +188,21 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
                         setState(() {
                           canUpdatePage = true;
                         });
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: Text(result),
-                              actions: <Widget>[
-                                TextButton(
-                                    onPressed: () => Get.back(),
-                                    child: const Text('확인'))
-                              ],
-                            );
-                          },
-                        );
                       }
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: Text(result),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () => Get.back(),
+                                  child: const Text('확인'))
+                            ],
+                          );
+                        },
+                      );
                     },
                   ),
                 ),
@@ -307,7 +305,6 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
       initialRating: 0,
       minRating: 1,
       direction: Axis.horizontal,
-      allowHalfRating: true,
       itemCount: 5,
       itemSize: 30,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -315,7 +312,7 @@ class ScoreReviewPageState extends State<ScoreReviewPage> {
       onRatingUpdate: (rating) {
         print(rating);
         setState(() {
-          starList![i].stars = rating;
+          starList![i].mapData!['stars'] = rating as int?;
         });
       },
     );

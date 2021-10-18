@@ -116,7 +116,6 @@ class _MealContainerState extends State<MealContainer> {
       height: 280,
       child: Scrollbar(
         controller: widget.scrollController,
-        isAlwaysShown: true,
         child: FutureBuilder<List<Menu>>(
             future: widget.futureMenuList,
             builder: (context, snapshot) {

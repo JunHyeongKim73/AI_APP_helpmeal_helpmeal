@@ -46,7 +46,7 @@ class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
       return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
-          title: Text('리뷰&댓글 분석',
+          title: Text('데이터 분석',
               style: GoogleFonts.doHyeon(fontSize: 24, color: Colors.white)),
           centerTitle: true,
         ),
@@ -62,7 +62,7 @@ class _ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
                     children: const [
                       SizedBox(width: 20),
                       Text(
-                        '리뷰 정리본은 매주 월요일에 제공됩니다.',
+                        '데이터 분석본은 매주 일요일에 제공됩니다.',
                         style: TextStyle(color: Colors.grey),
                       )
                     ],

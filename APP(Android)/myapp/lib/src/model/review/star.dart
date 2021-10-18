@@ -1,7 +1,7 @@
 class Star {
   String? name;
   int? order;
-  double? stars;
+  int? stars;
   Map<String, dynamic>? mapData;
 
   Star({this.name, this.order, this.stars}) {

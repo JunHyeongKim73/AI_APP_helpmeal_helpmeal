@@ -77,7 +77,7 @@ class ReviewRepository {
     }
   }
 
-  static Future<void> postStar(
+  static Future<String> postStar(
       DateTime dateTime, int troopId, int index, List<Star> starList) async {
     String date = dateTime.toString();
     String noTimeDate = date.substring(0, 10);
@@ -98,6 +98,7 @@ class ReviewRepository {
 
     if (response.statusCode == 201) {
       print('success Post');
+      return '저장되었습니다';
     } else {
       throw Exception('failed');
     }
