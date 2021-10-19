@@ -20,13 +20,13 @@
 
 ## 기술 스택 (Technique Used) 
 ### Server(back-end)
- - Backend: Node.js, MYSQL
+ - Node.js, MYSQL
  
 ### AI
- - AI: azure cloud service text-analyze, konlpy
+ - azure cloud service text-analyze, konlpy
 
-### Front-end
- - APP: flutter
+### APP(Front-end)
+ - flutter, dart, getx
 
 react.js, vue.js 등 사용한 front-end 프레임워크 
 UI framework
