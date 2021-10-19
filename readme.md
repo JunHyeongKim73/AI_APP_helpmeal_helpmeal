@@ -2,14 +2,13 @@
 해당 내용은 모두 예시이며 설명이 부족하거나 추가하고싶은 부분이 있으면 개발자님이 추가해서 작성하셔도 무관합니다. (동영상, 이미지, 텍스트 적용 전부 자유)
 
 
-# Project name or Logo
+# HelpMeal
 ![Logo](https://logosbynick.com/wp-content/uploads/2018/03/final-logo-example.png)
 
 프로젝트명 또는 프로젝트 로고 이미지 **(택1)**
 
-## 프로잭트 소개
-- 설명 기입
-
+## 프로잭트 소개:
+> 당신의 군 생활동안의 식사에 대한 크고 작은 고민들을 해결해줄 수 있는 작은 도우미, 헬프밀(HelpMeal)입니다.
 
 ## 기능 설명
  - 설명 기입
@@ -27,10 +26,6 @@
 
 ### APP(Front-end)
  - flutter, dart, getx
-
-react.js, vue.js 등 사용한 front-end 프레임워크 
-UI framework
-기타 사용한 라이브러리
 
 ## 설치 안내 (Installation Process)
 ```bash
