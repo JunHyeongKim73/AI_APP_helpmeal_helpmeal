@@ -15,13 +15,18 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
  - 장병들의 피드백이 반영되어 더 만족도 높은 식단을 구성할 수 있을 것입니다.
  - 위와 같이 장병들의 식단에 대한 만족도가 높아진다면, 버려지는 음식 때문에 생기는 연간 약 1000억원에 달하는 국방비를 절감할 수 있을 것입니다.
  - 각 부대 홈페이지에서 일정 주기마다 식단표를 확인해야 하는 번거로움을 줄일 수 있을 것입니다.
+<br/><br/><br/>
 
+> 군대는 잘 먹어야 진격한다.  
+>   
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나폴레옹 보나파르트
+
+<br/><br/><br/>
 ### 발표자료
 <a href="https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/helpmeal_presentation.pdf"><img src="https://user-images.githubusercontent.com/58851365/138083743-6e278d95-41b9-4e4d-a57f-c103386c7344.png" width="400"></a>
 
 ### 프로젝트 설명 영상
 [<img src = "https://user-images.githubusercontent.com/56298375/138110054-3a68a277-1214-4b5e-9153-7b8386efd93d.PNG" width="400" heigt="400"/>](https://www.youtube.com/watch?v=PZjvaPWjHr0?t=0s)
-
 
 ## 🖥 주요 기능
  - 메뉴(식단표)를 열람하고, 등록되지 않은 해당 부대의 식단을 수정 및 업데이트할 수 있습니다.  
@@ -89,10 +94,3 @@ $ flutter run
  * [GPL 3.0](https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/license.md)
 
 This project is licensed under the terms of the GNU General Public License v3.0 license.
-<br/><br/><br/><br/><br/>
-
-> 군대는 잘 먹어야 진격한다.  
->   
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나폴레옹 보나파르트
-
-<br/><br/><br/><br/><br/>
