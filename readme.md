@@ -35,10 +35,11 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
  - flutter, dart, getx
 
 ## 설치 안내 (Installation Process)
+- flutter SDK가 먼저 깔려있어야 합니다!
 ```bash
 $ git clone osamhack2021/AI_APP_helpmeal_helpmeal
-$ yarn install
-$ yarn start
+$ cd 'APP(Android)'
+$ flutter run
 ```
 
 ## 프로젝트 사용법 (Getting Started)
