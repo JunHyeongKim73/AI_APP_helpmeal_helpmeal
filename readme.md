@@ -1,5 +1,5 @@
 # HelpMeal
-![HelpMeal Logo](./logo_helpmeal.png)
+<img src = "./logo_helpmeal.png" width="300" heigt="300"/>
 
 ## 프로잭트 소개
 __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결해줄 수 있는 작은 도우미, \'헬프밀(HelpMeal)\'입니다.__
