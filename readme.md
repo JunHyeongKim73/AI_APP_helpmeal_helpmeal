@@ -17,7 +17,6 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
 
 ### 발표자료
 <a href="https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/HelpMeal.pdf"><img src="https://user-images.githubusercontent.com/58851365/138083743-6e278d95-41b9-4e4d-a57f-c103386c7344.png" width="400"></a>
-[![HelpMeal Presentation](./HelpMeal.pdf)](./APP(Android)/myapp/test/presentation_preview.jpg)
 
 > 군대는 잘 먹어야 진격한다.  
 >   
@@ -56,9 +55,9 @@ $ flutter run
 
  
 ## 팀 정보 (Team Information)
-- 양건희 (abab_1212@naver.com) Github ID : yangbaechu, __팀장 및 Backend(Server & AI)__
+- 양건희 (abab_1212@naver.com) Github ID : [yangbaechu](https://github.com/yangbaechu), __팀장 및 Backend(Server & AI)__
 - 김준형 (rla5764v@naver.com) Github ID : [JunHyeongKim73](https://github.com/JunHyeongKim73), __Frontend__
-- 김민석 (mhn07001@naver.com) Github ID : star8041, __Frontend__
+- 김민석 (mhn07001@naver.com) Github ID : [star8041](https://github.com/star8041), __Frontend__
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)
  * [GPL 3.0](https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/license.md)
