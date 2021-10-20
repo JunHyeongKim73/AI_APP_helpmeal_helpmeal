@@ -1,7 +1,7 @@
 # HelpMeal
 <img src = "./logo_helpmeal.png" width="150" heigt="150"/>
 
-## 💻 프로젝트 소개
+## 💻 프로잭트 소개
 __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결해줄 수 있는 작은 도우미, \'헬프밀(HelpMeal)\'입니다.__
 - - -
 
@@ -30,11 +30,21 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
  - 개선되었으면 하는 점이 있다면, '건의하기'를 통해 담당자에게 의견을 남길 수 있습니다.
  - AI 리뷰 분석을 통해 담당자는 좋은 점과 개선되었으면 하는 점을 확인할 수 있습니다.
 
-## 프로젝트 관리
+## 개발 과정
 ### 개발 일정
 <img src = "https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/APP(Android)/myapp/test/development_schedule.jpg?raw=true" width="1000" heigt="445"/>
 
-### 리뷰 분석 흐름도
+### Frontend
+#### 개발 중점 요소
+- 간편한 부대 설정 : 어떤 부대에 소속되었는지에 관계없이 직관적으로 선택할 수 있도록 구현하였습니다.
+- 사용자 친화적 UI : 사용자가 이용하는데 불편함이나 위화감을 느끼지 않도록 인터페이스를 구성하였습니다.
+- WordCloud : 리뷰 데이터를 가공 후 분석하여 한 눈에 식단의 장단점을 확인하여 피드백이 용이하도록 고안하였습니다.
+
+### Backend
+#### 식단표 구성 방법
+- 공공데이터포털의 식단표 데이터를 크롤링하여 제공 ➡️ 데이터가 부족하며, 정확도가 떨어짐
+- 따라서, 사용자 또는 담당자가 식단을 추가하거나 수정할 수 있는 기능을 제공
+#### AI 리뷰 분석 흐름도
 <img src = "https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/APP(Android)/myapp/test/flowchart.jpg?raw=true" width="895" heigt="505"/>
 
 ## 프로젝트 전망 및 개발 가능성
@@ -47,7 +57,6 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
 
 ## 📱 필요한 소프트웨어
 * Android : Android 11(sdk level 30) 이상
-* IOS : 제한 사항 없음
 
 ## 기술 스택 (Technique Used) 
 ### Server(back-end)
@@ -68,7 +77,6 @@ $ flutter run
 ```
 
 ## 프로젝트 사용법 (Getting Started)
-**마크다운 문법을 이용하여 자유롭게 기재**
 
 아래 링크에서 apk파일을 받아서 실행
 - <a href="https://drive.google.com/drive/folders/1KvTIeQwEkmsak6yaYFCTMqRVySkW0r_O">사용자 및 관리자 앱</a>
@@ -87,6 +95,6 @@ This project is licensed under the terms of the GNU General Public License v3.0 
 > 군대는 잘 먹어야 진격한다.  
 >   
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나폴레옹 보나파르트
-<br/><br/><br/>
+<br/><br/><br/><br/><br/>
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/6Az2cNU7gUw" frameborder="0" gesture="media" allowfullscreen=""></iframe>
