@@ -1,18 +1,24 @@
-### 본 페이지는 샘플입니다. 아래의 *[샘플 양식에 포함되어 있는 항목은 필수 기재사항]*   입니다.
-해당 내용은 모두 예시이며 설명이 부족하거나 추가하고싶은 부분이 있으면 개발자님이 추가해서 작성하셔도 무관합니다. (동영상, 이미지, 텍스트 적용 전부 자유)
-
-
-# Project name or Logo
-![Logo](https://logosbynick.com/wp-content/uploads/2018/03/final-logo-example.png)
-
-프로젝트명 또는 프로젝트 로고 이미지 **(택1)**
+# HelpMeal
+![HelpMeal Logo](./APP(Android)/myapp/test/logo_helpmeal.png)
 
 ## 프로잭트 소개
-- 설명 기입
+__당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결해줄 수 있는 작은 도우미, \'헬프밀(HelpMeal)\'입니다.__
+- - -
+### 기획의도
+고생하는 장병들에게 맛있는 한 끼 식사를 대접하기 위해, 조리병을 비롯하여 식단을 편성하고 요리하는 인원들은 밤낮없이 일하고 있습니다.  
+그럼에도 불구하고 수십만에 달하는 장병들을 만족시키기에는 턱없이 부족할 뿐더러 영양소 불균형이나 부족한 양 등과 관련한 문제가 지속적으로 제기되고 있습니다.  
+본 프로젝트는 이러한 문제들을 타파하기 위해 장병들의 병영식에 대한 만족도를 효율적으로 조사하고,
+피드백을 할 수 있도록 하는 것과 장병들이 식사하는데 불편함이 없도록 하는 것을 목적으로 하고 있습니다.
 
 
-## 기능 설명
- - 설명 기입
+> 군대는 잘 먹어야 진격한다.  
+>   
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나폴레옹 보나파르트
+
+## 주요 기능
+ - 메뉴(식단표)를 열람하고, 등록되지 않은 해당 부대의 식단을 수정 및 업데이트  
+ - 알레르기 등 장병들이 병영식을 이용하는데 불편할 수 있는 점에 대해 알려줄 것  
+ - 장병들이 각각의 메뉴에 대해 별점과 리뷰를 남길 수 있도록 하여 어떤 부분이 만족스럽고, 미흡한지 확인이 가능  
 
 ## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites)
 * ECMAScript 6 지원 브라우저 사용
@@ -20,43 +26,32 @@
 
 ## 기술 스택 (Technique Used) 
 ### Server(back-end)
- -  nodejs, php, java 등 서버 언어 버전 
- - express, laravel, sptring boot 등 사용한 프레임워크 
- - DB 등 사용한 다른 프로그램 
+ - Node.js, MYSQL, ERD
  
-### Front-end
- -  react.js, vue.js 등 사용한 front-end 프레임워크 
- -  UI framework
- - 기타 사용한 라이브러리
+### AI
+ - azure cloud service text-analyze, konlpy
+
+### APP(Front-end)
+ - flutter, dart, getx
 
 ## 설치 안내 (Installation Process)
 ```bash
-$ git clone git주소
-$ yarn or npm install
-$ yarn start or npm run start
+$ git clone osamhack2021/AI_APP_helpmeal_helpmeal
+$ yarn install
+$ yarn start
 ```
 
 ## 프로젝트 사용법 (Getting Started)
 **마크다운 문법을 이용하여 자유롭게 기재**
 
-잘 모를 경우
-구글 검색 - 마크다운 문법
-[https://post.naver.com/viewer/postView.nhn?volumeNo=24627214&memberNo=42458017](https://post.naver.com/viewer/postView.nhn?volumeNo=24627214&memberNo=42458017)
 
- 편한 마크다운 에디터를 찾아서 사용
- 샘플 에디터 [https://stackedit.io/app#](https://stackedit.io/app#)
  
 ## 팀 정보 (Team Information)
-- hong gil dong (hong999@gmail.com), Github Id: gildong999
-- kim su ji (suji999@gmail.com), Github Id: suji999
+- 양건희 (abab_1212@naver.com) Github ID : yangbaechu, __팀장 및 Backend(Server & AI)__
+- 김준형 (rla5764v@naver.com) Github ID : JunHyeongKim73, __프론트엔드__
+- 김민석 (mhn07001@naver.com) Github ID : star8041, __프론트엔드__
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)
- * [MIT](https://github.com/osam2020-WEB/Sample-ProjectName-TeamName/blob/master/license.md)
+ * [GPL 3.0](https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/license.md)
 
-This project is licensed under the terms of the MIT license.
-
-※ [라이선스 비교표(클릭)](https://olis.or.kr/license/compareGuide.do)
-
-※ [Github 내 라이선스 키워드(클릭)](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/licensing-a-repository)
-
-※ [\[참조\] Github license의 종류와 나에게 맞는 라이선스 선택하기(클릭)](https://flyingsquirrel.medium.com/github-license%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EB%82%98%EC%97%90%EA%B2%8C-%EB%A7%9E%EB%8A%94-%EB%9D%BC%EC%9D%B4%EC%84%A0%EC%8A%A4-%EC%84%A0%ED%83%9D%ED%95%98%EA%B8%B0-ae29925e8ff4)
+This project is licensed under the terms of the GNU General Public License v3.0 license.
