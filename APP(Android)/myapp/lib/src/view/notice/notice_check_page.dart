@@ -13,18 +13,6 @@ class NoticeCheckPage extends StatefulWidget {
   NoticeCheckPageState createState() => NoticeCheckPageState();
 }
 
-const noticeTitleList = [
-  '모두 정숙해주시길 바랍니다.',
-  '식당에 휴대폰 가져오지 마세요.',
-  '마스크 쓰고 밥 받으시길 바랍니다'
-];
-
-const noticeDetailList = [
-  '요즘 식당이 시끄러운 현상을 많이 목격하고 있습니다. 모두 아시다시피 식당은 다같이 밥을 먹는 공간입니다. 식당에서 밥을 먹을 때는 정숙해주시길 바랍니다.',
-  '요즘 식당이 시끄러운 현상이 많이 목격되고 있습니다. 모두 아시다시피 식당은 다같이 밥을 먹는 공간입니다. 식당에서 밥을 먹을 때는 정숙해주시길 바랍니다.',
-  '요즘 식당이 시끄러운 현상이 많이 목격되고 있습니다. 모두 아시다시피 식당은 다같이 밥을 먹는 공간입니다. 식당에서 밥을 먹을 때는 정숙해주시길 바랍니다.',
-];
-
 class NoticeCheckPageState extends State<NoticeCheckPage>
     with TickerProviderStateMixin {
   User user = Get.arguments;

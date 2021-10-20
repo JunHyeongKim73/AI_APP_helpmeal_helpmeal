@@ -39,9 +39,7 @@ class SuggestionComplainPageState extends State<SuggestionComplainPage> {
   Widget build(BuildContext context) {
     if (canBuildSuggestion) {
       suggestionList = SuggestionRepository.getSuggestionByUser(user.userId!);
-      setState(() {
-        canBuildSuggestion = false;
-      });
+      canBuildSuggestion = false;
     }
     return Scaffold(
       appBar: AppBar(
@@ -109,7 +107,7 @@ class SuggestionComplainPageState extends State<SuggestionComplainPage> {
                               fontWeight: FontWeight.w800),
                         ),
                         onPressed: () async {
-                          SuggestionRepository.postSuggestion(
+                          await SuggestionRepository.postSuggestion(
                               user.userId!, controller.text);
                           setState(() {
                             canBuildSuggestion = true;

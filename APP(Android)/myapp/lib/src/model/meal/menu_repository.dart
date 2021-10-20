@@ -73,7 +73,7 @@ class MenuRepository {
     String date = dateTime.toString();
     String noTimeDate = date.substring(0, 10);
 
-    final response = await http.post(
+    final response = await http.put(
       Uri.parse('https://helpmeal.duckdns.org/menus'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',

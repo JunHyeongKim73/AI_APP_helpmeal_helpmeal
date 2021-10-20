@@ -110,7 +110,7 @@ class _AllergyViewState extends State<AllergyView> {
               width: 180,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   List<String> selectedAllergy = [];
                   selectedList.forEachIndexed((index, element) {
                     if (element == true) {
@@ -128,8 +128,10 @@ class _AllergyViewState extends State<AllergyView> {
                     allergyList: signUpController.allergy,
                     groups: signUpController.groups,
                   );
-                  if(user.isLogined!){
-                    UserRepository.postUser(user);
+                  if (user.isLogined!) {
+                    await UserRepository.postUser(user);
+                    user = await UserRepository.getUser(
+                        signUpController.email, signUpController.password);
                   }
                   Get.offAllNamed('/', arguments: user);
                 },
