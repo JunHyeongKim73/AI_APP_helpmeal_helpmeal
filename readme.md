@@ -73,7 +73,7 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
 ### APP(Front-end)
  - flutter, dart, getx
 
-## 설치 안내 (Installation Process)
+## 🔎 설치 안내 (Installation Process)
 - flutter SDK가 먼저 깔려있어야 합니다!
 ```bash
 $ git clone osamhack2021/AI_APP_helpmeal_helpmeal
