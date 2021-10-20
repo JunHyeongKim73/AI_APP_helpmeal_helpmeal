@@ -57,7 +57,7 @@ $ flutter run
  
 ## 팀 정보 (Team Information)
 - 양건희 (abab_1212@naver.com) Github ID : yangbaechu, __팀장 및 Backend(Server & AI)__
-- 김준형 (rla5764v@naver.com) Github ID : JunHyeongKim73, __Frontend__
+- 김준형 (rla5764v@naver.com) Github ID : [JunHyeongKim73](https://github.com/JunHyeongKim73), __Frontend__
 - 김민석 (mhn07001@naver.com) Github ID : star8041, __Frontend__
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)
