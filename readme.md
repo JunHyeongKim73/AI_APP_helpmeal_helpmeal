@@ -16,6 +16,7 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
  - 각 부대 홈페이지에서 일정 주기마다 식단표를 확인해야 하는 번거로움을 줄일 수 있을 것입니다.
 
 ### 발표자료
+<a href="https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/HelpMeal.pdf"><img src="https://user-images.githubusercontent.com/58851365/138083743-6e278d95-41b9-4e4d-a57f-c103386c7344.png" width="400"></a>
 [![HelpMeal Presentation](./HelpMeal.pdf)](./APP(Android)/myapp/test/presentation_preview.jpg)
 
 > 군대는 잘 먹어야 진격한다.  
