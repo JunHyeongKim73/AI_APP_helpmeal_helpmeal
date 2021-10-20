@@ -21,6 +21,7 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
 ### 프로젝트 설명 영상
 - <a href="https://drive.google.com/drive/folders/1KvTIeQwEkmsak6yaYFCTMqRVySkW0r_O">영상 다운로드 링크</a>
 <br/><br/><br/><br/><br/>
+
 > 군대는 잘 먹어야 진격한다.  
 >   
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나폴레옹 보나파르트
@@ -32,9 +33,17 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
  - 개선되었으면 하는 점이 있다면, '건의하기'를 통해 담당자에게 의견을 남길 수 있습니다.
  - AI 리뷰 분석을 통해 담당자는 좋은 점과 개선되었으면 하는 점을 확인할 수 있습니다.
 
-## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites)
-* ECMAScript 6 지원 브라우저 사용
-* 권장: Google Chrome 버젼 77 이상
+## 프로젝트 관리
+### 개발 일정
+<img src = "https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/APP(Android)/myapp/test/development_schedule.jpg?raw=true" width="1000" heigt="445"/>
+
+### 리뷰 분석 흐름도
+<img src = "https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/APP(Android)/myapp/test/flowchart.jpg?raw=true" width="895" heigt="505"/>
+
+
+## 필요한 소프트웨어
+* Android : Android 11(sdk level 30) 이상
+* IOS : 제한 사항 없음
 
 ## 기술 스택 (Technique Used) 
 ### Server(back-end)
