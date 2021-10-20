@@ -16,10 +16,10 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
  - 위와 같이 장병들의 식단에 대한 만족도가 높아진다면, 버려지는 음식 때문에 생기는 연간 약 1000억원에 달하는 국방비를 절감할 수 있을 것입니다.
  - 각 부대 홈페이지에서 일정 주기마다 식단표를 확인해야 하는 번거로움을 줄일 수 있을 것입니다.
 
-### 📖 발표자료
+### 발표자료
 <a href="https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/helpmeal_presentation.pdf"><img src="https://user-images.githubusercontent.com/58851365/138083743-6e278d95-41b9-4e4d-a57f-c103386c7344.png" width="400"></a>
 
-### 🎬 프로젝트 설명 영상
+### 프로젝트 설명 영상
 [<img src = "https://user-images.githubusercontent.com/56298375/138110054-3a68a277-1214-4b5e-9153-7b8386efd93d.PNG" width="400" heigt="400"/>](https://www.youtube.com/watch?v=PZjvaPWjHr0?t=0s)
 
 
