@@ -63,7 +63,7 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
  - Node.js, MYSQL, ERD
  
 ### AI
- - azure cloud service text-analyze, konlpy
+ - azure cloud service text-analytics, konlpy
 
 ### APP(Front-end)
  - flutter, dart, getx
