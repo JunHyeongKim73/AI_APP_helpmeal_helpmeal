@@ -91,10 +91,12 @@ $ flutter run
  * [GPL 3.0](https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/license.md)
 
 This project is licensed under the terms of the GNU General Public License v3.0 license.
+<br/><br/><br/><br/><br/>
 
 > 군대는 잘 먹어야 진격한다.  
 >   
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나폴레옹 보나파르트
+
 <br/><br/><br/><br/><br/>
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/6Az2cNU7gUw" frameborder="0" gesture="media" allowfullscreen=""></iframe>
