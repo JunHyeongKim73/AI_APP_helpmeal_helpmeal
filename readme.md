@@ -20,6 +20,7 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
 <a href="https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/helpmeal_presentation.pdf"><img src="https://user-images.githubusercontent.com/58851365/138083743-6e278d95-41b9-4e4d-a57f-c103386c7344.png" width="400"></a>
 
 ### 프로젝트 설명 영상
+[<img src = "./logo_helpmeal.png" width="300" heigt="300"/>](https://www.youtube.com/watch?v=PZjvaPWjHr0?t=0s)
 - <a href="https://drive.google.com/drive/folders/1KvTIeQwEkmsak6yaYFCTMqRVySkW0r_O">영상 다운로드 링크</a>
 
 
