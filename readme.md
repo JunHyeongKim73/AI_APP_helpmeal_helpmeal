@@ -46,6 +46,10 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
 - WordCloud : 리뷰 데이터를 가공 후 분석하여 한 눈에 식단의 장단점을 확인하여 피드백이 용이하도록 고안하였습니다.
 
 ### Backend
+#### 설계
+- ER 다이어그램
+<img src = "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3737328e-5a9f-4c7d-b7ad-9f59a6c80026/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20211020%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20211020T143945Z&X-Amz-Expires=86400&X-Amz-Signature=00540c356956679cd27c74d47556f881407688aec94d493114e9f7b7efc2b302&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" width="895" heigt="505"/>
+
 #### 식단표 구성 방법
 - 공공데이터포털의 식단표 데이터를 크롤링하여 제공 ➡️ 데이터가 부족하며, 정확도가 떨어짐
 - 따라서, 사용자 또는 담당자가 식단을 추가하거나 수정할 수 있는 기능을 제공
