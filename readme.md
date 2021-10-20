@@ -1,7 +1,4 @@
 # HelpMeal
-![HelpMeal Logo](./logo_helpmeal.png)
-
-# HelpMeal
 <img src = "./logo_helpmeal.png" width="300" heigt="300"/>
 
 ## 💻 프로잭트 소개
