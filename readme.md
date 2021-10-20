@@ -96,5 +96,3 @@ This project is licensed under the terms of the GNU General Public License v3.0 
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나폴레옹 보나파르트
 
 <br/><br/><br/><br/><br/>
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/6Az2cNU7gUw" frameborder="0" gesture="media" allowfullscreen=""></iframe>
