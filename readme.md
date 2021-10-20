@@ -86,7 +86,7 @@ $ flutter run
 ```
 
 또는 아래 링크에서 apk파일을 받아서 실행하면 됩니다.
-- <a href="https://drive.google.com/drive/folders/1KvTIeQwEkmsak6yaYFCTMqRVySkW0r_O">사용자 및 관리자 앱</a>
+- <a href="https://drive.google.com/drive/folders/1KvTIeQwEkmsak6yaYFCTMqRVySkW0r_O">앱 다운로드</a>
 <br/><br/><br/><br/><br/>
  
 ## 팀 정보 (Team Information)
