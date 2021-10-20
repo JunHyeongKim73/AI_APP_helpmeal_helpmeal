@@ -18,10 +18,8 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
 ### 발표자료 및 프로젝트 설명 영상
 <a href="https://github.com/osamhack2021/AI_APP_helpmeal_helpmeal/blob/master/HelpMeal.pdf"><img src="https://user-images.githubusercontent.com/58851365/138083743-6e278d95-41b9-4e4d-a57f-c103386c7344.png" width="400"></a>
 
-- <a href="https://drive.google.com/drive/folders/11_kpVcOpbCIaYFENpywC9GHO2Axen6XJ?usp=sharing">영상 다운로드 링크</a>
-  
-  
-  
+- <a href="https://drive.google.com/drive/folders/1KvTIeQwEkmsak6yaYFCTMqRVySkW0r_O">영상 다운로드 링크</a>
+<br/><br/><br/><br/><br/>
 > 군대는 잘 먹어야 진격한다.  
 >   
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나폴레옹 보나파르트
