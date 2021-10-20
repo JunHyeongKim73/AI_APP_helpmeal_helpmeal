@@ -32,11 +32,11 @@ __당신의 군 생활동안 식사에 대한 크고 작은 고민들을 해결�
  - 장병들이 각각의 메뉴에 대해 별점과 리뷰를 남길 수 있도록 하여 어떤 부분이 만족스럽고, 미흡한지 확인할 수 있습니다.  
  - 개선되었으면 하는 점이 있다면, '건의하기'를 통해 담당자에게 의견을 남길 수 있습니다.
  - AI 리뷰 분석을 통해 담당자는 좋은 점과 개선되었으면 하는 점을 확인할 수 있습니다.
-| <img src = "./APP(Android)/myapp/create_modify.png" width="250">  | <img src = "./APP(Android)/myapp/inquiry.png" width="250"> |
+| <img src = "./APP(Android)/myapp/test/create_modify.png" width="250">  | <img src = "./APP(Android)/myapp/test/inquiry.png" width="250"> |
 |--|--|
-| <img src = "./APP(Android)/myapp/score_review.png" width="250"> | <img src = "./APP(Android)/myapp/suggestion.png" width="250"> |
+| <img src = "./APP(Android)/myapp/test/score_review.png" width="250"> | <img src = "./APP(Android)/myapp/test/suggestion.png" width="250"> |
 |--|--|
-| <img src = "./APP(Android)/myapp/notice.png" width="250"> | <img src = "./APP(Android)/myapp/analysis.png" width="250"> |
+| <img src = "./APP(Android)/myapp/test/notice.png" width="250"> | <img src = "./APP(Android)/myapp/test/analysis.png" width="250"> |
 
 ## ⏰ 개발 과정
 ### 개발 일정
